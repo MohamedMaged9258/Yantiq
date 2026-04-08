@@ -1,6 +1,11 @@
 # Graduation Project Documentation (V2)
 
-## Working Title
+**Flag Legend**
+- ✔ Confirmed choice
+- ⚠ To be discussed later
+- 🔷 To be discussed in detail later
+
+## Project Name
 - Loghatona (لغتنا)
 
 ---
@@ -101,7 +106,34 @@
 ---
 
 ## 10. User Journey
-- TBD
+
+### First-Time Experience
+- An adult will assist the child in creating the account and setting up the initial profile.
+- Initial setup includes choosing the child’s age.
+- Additional user information and setup details 🔷 (To be discussed in detail later)
+
+### Daily Usage Flow
+- Open app
+- Continue last lesson
+- Complete a short lesson/activity
+- Get reward (stars / badges)
+- Unlock next stage
+- Preferred format: short lessons
+
+### Level Progression Logic
+- ✔ Must-pass criteria before moving to the next stage/level
+
+### Failure Handling
+- Hybrid approach:
+  - First failures: show hint and allow retry
+  - If failure continues: provide a simpler version of the task
+
+### Speaking Interaction Flow
+- App plays the correct pronunciation
+- Child repeats the sound/word
+- AI evaluates pronunciation
+- App provides guided + encouraging feedback
+- Add pronunciation scoring ✔
 
 ---
 
@@ -145,4 +177,5 @@
 - ⚠ Advanced AI features
 - ⚠ Gamification expansion
 - ⚠ Cybersecurity final scope
-
+- 🔷 Detailed account setup information
+- 🔷 Detailed child profile fields and onboarding inputs
