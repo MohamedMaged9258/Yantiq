@@ -1,11 +1,11 @@
-# Graduation Project Documentation (V2)
+# Graduation Project Documentation (V2.2)
 
 **Flag Legend**
 - ✔ Confirmed choice
 - ⚠ To be discussed later
 - 🔷 To be discussed in detail later
 
-## Project Name
+## Working Title
 - Loghatona (لغتنا)
 
 ---
@@ -109,8 +109,32 @@
 
 ### First-Time Experience
 - An adult will assist the child in creating the account and setting up the initial profile.
-- Initial setup includes choosing the child’s age.
+- Initial setup includes:
+  - Parent basic information (MVP)
+  - Child profile creation
 - Additional user information and setup details 🔷 (To be discussed in detail later)
+
+### Onboarding & Profile Design
+
+#### Parent / Guardian (MVP)
+- ✔ Basic parent information (e.g., email or phone for account creation)
+- ✔ Consent for child usage
+- ⚠ Detailed authentication methods (to be refined later)
+
+#### Child Profile (MVP)
+- ✔ First name / nickname
+- ✔ Age
+- ✔ Arabic exposure level
+- ✔ Current level
+
+#### Initial Placement Logic (Chosen)
+
+- ✔ Initial level determined based on:
+- Age
+- Arabic exposure level
+- ✔ Option to take placement test if level is too easy
+
+---
 
 ### Daily Usage Flow
 - Open app
@@ -179,3 +203,4 @@
 - ⚠ Cybersecurity final scope
 - 🔷 Detailed account setup information
 - 🔷 Detailed child profile fields and onboarding inputs
+
