@@ -178,8 +178,24 @@
 - ⚠ Final deployment decision depends on cost, access, and infrastructure availability
 
 ### Project Complexity Level (Chosen)
-- ✔ Medium complexity
-  * Balanced between strong technical value and practical execution feasibility
+- The project will aim for a balanced scope that demonstrates strong technical value without overloading the team with high-risk features.
+- The team will implement a working mobile learning application connected to a backend.
+- The MVP will include:
+  - User onboarding for parent/guardian and child profile creation
+  - Multi-level Arabic learning flow with short lessons
+  - Visual + audio learning activities
+  - Speech recognition for pronunciation evaluation
+  - Basic handwriting recognition for letter-shape validation
+  - Guided and encouraging feedback
+  - Gamification through stars/badges and level unlocks
+  - Basic security and privacy protections for user data
+- The project will avoid very advanced features in the first version, such as:
+  - Fully dynamic AI personalization
+  - Advanced handwriting analysis (stroke order/alignment)
+  - Full AI voice companion
+  - Full parent/teacher dashboard
+  - Multi-platform expansion such as website support
+- This means the team will focus on delivering a complete, functional, and testable core product first, while keeping advanced enhancements for later phases.
 
 ---
 
