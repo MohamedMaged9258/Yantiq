@@ -1,29 +1,26 @@
 # Graduation Project Documentation (V2.4)
 
 ## Working Title
-- Loghatona (لغتنا)
+- Yantiq: AI-Based Early Arabic Reading Tutor with Pronunciation Correction
 
 ---
 
 ## 1. Project Idea Summary
-- A mobile application that helps children learn Arabic speaking and writing using AI.
-- The application targets children directly as the primary users.
-- ⚠ Future enhancement: parent/teacher dashboard for monitoring progress.
-- The app will support both:
-  - Non-native Arabic learners (living abroad)
-  - Native Arabic speakers (starting at higher levels)
-- The learning journey will be structured into 5 progressive levels, each containing multiple stages.
-- Level 1 will focus on:
-  - Letter pronunciation first
-  - Then letter writing
+  Early Arabic literacy, particularly among preschool-aged children, faces significant challenges due to limited access to interactive and personalized learning tools, especially for pronunciation development. Children living in non-Arabic environments often lack consistent exposure to correct Arabic speech, while existing solutions typically rely on static content with minimal real-time feedback.
+
+  Additionally, most available applications do not provide stepwise progression aligned with early literacy development, nor do they effectively integrate speaking, listening, and reading skills in a unified learning experience. The absence of adaptive learning paths and progress monitoring further limits the effectiveness of these tools for both learners and guardians.
 
 ---
 
 ## 2. Project Problem Statement
-- Children living in non-Arabic environments lack exposure to Arabic.
-- Existing solutions lack engagement and personalization.
-- Limited use of AI in current Arabic learning tools.
-- Native children lack structured, gamified reinforcement systems.
+
+Early Arabic literacy, particularly among preschool-aged children, faces significant challenges due to limited access to interactive and personalized learning tools, especially for pronunciation development. Children living in non-Arabic environments often lack consistent exposure to correct Arabic speech, which negatively impacts their ability to develop accurate reading and speaking skills.
+
+Most existing solutions rely on static content and do not provide real-time pronunciation feedback, making it difficult for children to correct mistakes and improve effectively. Additionally, many platforms do not follow a structured, stepwise progression aligned with early literacy development, nor do they integrate listening, speaking, and reading in a unified learning experience.
+
+Furthermore, the lack of adaptive learning paths and progress monitoring tools limits the ability of parents and teachers to support the child’s learning journey, reducing overall engagement and learning outcomes.
+
+These limitations highlight the need for an intelligent, interactive, and adaptive solution that supports early Arabic literacy through real-time feedback and structured learning progression.
 
 ---
 
@@ -39,10 +36,12 @@
 ---
 
 ## 5. Project Objectives
-- Structured Arabic learning journey (basic → advanced)
-- Develop speaking and writing skills
-- Use AI for personalized feedback
-- Combine education + gamification
+- Provide a structured, stepwise Arabic reading journey from letter recognition to sentence reading
+- Enable real-time pronunciation feedback using AI
+- Support audio-first learning through listening and speaking exercises
+- Deliver a personalized learning experience based on child progress
+- Provide progress tracking through a parent/teacher dashboard
+- Ensure alignment with early Arabic literacy learning principles
 
 ---
 
@@ -50,15 +49,12 @@
 - Hybrid learning model (Educational + Gamified)
 - 5 learning levels with multiple stages
 
-### Level 1 Example
-- Stage 1: Letter pronunciation (visual + audio)
-- Stage 2: Letter writing (tracing)
-
 ### Learning Approach
-- Visual + Audio (primary)
-- Speaking practice (AI-based)
-- Writing practice
-- Adaptation based on age ⚠ (To be refined later)
+- Audio-first learning (primary focus on listening and speaking)
+- Visual support for letter and word recognition
+- Stepwise progression (letters → words → sentences)
+- Real-time pronunciation feedback using AI
+- Adaptive learning path based on user progress ⚠ (to be refined later)
 
 ### Gamification (MVP Choices)
 - Stars / Badges
@@ -71,13 +67,10 @@
 ## 7. AI Components
 
 ### Speech Recognition
+- Transcribe spoken input for evaluation and feedback
 - Detect correct/incorrect pronunciation
 - Detect specific pronunciation mistakes 
 - Provide guided + encouraging feedback
-
-### Handwriting Recognition
-- Detect correct vs incorrect letter shape
-- ⚠ Advanced analysis (stroke order, alignment) – future phase
 
 ### Future AI Feature
 - ⚠ Audio AI companion (voice-based assistant)
@@ -148,11 +141,12 @@
   - If failure continues: provide a simpler version of the task
 
 ### Speaking Interaction Flow
-- App plays the correct pronunciation
-- Child repeats the sound/word
-- AI evaluates pronunciation
-- App provides guided + encouraging feedback
-- Add pronunciation scoring ✔
+- App presents letter/word using text-to-speech  
+- Child listens and repeats  
+- AI transcribes the spoken input  
+- System evaluates pronunciation accuracy  
+- App provides real-time, guided, and encouraging feedback  
+- Score is recorded and used for progress tracking  
 
 ---
 
@@ -175,7 +169,7 @@
 
 #### 1. Mobile Application Layer
 - Main interface for child learning and guardian-supported onboarding
-- Handles account setup support, lesson interaction, audio playback, handwriting input, rewards, and progress display
+- Handles account setup support, lesson interaction, audio playback, rewards, and progress display
 
 #### 2. Main Backend Server
 - Responsible for core application logic
@@ -185,7 +179,6 @@
 #### 3. Separate AI Service Layer
 - Chosen as a modular architecture decision
 - Handles pronunciation evaluation
-- Handles handwriting recognition
 <!-- - Generates AI-based scoring and feedback -->
 - Supports future AI extensions without tightly coupling them to the main backend
 <!-- - Matches the project well because AI models may be hosted internally on university infrastructure -->
@@ -218,7 +211,6 @@
   - Multi-level Arabic learning flow with short lessons
   - Visual + audio learning activities
   - Speech recognition for pronunciation evaluation
-  - Basic handwriting recognition for letter-shape validation
   - Guided and encouraging feedback
   - Gamification through stars/badges and level unlocks
   - Basic security and privacy protections for user data
@@ -238,13 +230,12 @@
 - Child profile can be created and saved successfully
 - User can complete at least one full learning level
 - Speech evaluation returns a result for ≥ 90% of attempts
-- Handwriting input is processed and evaluated correctly
 - Progress and scores are stored and retrieved without data loss
 
 ### 2. AI Performance Success
-- Speech recognition correctly classifies pronunciation (correct/incorrect) in ≥ 80% of tested cases
-- System can identify common pronunciation mistakes for basic letters
-- Handwriting recognition correctly identifies Arabic letters in ≥ 80% of test samples
+- Speech recognition correctly transcribes child input in ≥ 80% of test cases
+- System accurately classifies pronunciation (correct/incorrect) in ≥ 80% of cases
+- Real-time feedback is delivered consistently within defined response time
 
 ### 3. User Experience Success
 - Child can complete a lesson without external help in ≥ 80% of test sessions
@@ -288,7 +279,7 @@
 - Define overall system architecture (mobile, backend, AI services, database, security)
 - Design backend structure, APIs, and data flow
 - Lead implementation of critical backend components
-- Own AI integration strategy (how speech and handwriting services connect to backend)
+- Own AI integration strategy (how speech recognition services connect to backend)
 - Review code across all modules to ensure consistency and quality
 - Coordinate between team members and manage technical decisions
 - Ensure alignment between product requirements and technical implementation
@@ -300,20 +291,20 @@
 - Tune scoring thresholds and feedback behavior
 - Collaborate with backend to expose speech evaluation results via APIs
 
-### Handwriting Recognition Engineer
-- Integrate handwriting recognition solution for Arabic letters
-- Handle drawing input from mobile (touch input → usable format)
-- Implement validation logic for letter shapes (correct vs incorrect)
-- Support preprocessing (image cleaning, normalization if needed)
-- Work with backend to deliver structured evaluation results and feedback
-
-### Mobile Application Engineer
-- Develop the mobile application (UI/UX) using chosen framework
-- Implement learning flow (levels, stages, lessons)
-- Integrate visual, audio, and interaction components
-- Connect mobile app to backend APIs (authentication, lessons, scoring, progress)
+### Mobile Application Engineer (UI/UX & Interaction)
+- Develop the mobile application interface (UI/UX)
+- Design child-friendly screens and interactions
+- Implement lesson flow (levels, stages, lessons)
+- Integrate visual and audio components
 - Implement gamification features (stars/badges, level unlocking)
-- Ensure smooth and child-friendly user experience
+- Ensure smooth and engaging user experience
+
+### Mobile Application Engineer (Backend Integration & Logic)
+- Connect mobile app to backend APIs (authentication, lessons, scoring, progress)
+- Handle data flow between mobile app and backend
+- Implement client-side logic for lessons and progression
+- Manage API error handling and response processing
+- Support testing and debugging of mobile-backend integration
 
 ### Security & Privacy Engineer (Cybersecurity)
 - Design and implement authentication system (guardian accounts)
@@ -328,7 +319,7 @@
 ## 15. Risks
 
 ### 1. AI Accuracy Risk
-- Speech or handwriting recognition may not perform well for all users
+- Speech recognition may not perform well for all users
 - Mitigation:
   - Use well-established models/APIs
   - Limit scope to basic letters and simple cases
@@ -377,7 +368,6 @@
 - Backend system with APIs for user management, lessons, and progress tracking
 - Integrated AI services for:
   - Speech recognition and pronunciation evaluation
-  - Handwriting recognition for Arabic letters
 - Database containing user data, progress, and learning content
 
 ### 2. Documentation Deliverables
@@ -388,7 +378,7 @@
 
 ### 3. Testing & Evaluation Deliverables
 - Test cases and results for core features
-- AI performance evaluation results (speech & handwriting)
+- AI performance evaluation results (speech recognition)
 - User testing report (feedback, observations, improvements)
 
 ### 4. Security Deliverables
@@ -415,6 +405,7 @@
 - ⚠ Gamification expansion
 - ⚠ Cybersecurity final scope
 - ⚠ Final AI hosting infrastructure details
+- ⚠ Curriculum alignment details (mapping levels to literacy standards)
 - 🔷 Detailed account setup information
 - 🔷 Detailed child profile fields and onboarding inputs
 
