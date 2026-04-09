@@ -371,7 +371,39 @@
 ---
 
 ## 16. Deliverables
-- TBD
+
+### 1. Software Deliverables
+- Fully functional mobile application (MVP)
+- Backend system with APIs for user management, lessons, and progress tracking
+- Integrated AI services for:
+  - Speech recognition and pronunciation evaluation
+  - Handwriting recognition for Arabic letters
+- Database containing user data, progress, and learning content
+
+### 2. Documentation Deliverables
+- Project documentation (this document)
+- System architecture diagram
+- API documentation (endpoints, request/response formats)
+- AI integration documentation (models used, how they are connected)
+
+### 3. Testing & Evaluation Deliverables
+- Test cases and results for core features
+- AI performance evaluation results (speech & handwriting)
+- User testing report (feedback, observations, improvements)
+
+### 4. Security Deliverables
+- Authentication and authorization design
+- Basic threat model
+- Security measures documentation (data protection, API security)
+
+### 5. Presentation Deliverables
+- Final presentation slides
+- Live demo of the application
+- Explanation of system architecture and technical decisions
+
+### 6. Future Work Documentation
+- List of planned enhancements (AI companion, advanced personalization, dashboard, etc.)
+- Identified limitations and proposed improvements
 
 ---
 
