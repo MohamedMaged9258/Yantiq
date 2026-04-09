@@ -1,10 +1,5 @@
 # Graduation Project Documentation (V2.4)
 
-**Flag Legend**
-- ✔ Confirmed choice
-- ⚠ To be discussed later
-- 🔷 To be discussed in detail later
-
 ## Working Title
 - Loghatona (لغتنا)
 
@@ -13,7 +8,7 @@
 ## 1. Project Idea Summary
 - A mobile application that helps children learn Arabic speaking and writing using AI.
 - The application targets children directly as the primary users.
-- Future enhancement: parent/teacher dashboard for monitoring progress. ⚠ (To be discussed later)
+- ⚠ Future enhancement: parent/teacher dashboard for monitoring progress.
 - The app will support both:
   - Non-native Arabic learners (living abroad)
   - Native Arabic speakers (starting at higher levels)
@@ -34,7 +29,7 @@
 
 ## 3. Target Users
 - Primary: Children
-- Secondary: Parents & Teachers ⚠ (To be expanded later)
+- Secondary: Parents & Teachers
 
 ---
 
@@ -66,8 +61,8 @@
 - Adaptation based on age ⚠ (To be refined later)
 
 ### Gamification (MVP Choices)
-- ✔ Stars / Badges
-- ✔ Level Unlock System
+- Stars / Badges
+- Level Unlock System
 - ⚠ Daily streaks (future consideration)
 - ⚠ Avatars (future consideration)
 
@@ -75,13 +70,13 @@
 
 ## 7. AI Components
 
-### Speech Recognition (Chosen)
-- ✔ Detect correct/incorrect pronunciation
-- ✔ Detect specific pronunciation mistakes (Advanced – Option B)
-- ✔ Provide guided + encouraging feedback
+### Speech Recognition
+- Detect correct/incorrect pronunciation
+- Detect specific pronunciation mistakes 
+- Provide guided + encouraging feedback
 
-### Handwriting Recognition (Chosen – Basic Scope)
-- ✔ Detect correct vs incorrect letter shape
+### Handwriting Recognition
+- Detect correct vs incorrect letter shape
 - ⚠ Advanced analysis (stroke order, alignment) – future phase
 
 ### Future AI Feature
@@ -89,18 +84,18 @@
 
 ---
 
-## 8. Feedback System (Chosen)
-- ✔ Guided feedback (show mistake + correction)
-- ✔ Encouraging tone (positive reinforcement)
+## 8. Feedback System
+- Guided feedback (show mistake + correction)
+- Encouraging tone (positive reinforcement)
 
 ---
 
 ## 9. Cybersecurity Scope (Initial – To Be Refined)
-- ✔ User data protection (especially children data)
-- ✔ Authentication (parent/guardian accounts)
-- ✔ Secure AI APIs and backend
-- ✔ Prevent misuse or fake inputs
-- ✔ Privacy considerations (child-safe design)
+- User data protection (especially children data)
+- Authentication (parent/guardian accounts)
+- Secure AI APIs and backend
+- Prevent misuse or fake inputs
+- Privacy considerations (child-safe design)
 - ⚠ Final scope definition pending
 
 ---
@@ -117,22 +112,22 @@
 ### Onboarding & Profile Design
 
 #### Parent / Guardian (MVP)
-- ✔ Basic parent information (e.g., email or phone for account creation)
-- ✔ Consent for child usage
+- Basic parent information (e.g., email or phone for account creation)
+- Consent for child usage
 - ⚠ Detailed authentication methods (to be refined later)
 
 #### Child Profile (MVP)
-- ✔ First name / nickname
-- ✔ Age
-- ✔ Arabic exposure level
-- ✔ Current level
+- First name / nickname
+- Age
+- Arabic exposure level
+- Current level
 
 #### Initial Placement Logic (Chosen)
 
-- ✔ Initial level determined based on:
+- Initial level determined based on:
 - Age
 - Arabic exposure level
-- ✔ Option to take placement test if level is too easy
+- Option to take placement test if level is too easy
 
 ---
 
@@ -145,7 +140,7 @@
 - Preferred format: short lessons
 
 ### Level Progression Logic
-- ✔ Must-pass criteria before moving to the next stage/level
+- Must-pass criteria before moving to the next stage/level
 
 ### Failure Handling
 - Hybrid approach:
@@ -163,8 +158,8 @@
 
 ## 11. Technical Scope
 ### Personalization Approach
-- ✔ Option A: fixed learning path with light adaptation
-- ✔ Small adaptation through retry support and simpler fallback tasks
+- Option A: fixed learning path with light adaptation
+- Small adaptation through retry support and simpler fallback tasks
 - ⚠ Advanced dynamic AI personalization – future phase
 
 ### Platform Strategy
@@ -238,12 +233,53 @@
 ---
 
 ## 12. Success Criteria
-- TBD
+
+### 1. Functional Success
+- Child profile can be created and saved successfully
+- User can complete at least one full learning level
+- Speech evaluation returns a result for ≥ 90% of attempts
+- Handwriting input is processed and evaluated correctly
+- Progress and scores are stored and retrieved without data loss
+
+### 2. AI Performance Success
+- Speech recognition correctly classifies pronunciation (correct/incorrect) in ≥ 80% of tested cases
+- System can identify common pronunciation mistakes for basic letters
+- Handwriting recognition correctly identifies Arabic letters in ≥ 80% of test samples
+
+### 3. User Experience Success
+- Child can complete a lesson without external help in ≥ 80% of test sessions
+- Average lesson completion time: 2–5 minutes
+- Feedback is clear and understandable (validated through user testing)
+
+### 4. System Performance
+- Average response time for AI evaluation ≤ 2 seconds
+- App maintains stable performance with minimal crashes during testing
+- Backend APIs respond successfully in ≥ 95% of requests
+
+### 5. Security Success
+- Only authenticated guardian accounts can access system features
+- Child data is securely stored and not exposed
+- All API endpoints require authentication and validation
+
+### 6. User Testing Validation
+- Conduct testing with real users or simulated child scenarios
+- Collect feedback on usability, clarity, and engagement
+- Validate that users can follow the learning flow without confusion
 
 ---
 
 ## 13. Constraints and Assumptions
-- TBD
+
+### Constraints
+- Limited project time and resources
+- Dependence on available AI models and APIs
+- Possible limitations of university infrastructure for hosting AI services
+- Mobile platform development constraints (performance, device compatibility)
+
+### Assumptions
+- Selected AI models provide acceptable baseline accuracy
+- Users (children) will have basic guidance from a guardian during onboarding
+- Internet connectivity is available for accessing backend and AI services
 
 ---
 
@@ -290,7 +326,47 @@
 ---
 
 ## 15. Risks
-- TBD
+
+### 1. AI Accuracy Risk
+- Speech or handwriting recognition may not perform well for all users
+- Mitigation:
+  - Use well-established models/APIs
+  - Limit scope to basic letters and simple cases
+  - Tune thresholds and feedback logic
+
+### 2. Integration Complexity
+- Difficulty integrating mobile app, backend, and AI services
+- Mitigation:
+  - Use modular architecture (already defined)
+  - Assign clear ownership (backend, AI, mobile)
+  - Perform incremental integration and testing
+
+### 3. Performance Issues
+- Slow response from AI services may affect user experience
+- Mitigation:
+  - Optimize request handling
+  - Use efficient APIs
+  - Limit payload size (audio/image processing)
+
+### 4. Time Constraints
+- Risk of not completing all features within timeline
+- Mitigation:
+  - Focus on MVP features only
+  - Defer advanced features (already defined in scope)
+  - Maintain clear task distribution
+
+### 5. Security Risks
+- Potential exposure of sensitive child data
+- Mitigation:
+  - Implement authentication and access control
+  - Secure API communication
+  - Follow basic data protection practices
+
+### 6. Dependency on External Tools
+- Risk related to availability or limitations of AI models/APIs
+- Mitigation:
+  - Keep fallback options (alternative APIs or models)
+  - Consider internal hosting where possible
 
 ---
 
