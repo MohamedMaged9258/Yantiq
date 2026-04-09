@@ -1,4 +1,4 @@
-# Graduation Project Documentation (V2.2)
+# Graduation Project Documentation (V2.4)
 
 **Flag Legend**
 - ✔ Confirmed choice
