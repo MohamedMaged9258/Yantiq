@@ -162,7 +162,24 @@
 ---
 
 ## 11. Technical Scope
-- TBD
+### Personalization Approach (Chosen)
+- ✔ Option A: fixed learning path with light adaptation
+- ✔ Small adaptation through retry support and simpler fallback tasks
+- ⚠ Advanced dynamic AI personalization – future phase
+
+### Platform Strategy (Chosen)
+- ✔ Mobile application as the primary platform
+- ✔ Mobile app + backend architecture
+- ⚠ Website version – future enhancement
+
+### AI Deployment Strategy (Chosen)
+- ✔ Cloud-based AI APIs as the primary deployment model
+- ✔ Alternative option: host AI services locally on university servers
+- ⚠ Final deployment decision depends on cost, access, and infrastructure availability
+
+### Project Complexity Level (Chosen)
+- ✔ Medium complexity
+  * Balanced between strong technical value and practical execution feasibility
 
 ---
 
@@ -172,8 +189,7 @@
 ---
 
 ## 13. Constraints and Assumptions
-
-* TBD
+- TBD
 
 ---
 
