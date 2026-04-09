@@ -172,7 +172,8 @@
 ---
 
 ## 13. Constraints and Assumptions
-- TBD
+
+* TBD
 
 ---
 
