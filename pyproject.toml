@@ -15,14 +15,10 @@ authors = [
 description = "Quran Phonetic Script with addional quarnic utils"
 readme = "README.md"
 dependencies = [
-    "diff-match-patch>=20241021",
     "librosa>=0.11.0",
-    "litserve>=0.2.17",
     "numpy>=2.2.6",
     "pydantic-settings>=2.13.1",
     "python-multipart>=0.0.20",
-    "quran-transcript>=0.5.2",
-    "rich>=14.1.0",
     "torch>=2.4.0",
     "transformers>=4.55.0",
 ]
@@ -49,12 +45,10 @@ ui = [
     "httpx>=0.28.1",
     "librosa>=0.11.0",
     "numba>=0.61.2",
-    "moviepy>=2.2.1",
 ]
 engine = [
     "fastapi>=0.116.1",
     "httpx>=0.28.1",
-    "litserve>=0.2.17",
     "pydantic-settings>=2.13.1",
     "python-multipart>=0.0.20",
     "uvicorn>=0.35.0",
@@ -68,9 +62,6 @@ training = [
 
 
 [project.scripts]
-quran-muaalem-ui = "quran_muaalem.gradio_app:main"
-quran-muaalem-engine = "quran_muaalem.engine.main:main"
-quran-muaalem-app = "quran_muaalem.app:main"
 quran-muaalem-msa-api = "quran_muaalem.msa.api:main"
 quran-muaalem-msa-ui = "quran_muaalem.msa.ui:main"
 
