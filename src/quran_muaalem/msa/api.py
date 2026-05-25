@@ -1,11 +1,38 @@
 """FastAPI service for the fine-tuned MSA model."""
 
 from dataclasses import asdict
+from pathlib import Path
 import io
+import os
+import subprocess
+import tempfile
 
 import librosa
 import numpy as np
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+
+
+def _ffmpeg_decode(raw: bytes, suffix: str, sample_rate: int) -> np.ndarray:
+    """Decode any ffmpeg-supported format (mp3/m4a/webm/opus/...) to mono
+    float32 PCM at `sample_rate`. Used as the fallback when libsndfile can't
+    read the upload — replaces librosa's deprecated audioread path."""
+    tmp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(suffix=suffix or ".audio", delete=False) as tmp:
+            tmp.write(raw)
+            tmp_path = tmp.name
+        proc = subprocess.run(
+            ["ffmpeg", "-nostdin", "-v", "error", "-i", tmp_path,
+             "-f", "f32le", "-ac", "1", "-ar", str(sample_rate), "pipe:1"],
+            capture_output=True,
+        )
+        if proc.returncode != 0:
+            err = proc.stderr.decode("utf-8", "ignore").strip()[-500:]
+            raise RuntimeError(err or "ffmpeg failed")
+        return np.frombuffer(proc.stdout, dtype=np.float32).copy()
+    finally:
+        if tmp_path and os.path.exists(tmp_path):
+            os.unlink(tmp_path)
 
 from .compare import compare_phonemes
 from .inference import MSAInference
@@ -31,12 +58,30 @@ def create_app(settings: MSASettings | None = None) -> FastAPI:
         if upload is None:
             raise HTTPException(status_code=400, detail="audio file is required")
         raw = await upload.read()
+        if not raw:
+            raise HTTPException(status_code=400, detail="audio file is empty")
+        # soundfile (via BytesIO) decodes WAV/FLAC/OGG directly. Compressed
+        # formats from browsers/phones (webm/opus, mp3, m4a) aren't libsndfile
+        # formats, so on failure transcode with ffmpeg.
         try:
             audio, _ = librosa.load(
                 io.BytesIO(raw), sr=settings.sample_rate, mono=True
             )
-        except Exception as exc:
-            raise HTTPException(status_code=400, detail=f"could not decode audio: {exc}")
+        except Exception:
+            try:
+                audio = _ffmpeg_decode(
+                    raw, Path(upload.filename or "").suffix, settings.sample_rate
+                )
+            except FileNotFoundError:
+                raise HTTPException(
+                    status_code=400,
+                    detail=(
+                        "could not decode audio: ffmpeg is not installed. "
+                        "Compressed formats (mp3/m4a/webm) require ffmpeg on the server."
+                    ),
+                )
+            except Exception as exc:
+                raise HTTPException(status_code=400, detail=f"could not decode audio: {exc}")
         return audio.astype(np.float32, copy=False)
 
     @app.get("/health")
