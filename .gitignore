@@ -1,0 +1,42 @@
+# build source
+**/*.egg-info/
+
+# pypdl logs
+**pypdl.log
+
+# pycache
+**/__pycache__/
+
+# slurmoutput
+*.out
+
+# logs
+*.log
+
+# vim swap
+*.swp
+
+**/*.gradio/
+
+# vitepress
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+docs/.vitepress/temp/
+datasets
+checkpoints/
+
+# python tooling caches
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+
+# editor / IDE state
+.vscode/
+.idea/
+
+# local secrets / overrides
+.env.local
+*.local.env

@@ -1,0 +1,23 @@
+html[lang="ar"] {
+  direction: rtl;
+}
+
+html[lang="ar"] body {
+  direction: rtl;
+}
+
+html[lang="ar"] .VPDoc,
+html[lang="ar"] .VPContent,
+html[lang="ar"] .VPNavBar,
+html[lang="ar"] .VPFooter,
+html[lang="ar"] .VPSidebar,
+html[lang="ar"] .VPNavBarMenu {
+  direction: rtl;
+}
+
+html[lang="ar"] .VPDoc,
+html[lang="ar"] .VPNavBarTitle,
+html[lang="ar"] .VPNavBarMenuLink,
+html[lang="ar"] .VPSidebarItem {
+  text-align: right;
+}
