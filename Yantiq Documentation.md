@@ -1,4 +1,4 @@
-# Graduation Project Documentation (V2.4)
+# Graduation Project Documentation (V2.6)
 
 ## Working Title
 - Yantiq: AI-Based Early Arabic Reading Tutor with Pronunciation Correction
@@ -37,7 +37,7 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 
 ## 5. Project Objectives
 - Provide a structured, stepwise Arabic reading journey from letter recognition to sentence reading
-- Enable real-time pronunciation feedback using AI
+- Enable real-time pronunciation feedback using a fine-tuned Arabic speech model adapted from Quranic speech/recitation recognition to Modern Standard Arabic, with correctness evaluation based on comparison against predefined ground truth
 - Support audio-first learning through listening and speaking exercises
 - Deliver a personalized learning experience based on child progress
 - Provide progress tracking through a parent/teacher dashboard
@@ -53,7 +53,7 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 - Audio-first learning (primary focus on listening and speaking)
 - Visual support for letter and word recognition
 - Stepwise progression (letters → words → sentences)
-- Real-time pronunciation feedback using AI
+- Real-time pronunciation feedback using a fine-tuned Arabic speech model that transcribes the child’s input and evaluates correctness by comparing it with the expected ground truth
 - Adaptive learning path based on user progress ⚠ (to be refined later)
 
 ### Gamification (MVP Choices)
@@ -66,11 +66,14 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 
 ## 7. AI Components
 
-### Speech Recognition
-- Transcribe spoken input for evaluation and feedback
-- Detect correct/incorrect pronunciation
-- Detect specific pronunciation mistakes 
-- Provide guided + encouraging feedback
+### Fine-Tuned Arabic Speech Model
+- Use an existing Quranic Arabic speech/recitation model as the base model
+- Fine-tune and train the model on Modern Standard Arabic content aligned with the project scope
+- Process the child’s spoken input and generate a transcription
+- Compare the generated transcription with the predefined ground truth for the target letter, word, or sentence
+- Evaluate pronunciation correctness based on the comparison result
+- Return correctness status, score, and feedback indicators to the application
+- Support guided and encouraging feedback for the child
 
 ### Future AI Feature
 - ⚠ Audio AI companion (voice-based assistant)
@@ -141,12 +144,15 @@ These limitations highlight the need for an intelligent, interactive, and adapti
   - If failure continues: provide a simpler version of the task
 
 ### Speaking Interaction Flow
-- App presents letter/word using text-to-speech  
-- Child listens and repeats  
-- AI transcribes the spoken input  
-- System evaluates pronunciation accuracy  
-- App provides real-time, guided, and encouraging feedback  
-- Score is recorded and used for progress tracking  
+- App presents the target letter, word, or sentence
+- The expected answer is stored as predefined ground truth
+- Child listens and repeats the target content
+- The fine-tuned Arabic speech model processes the child’s voice input
+- The model generates a transcription of the spoken input
+- The system compares the generated transcription with the predefined ground truth
+- Correctness score and pronunciation result are generated
+- App provides real-time, guided, and encouraging feedback
+- Score is recorded and used for progress tracking
 
 ---
 
@@ -162,8 +168,9 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 - ⚠ Website version – future enhancement
 
 ### AI Deployment Strategy
-- Mainly internally hosted AI models
-- AI services may run on controlled internal servers
+- The project will use a fine-tuned Arabic speech model adapted from a Quranic speech/recitation model to Modern Standard Arabic
+- The model will run as part of a separate AI service layer responsible for inference, transcription, and correctness evaluation
+- Depending on available infrastructure, the AI service may be hosted internally or deployed through a controlled server environment
 
 ### System Architecture
 
@@ -178,7 +185,7 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 
 #### 3. Separate AI Service Layer
 - Chosen as a modular architecture decision
-- Handles pronunciation evaluation
+- Handles audio preprocessing, fine-tuned model inference, speech transcription, ground truth comparison, pronunciation correctness evaluation, scoring, and feedback result generation
 <!-- - Generates AI-based scoring and feedback -->
 - Supports future AI extensions without tightly coupling them to the main backend
 <!-- - Matches the project well because AI models may be hosted internally on university infrastructure -->
@@ -210,7 +217,7 @@ These limitations highlight the need for an intelligent, interactive, and adapti
   - User onboarding for parent/guardian and child profile creation
   - Multi-level Arabic learning flow with short lessons
   - Visual + audio learning activities
-  - Speech recognition for pronunciation evaluation
+  - Fine-tuned Arabic speech model for transcription and pronunciation correctness evaluation
   - Guided and encouraging feedback
   - Gamification through stars/badges and level unlocks
   - Basic security and privacy protections for user data
@@ -233,9 +240,10 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 - Progress and scores are stored and retrieved without data loss
 
 ### 2. AI Performance Success
-- Speech recognition correctly transcribes child input in ≥ 80% of test cases
-- System accurately classifies pronunciation (correct/incorrect) in ≥ 80% of cases
-- Real-time feedback is delivered consistently within defined response time
+- The fine-tuned Arabic speech model correctly transcribes child input in ≥ 80% of test cases
+- The system correctly compares the generated transcription with the predefined ground truth in ≥ 90% of valid test cases
+- The system accurately classifies pronunciation as correct/incorrect in ≥ 80% of test cases
+- Real-time feedback is delivered within the target response time of ≤ 2 seconds on average
 
 ### 3. User Experience Success
 - Child can complete a lesson without external help in ≥ 80% of test sessions
@@ -268,7 +276,7 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 - Mobile platform development constraints (performance, device compatibility)
 
 ### Assumptions
-- Selected AI models provide acceptable baseline accuracy
+- The selected Quranic Arabic speech model can be fine-tuned effectively on Modern Standard Arabic content and can provide acceptable transcription and correctness evaluation accuracy after adaptation
 - Users (children) will have basic guidance from a guardian during onboarding
 - Internet connectivity is available for accessing backend and AI services
 
@@ -279,15 +287,15 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 - Define overall system architecture (mobile, backend, AI services, database, security)
 - Design backend structure, APIs, and data flow
 - Lead implementation of critical backend components
-- Own AI integration strategy (how speech recognition services connect to backend)
+- Own AI integration strategy, including how the fine-tuned speech model connects to the backend and supports scoring and feedback
 - Review code across all modules to ensure consistency and quality
 - Coordinate between team members and manage technical decisions
 - Ensure alignment between product requirements and technical implementation
 
 ### Speech Processing & AI Integration Engineer
-- Integrate speech recognition models/APIs for Arabic pronunciation
+- Adapt, fine-tune, train, integrate, and test the selected Quranic Arabic speech model for Modern Standard Arabic transcription and pronunciation correctness evaluation
 - Implement audio input/output pipeline (recording, preprocessing, playback)
-- Develop pronunciation evaluation logic (correct/incorrect + error detection)
+- Develop the ground truth comparison logic used for correctness evaluation
 - Tune scoring thresholds and feedback behavior
 - Collaborate with backend to expose speech evaluation results via APIs
 
@@ -319,11 +327,12 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 ## 15. Risks
 
 ### 1. AI Accuracy Risk
-- Speech recognition may not perform well for all users
+- The fine-tuned model may face accuracy limitations when moving from Quranic recitation-style speech to children’s Modern Standard Arabic pronunciation, especially due to age, accent, background noise, unclear speech, or limited training data
 - Mitigation:
-  - Use well-established models/APIs
-  - Limit scope to basic letters and simple cases
-  - Tune thresholds and feedback logic
+  - Use a well-established Quranic Arabic speech model as the base model
+  - Fine-tune and train the model on Modern Standard Arabic content aligned with the project scope
+  - Limit MVP scope to basic letters, words, and simple sentences
+  - Tune thresholds, ground truth comparison logic, and feedback behavior
 
 ### 2. Integration Complexity
 - Difficulty integrating mobile app, backend, and AI services
@@ -354,10 +363,11 @@ These limitations highlight the need for an intelligent, interactive, and adapti
   - Follow basic data protection practices
 
 ### 6. Dependency on External Tools
-- Risk related to availability or limitations of AI models/APIs
+- Risk related to availability, training limitations, or deployment constraints of the selected speech model
 - Mitigation:
-  - Keep fallback options (alternative APIs or models)
-  - Consider internal hosting where possible
+  - Keep fallback options (alternative models/APIs)
+  - Consider internal hosting or controlled server deployment where possible
+  - Maintain a modular AI service layer so the model can be replaced or improved without redesigning the full system
 
 ---
 
@@ -367,18 +377,18 @@ These limitations highlight the need for an intelligent, interactive, and adapti
 - Fully functional mobile application (MVP)
 - Backend system with APIs for user management, lessons, and progress tracking
 - Integrated AI services for:
-  - Speech recognition and pronunciation evaluation
+  - Fine-tuned Arabic speech transcription and pronunciation correctness evaluation
 - Database containing user data, progress, and learning content
 
 ### 2. Documentation Deliverables
 - Project documentation (this document)
 - System architecture diagram
 - API documentation (endpoints, request/response formats)
-- AI integration documentation (models used, how they are connected)
+- AI integration documentation covering the selected existing model, modifications/adaptation performed, input/output flow, transcription behavior, correctness evaluation method, ground truth comparison, scoring logic, and integration with backend APIs
 
 ### 3. Testing & Evaluation Deliverables
 - Test cases and results for core features
-- AI performance evaluation results (speech recognition)
+- AI performance evaluation results for transcription accuracy, ground truth comparison, and pronunciation correctness classification
 - User testing report (feedback, observations, improvements)
 
 ### 4. Security Deliverables
