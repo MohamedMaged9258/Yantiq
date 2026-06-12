@@ -83,7 +83,7 @@ python3.14 -m uv run quran-muaalem-msa-ui    # :7870
 
 Innovative architecture: Multi-level CTC, where each level trains on a specific aspect.
 
-![multi-lvel-ctc](./assets/figures/mutli-level-ctc.png)
+![multi-lvel-ctc](assetsigures/mutli-level-ctc.png)
 
 ## Development Steps
 
@@ -168,6 +168,7 @@ from quran_muaalem import Muaalem
 # Setup logging to see informative messages
 logging.basicConfig(level=logging.INFO)
 
+
 def analyze_recitation(audio_path):
     """
     Analyze a Quranic recitation audio file using the Muaalem model.
@@ -185,11 +186,11 @@ def analyze_recitation(audio_path):
 
     # Step 2: Configure the recitation style (Moshaf attributes)
     moshaf = MoshafAttributes(
-        rewaya="hafs",        # Recitation style (Hafs is most common)
+        rewaya="hafs",  # Recitation style (Hafs is most common)
         madd_monfasel_len=2,  # Length of separated elongation
         madd_mottasel_len=4,  # Length of connected elongation
-        madd_mottasel_waqf=4, # Length of connected elongation when stopping
-        madd_aared_len=2,     # Length of necessary elongation
+        madd_mottasel_waqf=4,  # Length of connected elongation when stopping
+        madd_aared_len=2,  # Length of necessary elongation
     )
     # see: https://github.com/obadx/prepare-quran-dataset?tab=readme-ov-file#moshaf-attributes-docs
 
@@ -206,8 +207,8 @@ def analyze_recitation(audio_path):
     # Step 6: Process the audio with the model
     # The model analyzes the phonetic properties of the recitation
     outs = muaalem(
-        [wave],           # Audio data
-        [phonetizer_out],          # Phonetic reference
+        [wave],  # Audio data
+        [phonetizer_out],  # Phonetic reference
         sampling_rate=sampling_rate
     )
 
@@ -232,7 +233,7 @@ def analyze_recitation(audio_path):
 
 if __name__ == "__main__":
     # Replace with the path to your audio file
-    audio_path = "./assets/test.wav"
+    audio_path = "assets/test.wav"
 
     try:
         analyze_recitation(audio_path)

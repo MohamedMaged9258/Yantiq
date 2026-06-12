@@ -81,7 +81,7 @@ python3.14 -m uv run quran-muaalem-msa-ui    # :7870
 ## المعمارية
 معمارية مبتكرة: CTC متعدد المستويات. حيث كل مستوي يتدرب على وجه معين
 
-![multi-lvel-ctc](./assets/figures/mutli-level-ctc.png)
+![multi-lvel-ctc](assetsigures/mutli-level-ctc.png)
 
 ## الخطوات المختصرة للتطوير
 
@@ -166,6 +166,7 @@ from quran_muaalem import Muaalem
 # Setup logging to see informative messages
 logging.basicConfig(level=logging.INFO)
 
+
 def analyze_recitation(audio_path):
     """
     Analyze a Quranic recitation audio file using the Muaalem model.
@@ -176,43 +177,43 @@ def analyze_recitation(audio_path):
     # Configuration
     sampling_rate = 16000  # Must be 16000 Hz
     device = "cuda" if torch.cuda.is_available() else "cpu"  # Use GPU if available
-    
+
     # Step 1: Prepare the Quranic reference text
     # Get the Uthmani script for a specific verse (Aya 8, Surah 75 in this example)
     uthmani_ref = Aya(8, 75).get_by_imlaey_words(17, 9).uthmani
-    
+
     # Step 2: Configure the recitation style (Moshaf attributes)
     moshaf = MoshafAttributes(
-        rewaya="hafs",        # Recitation style (Hafs is most common)
+        rewaya="hafs",  # Recitation style (Hafs is most common)
         madd_monfasel_len=2,  # Length of separated elongation
         madd_mottasel_len=4,  # Length of connected elongation
-        madd_mottasel_waqf=4, # Length of connected elongation when stopping
-        madd_aared_len=2,     # Length of necessary elongation
+        madd_mottasel_waqf=4,  # Length of connected elongation when stopping
+        madd_aared_len=2,  # Length of necessary elongation
     )
     # see: https://github.com/obadx/prepare-quran-dataset?tab=readme-ov-file#moshaf-attributes-docs
-    
+
     # Step 3: Convert text to phonetic representation
     # see docs for phnetizer: https://github.com/obadx/quran-transcript
     phonetizer_out = quran_phonetizer(uthmani_ref, moshaf, remove_spaces=True)
-    
+
     # Step 4: Initialize the Muaalem model
     muaalem = Muaalem(device=device)
-    
+
     # Step 5: Load and prepare the audio
     wave, _ = load(audio_path, sr=sampling_rate, mono=True)
-    
+
     # Step 6: Process the audio with the model
     # The model analyzes the phonetic properties of the recitation
     outs = muaalem(
-        [wave],           # Audio data
-        [phonetizer_out],          # Phonetic reference
+        [wave],  # Audio data
+        [phonetizer_out],  # Phonetic reference
         sampling_rate=sampling_rate
     )
-    
+
     # Step 7: Display the results
     for out in outs:
         print("Predicted Phonemes:", out.phonemes.text)
-        
+
         # Display detailed phonetic features for each phoneme
         for sifa in out.sifat:
             print(json.dumps(asdict(sifa), indent=2, ensure_ascii=False))
@@ -230,8 +231,8 @@ def analyze_recitation(audio_path):
 
 if __name__ == "__main__":
     # Replace with the path to your audio file
-    audio_path = "./assets/test.wav"
-    
+    audio_path = "assets/test.wav"
+
     try:
         analyze_recitation(audio_path)
     except Exception as e:

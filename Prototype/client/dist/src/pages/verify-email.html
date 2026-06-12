@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yantiq — Verify Email</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0A5744">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <script type="module" crossorigin src="/assets/verifyEmail-BL5mRWd8.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/animations-CD3NMRZt.js">
+  <link rel="modulepreload" crossorigin href="/assets/api-CXCcurua.js">
+  <link rel="stylesheet" crossorigin href="/assets/main-cFoTJlwm.css">
+</head>
+<body class="phone-wrap no-scrollbar overflow-y-auto"
+      style="background:linear-gradient(160deg,#0A5744 0%,#0D7055 60%,#14A878 100%)">
+<div class="absolute inset-0 bg-geo-pattern pointer-events-none"></div>
+
+<div id="verify-confetti" class="fixed inset-0 pointer-events-none z-[250] overflow-hidden"></div>
+
+<div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 text-center">
+
+  <!-- Loading state -->
+  <div id="state-loading" class="flex flex-col items-center gap-4">
+    <div class="w-20 h-20 rounded-full border-4 border-white/20 border-t-white animate-spin"></div>
+    <p class="font-display text-white text-lg">Verifying your email...</p>
+  </div>
+
+  <!-- Success state -->
+  <div id="state-success" class="hidden">
+    <div class="text-7xl mb-6" style="animation:celebrate 0.6s ease both">✅</div>
+    <h1 class="font-display text-white text-3xl mb-3">Email Verified!</h1>
+    <p class="text-white/70 font-semibold text-base mb-8 leading-relaxed">
+      Your email has been confirmed.<br>Welcome to Yantiq!
+    </p>
+    <div class="bg-white/10 border border-white/20 rounded-4xl p-5 mb-8 text-left">
+      <p class="font-arabic text-white text-4xl rtl-text text-center mb-2">أهلاً وسهلاً!</p>
+      <p class="text-white/70 text-center font-semibold text-sm">Welcome! Let's start Layla's Arabic journey.</p>
+    </div>
+    <button onclick="window.location.href='./login.html'"
+            class="btn font-display text-xl w-full py-5 rounded-4xl mb-3"
+            style="background:white;color:#0A5744;box-shadow:0 8px 32px rgba(0,0,0,0.15)">
+      Start Learning! 🚀
+    </button>
+  </div>
+
+  <!-- Already verified state -->
+  <div id="state-already" class="hidden">
+    <div class="text-7xl mb-6" style="animation:float 3s ease-in-out infinite">🎓</div>
+    <h1 class="font-display text-white text-2xl mb-3">Already Verified</h1>
+    <p class="text-white/70 font-semibold text-sm mb-8">Your email is already confirmed. You're all set!</p>
+    <button onclick="window.location.href='./app.html'"
+            class="btn font-display text-xl w-full py-5 rounded-4xl"
+            style="background:white;color:#0A5744">
+      Open App →
+    </button>
+  </div>
+
+  <!-- Error state -->
+  <div id="state-error" class="hidden">
+    <div class="text-7xl mb-6" style="animation:shake 0.5s ease both">❌</div>
+    <h1 class="font-display text-white text-2xl mb-3">Link Expired</h1>
+    <p class="text-white/70 font-semibold text-sm mb-8 leading-relaxed">
+      This verification link has expired or is invalid.<br>
+      Request a new one from the app.
+    </p>
+    <button onclick="resend()"
+            class="btn font-display text-lg w-full py-4 rounded-4xl mb-3"
+            style="background:white;color:#0A5744">
+      Send New Link
+    </button>
+    <button onclick="window.location.href='./login.html'"
+            class="btn btn-ghost text-white/80 w-full">
+      Back to Sign In
+    </button>
+  </div>
+</div>
+
+</body>
+</html>

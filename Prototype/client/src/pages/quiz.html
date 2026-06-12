@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yantiq — Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0A5744">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="bg-white phone-wrap no-scrollbar overflow-y-auto">
+
+<header class="islamic-header safe-top pb-5 px-4 relative overflow-hidden"
+  style="background: linear-gradient(160deg, #042F24 0%, #0A5744 50%, #0D7055 100%); box-shadow: 0 8px 32px rgba(4,47,36,0.4);">
+  <div class="particle text-white/12 text-2xl" style="--duration:5s;--delay:0s; top:25%;left:8%;">📖</div>
+  <div class="particle text-white/10 text-xl" style="--duration:7s;--delay:1s; top:55%;left:82%;">🌟</div>
+  <div class="particle text-white/10 text-2xl" style="--duration:8s;--delay:2s; top:40%;left:50%;">🌙</div>
+  <div class="flex items-center justify-between mb-4">
+    <button onclick="window.location.href='./pronunciation.html'"
+            class="w-10 h-10 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-lg">←</button>
+    <div class="text-center">
+      <span class="bg-white/20 text-white text-xs font-black px-3 py-1 rounded-full border border-white/20">
+          +25 🌟 BONUS
+        </span>
+      <p class="font-display text-white text-lg mt-0.5">Match the Sounds!</p>
+    </div>
+    <div class="glass rounded-2xl px-3 py-1.5"><span class="font-display text-white text-sm">+20 🌟</span></div>
+  </div>
+  <!-- Progress bar -->
+  <div class="mb-2">
+    <div class="flex justify-between text-white/60 text-xs font-bold mb-1.5">
+      <span id="q-counter">Question 1 of 3</span>
+      <span id="q-score-top">Score: 0</span>
+    </div>
+    <div class="h-3 bg-white/15 rounded-full overflow-hidden">
+      <div id="quiz-prog" class="h-full bg-gold-light rounded-full transition-all duration-500" style="width:33%"></div>
+    </div>
+  </div>
+</header>
+
+<main class="px-4 pt-6 pb-28">
+  <!-- Lives + Score -->
+  <div class="flex items-center justify-between bg-cream rounded-3xl px-4 py-3 mb-5">
+    <div class="flex items-center gap-2">
+      <span class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Lives</span>
+      <div id="hearts" class="flex gap-1 text-lg">❤️❤️❤️</div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Score</span>
+      <span id="score-display" class="font-display text-primary text-lg">0 / 3</span>
+    </div>
+  </div>
+
+  <!-- Avatar coach -->
+  <div class="flex flex-col items-center mb-4">
+    <div id="coach-avatar" class="text-5xl" style="animation:float 2.5s ease-in-out infinite">🦅</div>
+    <div id="coach-speech" class="mt-2 bg-primary-50 border border-primary/10 rounded-2xl px-4 py-2 max-w-xs text-center">
+      <p class="font-bold text-primary text-sm" id="coach-text">Look at the letter and choose the right sound!</p>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div id="q0" class="animate-slide-up">
+    <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest text-center mb-2">Question 1</p>
+    <p class="font-display text-gray-800 text-xl text-center mb-4">What sound does this letter make?</p>
+    <div class="w-28 h-28 rounded-4xl bg-primary-50 border-2 border-primary/10 flex items-center justify-center mx-auto mb-6"
+         style="animation:float 3s ease-in-out infinite; box-shadow:0 8px 32px rgba(10,87,68,0.12)">
+      <span class="font-arabic text-primary rtl-text" style="font-size:80px;line-height:1">خَ</span>
+    </div>
+    <div class="grid grid-cols-2 gap-3" id="q0-opts">
+      <div class="quiz-opt" data-correct="false" onclick="answer(this,false,0)">
+        <span class="font-arabic text-gray-800 rtl-text" style="font-size:40px;line-height:1.2">دَ</span>
+        <span class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Da</span>
+      </div>
+      <div class="quiz-opt" data-correct="true" onclick="answer(this,true,0)">
+        <span class="font-arabic text-gray-800 rtl-text" style="font-size:40px;line-height:1.2">خَ</span>
+        <span class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Kha</span>
+      </div>
+      <div class="quiz-opt" data-correct="false" onclick="answer(this,false,0)">
+        <span class="font-arabic text-gray-800 rtl-text" style="font-size:40px;line-height:1.2">حَ</span>
+        <span class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Ha</span>
+      </div>
+      <div class="quiz-opt" data-correct="false" onclick="answer(this,false,0)">
+        <span class="font-arabic text-gray-800 rtl-text" style="font-size:40px;line-height:1.2">جَ</span>
+        <span class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Jim</span>
+      </div>
+    </div>
+    <div id="fb0" class="hidden mt-4 p-4 rounded-3xl flex items-start gap-3"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div id="q1" class="hidden animate-slide-up">
+    <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest text-center mb-2">Question 2</p>
+    <p class="font-display text-gray-800 text-xl text-center mb-4">Which letter has ONE dot above?</p>
+    <div class="grid grid-cols-2 gap-3" id="q1-opts">
+      <div class="quiz-opt" data-correct="false" onclick="answer(this,false,1)">
+        <span class="font-arabic text-gray-800 rtl-text" style="font-size:44px;line-height:1.2">ث</span>
+        <span class="text-xs font-extrabold text-gray-400 uppercase">Tha (3 dots)</span>
+      </div>
+      <div class="quiz-opt" data-correct="true" onclick="answer(this,true,1)">
+        <span class="font-arabic text-gray-800 rtl-text" style="font-size:44px;line-height:1.2">ذ</span>
+        <span class="text-xs font-extrabold text-gray-400 uppercase">Dhal (1 dot)</span>
+      </div>
+      <div class="quiz-opt" data-correct="false" onclick="answer(this,false,1)">
+        <span class="font-arabic text-gray-800 rtl-text" style="font-size:44px;line-height:1.2">ب</span>
+        <span class="text-xs font-extrabold text-gray-400 uppercase">Ba (dot below)</span>
+      </div>
+      <div class="quiz-opt" data-correct="false" onclick="answer(this,false,1)">
+        <span class="font-arabic text-gray-800 rtl-text" style="font-size:44px;line-height:1.2">خ</span>
+        <span class="text-xs font-extrabold text-gray-400 uppercase">Kha (1 above)</span>
+      </div>
+    </div>
+    <div id="fb1" class="hidden mt-4 p-4 rounded-3xl flex items-start gap-3"></div>
+  </div>
+
+  <!-- Q3 (Tashkeel) -->
+  <div id="q2" class="hidden animate-slide-up">
+    <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest text-center mb-2">Question 3</p>
+    <p class="font-display text-gray-800 text-xl text-center mb-2">What does the Kasra (ِ) do?</p>
+    <div class="w-28 h-28 rounded-4xl bg-primary-50 border-2 border-primary/10 flex items-center justify-center mx-auto mb-4"
+         style="animation:float 3s ease-in-out infinite">
+      <span class="font-arabic text-primary rtl-text" style="font-size:80px;line-height:1">بِ</span>
+    </div>
+    <div class="flex flex-col gap-3" id="q2-opts">
+      <div class="quiz-opt flex-row gap-4 text-left" data-correct="false" onclick="answer(this,false,2)"
+           style="flex-direction:row!important;text-align:left!important;align-items:center">
+        <span class="font-arabic text-primary rtl-text text-3xl flex-shrink-0">بَ</span>
+        <span class="font-bold text-gray-700 text-sm">Makes the "a" sound — like in "bad"</span>
+      </div>
+      <div class="quiz-opt flex-row gap-4 text-left" data-correct="true" onclick="answer(this,true,2)"
+           style="flex-direction:row!important;text-align:left!important;align-items:center">
+        <span class="font-arabic text-primary rtl-text text-3xl flex-shrink-0">بِ</span>
+        <span class="font-bold text-gray-700 text-sm">Makes the "i" sound — like in "bit"</span>
+      </div>
+      <div class="quiz-opt flex-row gap-4 text-left" data-correct="false" onclick="answer(this,false,2)"
+           style="flex-direction:row!important;text-align:left!important;align-items:center">
+        <span class="font-arabic text-primary rtl-text text-3xl flex-shrink-0">بُ</span>
+        <span class="font-bold text-gray-700 text-sm">Makes the "u" sound — like in "put"</span>
+      </div>
+    </div>
+    <div id="fb2" class="hidden mt-4 p-4 rounded-3xl flex items-start gap-3"></div>
+  </div>
+
+  <!-- Quiz Complete -->
+  <div id="q-done" class="hidden text-center animate-scale-in pt-4">
+    <div id="done-emoji" class="text-7xl mb-4" style="animation:celebrate 0.6s ease both">🌟</div>
+    <h2 id="done-title" class="font-display text-gray-900 text-3xl mb-2">Quiz Complete!</h2>
+    <p id="done-score" class="text-gray-500 font-bold mb-6">Score: 3/3 — Perfect! 🎉</p>
+    <button onclick="window.location.href='./result.html'"
+            class="btn btn-primary btn-lg w-full mb-3 font-display text-xl">See My Stars! 🌟</button>
+    <button onclick="resetQuiz()" class="btn btn-outline w-full">Try Again 🔄</button>
+  </div>
+</main>
+
+<script type="module">
+import { correctPop, wrongShake, confettiCorrect, flashCorrect, flashWrong,
+         spawnEmojis, showXPGain, toast, perfectScore } from '../js/utils/animations.js';
+import { progressAPI } from '../js/utils/api.js';
+import { getState } from '../js/utils/storage.js';
+
+let qIdx = 0, correct = 0, lives = 3;
+const total = 3;
+const hearts = ['❤️❤️❤️', '❤️❤️🖤', '❤️🖤🖤', '🖤🖤🖤'];
+const explanations = [
+  { ok:'✅ خَ (Kha) is the deep throat sound — like "loch" in Scottish!', no:'Not quite! خَ (Kha) is the right answer — it has a dot above حَ.' },
+  { ok:'✅ ذَ (Dhal) has exactly one dot above it. Great eye! 👀', no:'Look again! ذَ is the one with a single dot above.' },
+  { ok:'✅ Kasra (ِ) always makes the short "i" sound. You\'re brilliant! 🧠', no:'The Kasra mark (ِ) below the letter makes an "i" sound, like in "bit".' },
+];
+const coaches = {
+  correct: ['Amazing! 🌟', 'You got it! 🌟', 'Brilliant! 🎉', 'Excellent! 💫', 'Keep going! 🚀'],
+  wrong:   ['Almost! Try once more 💪', 'You can do it! 🔥', 'Nearly there! 🌱'],
+};
+function pick(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+
+window.answer = (el, isCorrect, qN) => {
+  const opts = el.closest('[id^="q"]').querySelectorAll('.quiz-opt');
+  opts.forEach(o => { o.onclick = null; o.classList.add('dim'); });
+
+  const fb = document.getElementById('fb'+qN);
+  const coach = document.getElementById('coach-avatar');
+  const coachTxt = document.getElementById('coach-text');
+
+  if (isCorrect) {
+    el.classList.remove('dim');
+    el.classList.add('correct');
+    correct++;
+    lives = Math.min(lives, 3);
+    fb.className = 'mt-4 p-4 rounded-3xl flex items-start gap-3 bg-primary-50 border-2 border-primary/15';
+    fb.innerHTML = `<span class="text-xl flex-shrink-0">✅</span><p class="font-bold text-primary-700 text-sm leading-relaxed">${explanations[qN].ok}</p>`;
+    fb.classList.remove('hidden');
+    correctPop(el);
+    flashCorrect();
+    confettiCorrect(el);
+    showXPGain(5, el);
+    spawnEmojis(['🌟','✨','🌟'], el, 4);
+    coach.textContent = '🦅';
+    coach.style.animation = 'celebrate 0.6s ease, float 2s 0.6s ease-in-out infinite';
+    coachTxt.textContent = pick(coaches.correct);
+  } else {
+    el.classList.remove('dim');
+    el.classList.add('wrong');
+    lives--;
+    if (lives < 0) lives = 0;
+    document.getElementById('hearts').textContent = hearts[Math.min(3-lives,3)];
+    fb.className = 'mt-4 p-4 rounded-3xl flex items-start gap-3 bg-coral-50 border-2 border-coral/15';
+    fb.innerHTML = `<span class="text-xl flex-shrink-0">💪</span><p class="font-bold text-coral-700 text-sm leading-relaxed">${explanations[qN].no}</p>`;
+    fb.classList.remove('hidden');
+    wrongShake(el);
+    flashWrong();
+    coach.textContent = '🤗';
+    coach.style.animation = 'shake 0.5s ease';
+    coachTxt.textContent = pick(coaches.wrong);
+    setTimeout(() => { coach.style.animation = 'float 2.5s ease-in-out infinite'; }, 700);
+  }
+  document.getElementById('score-display').textContent = `${correct} / ${total}`;
+
+  setTimeout(() => {
+    document.getElementById('q'+qN).style.display = 'none';
+    qIdx = qN + 1;
+    if (qIdx < total) {
+      document.getElementById('q'+qIdx).classList.remove('hidden');
+      document.getElementById('q'+qIdx).style.display = '';
+      document.getElementById('q-counter').textContent = `Question ${qIdx+1} of ${total}`;
+      document.getElementById('q-score-top').textContent = `Score: ${correct}`;
+      document.getElementById('quiz-prog').style.width = `${((qIdx+1)/total)*100}%`;
+      coachTxt.textContent = 'Look carefully and choose wisely! 🌟';
+    } else {
+      document.getElementById('q-done').classList.remove('hidden');
+      document.getElementById('quiz-prog').style.width = '100%';
+
+      // Build session payload and store for result page
+      const accuracyPct = Math.round((correct / total) * 100);
+      const starsEarned = correct === total ? 3 : correct >= 2 ? 2 : 1;
+      const params      = new URLSearchParams(window.location.search);
+      const lessonId    = params.get('lesson') || '';
+      const sessionPayload = { lessonId, score: accuracyPct, accuracyPct, starsEarned, attempts: 1, completed: true };
+      sessionStorage.setItem('last_session', JSON.stringify(sessionPayload));
+
+      // Log to server
+      const child = getState('activeChild');
+      if (child?.id && lessonId) {
+        progressAPI.logSession(child.id, sessionPayload).catch(console.error);
+      }
+
+      if (correct === total) {
+        document.getElementById('done-emoji').textContent = '👑';
+        document.getElementById('done-title').textContent = 'PERFECT! 🎉';
+        document.getElementById('done-score').textContent = `3/3 — You're a superstar! 🌟🌟🌟`;
+        perfectScore();
+      } else if (correct >= 2) {
+        document.getElementById('done-emoji').textContent = '🌟';
+        document.getElementById('done-score').textContent = `${correct}/3 — Great job! Keep practising!`;
+        confettiCorrect(document.getElementById('q-done'));
+      } else {
+        document.getElementById('done-emoji').textContent = '💪';
+        document.getElementById('done-score').textContent = `${correct}/3 — Review the lesson and try again!`;
+      }
+    }
+  }, 1600);
+};
+
+window.resetQuiz = () => {
+  qIdx = 0; correct = 0; lives = 3;
+  document.getElementById('hearts').textContent = '❤️❤️❤️';
+  document.getElementById('score-display').textContent = '0 / 3';
+  document.getElementById('q-score-top').textContent = 'Score: 0';
+  document.getElementById('q-counter').textContent = 'Question 1 of 3';
+  document.getElementById('quiz-prog').style.width = '33%';
+  for (let i=0;i<total;i++) {
+    const q = document.getElementById('q'+i);
+    q.classList.remove('hidden'); q.style.display = i===0?'':'none';
+    q.querySelectorAll('.quiz-opt').forEach(o => { o.className='quiz-opt'; o.onclick=window[`answer`]; });
+    document.getElementById('fb'+i).classList.add('hidden');
+  }
+  document.getElementById('q-done').classList.add('hidden');
+  document.getElementById('coach-text').textContent = 'Look at the letter and choose the right sound!';
+};
+</script>
+</body>
+</html>

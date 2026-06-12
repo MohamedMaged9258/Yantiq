@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yantiq — Pronunciation</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0A5744">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="bg-white phone-wrap no-scrollbar overflow-y-auto">
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="islamic-header safe-top pb-5 px-4 relative overflow-hidden"
+  style="background: linear-gradient(160deg, #042F24 0%, #0A5744 50%, #0D7055 100%); box-shadow: 0 8px 32px rgba(4,47,36,0.4);">
+  <div class="particle text-white/12 text-2xl" style="--duration:5s;--delay:0s; top:30%;left:12%;">🎵</div>
+  <div class="particle text-white/10 text-xl" style="--duration:7s;--delay:2s; top:55%;left:80%;">🌙</div>
+  <div class="flex items-center justify-between mb-4">
+    <button onclick="window.location.href='./lesson.html'"
+            class="w-10 h-10 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-lg hover:bg-white/25 transition-colors">
+      ←
+    </button>
+    <div class="text-center">
+      <p class="text-white/60 text-xs font-bold uppercase tracking-wider">Stage 3 · Lesson 2</p>
+      <p class="font-display text-white text-lg mt-0.5">Letter <span class="font-arabic text-gold-light">بَ</span> (Ba)</p>
+    </div>
+    <div class="glass rounded-2xl px-3 py-1.5">
+      <span class="font-display text-white text-sm">+10 🌟</span>
+    </div>
+  </div>
+  <!-- Step tabs -->
+  <div class="flex gap-1 bg-white/10 rounded-full p-1">
+    <button id="tab1" class="flex-1 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all bg-white text-primary">
+      1 · Listen
+    </button>
+    <button id="tab2" class="flex-1 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all text-white/70 hover:text-white"
+            onclick="setStep(2)">
+      2 · Speak
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════ BODY ══════════════ -->
+<main class="px-4 pt-6 pb-28">
+
+  <!-- ── Big Letter Display ──────────────── -->
+  <div class="text-center mb-6">
+    <div id="letter-box"
+         class="letter-box w-40 h-40 mx-auto mb-4 relative"
+         style="animation:float 3s ease-in-out infinite">
+      <!-- Glow ring -->
+      <div class="absolute inset-0 rounded-4xl border-2 border-primary/20 animate-ping-slow"></div>
+      <span class="letter-main text-9xl" style="font-size:90px; direction:rtl;">بَ</span>
+    </div>
+    <p class="font-arabic text-primary text-2xl rtl-text">بَاء</p>
+    <p class="font-bold text-gray-400 text-sm mt-1">Ba · The "B" sound · with Fatha (a)</p>
+  </div>
+
+  <!-- ── Tashkeel Row ─────────────────────── -->
+  <p class="text-center text-xs font-extrabold text-gray-400 uppercase tracking-widest mb-3">Three vowel forms of ب</p>
+  <div class="flex gap-3 mb-6" id="tashkeel-row">
+    <div class="tashkeel-card active" onclick="selectTashkeel(this,'بَ','Ba','a')">
+      <span class="font-arabic text-primary text-3xl rtl-text leading-none">بَ</span>
+      <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mt-1">Ba (a)</span>
+    </div>
+    <div class="tashkeel-card" onclick="selectTashkeel(this,'بِ','Bi','i')">
+      <span class="font-arabic text-primary text-3xl rtl-text leading-none">بِ</span>
+      <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mt-1">Bi (i)</span>
+    </div>
+    <div class="tashkeel-card" onclick="selectTashkeel(this,'بُ','Bu','u')">
+      <span class="font-arabic text-primary text-3xl rtl-text leading-none">بُ</span>
+      <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mt-1">Bu (u)</span>
+    </div>
+  </div>
+
+  <!-- ── Listen Button ────────────────────── -->
+  <button id="listen-btn" onclick="simulateListen()"
+          class="flex items-center gap-2 mx-auto mb-5 px-6 py-3 rounded-full
+                 bg-gold-50 text-gold border-2 border-gold/20
+                 font-display text-base hover:bg-gold hover:text-white hover:border-gold
+                 transition-all duration-200 active:scale-95">
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    <span id="listen-txt">Listen to the sound</span>
+  </button>
+
+  <!-- ── Waveform ──────────────────────────── -->
+  <div class="flex items-center justify-center gap-1 h-14 mb-5" id="waveform"
+       style="box-shadow: 0 0 40px rgba(10,87,68,0.3), inset 0 0 20px rgba(10,87,68,0.1);">
+    <div class="wave-bar h-2 bg-primary-100 rounded-full w-1" style="--delay:0s"></div>
+    <div class="wave-bar h-3 bg-primary-100 rounded-full w-1" style="--delay:0.08s"></div>
+    <div class="wave-bar h-4 bg-primary-100 rounded-full w-1" style="--delay:0.16s"></div>
+    <div class="wave-bar h-2 bg-primary-100 rounded-full w-1" style="--delay:0.05s"></div>
+    <div class="wave-bar h-6 bg-primary-100 rounded-full w-1" style="--delay:0.12s"></div>
+    <div class="wave-bar h-3 bg-primary-100 rounded-full w-1" style="--delay:0.20s"></div>
+    <div class="wave-bar h-8 bg-primary-100 rounded-full w-1" style="--delay:0.08s"></div>
+    <div class="wave-bar h-4 bg-primary-100 rounded-full w-1" style="--delay:0.14s"></div>
+    <div class="wave-bar h-10 bg-primary-100 rounded-full w-1" style="--delay:0.02s"></div>
+    <div class="wave-bar h-5 bg-primary-100 rounded-full w-1" style="--delay:0.18s"></div>
+    <div class="wave-bar h-8 bg-primary-100 rounded-full w-1" style="--delay:0.06s"></div>
+    <div class="wave-bar h-3 bg-primary-100 rounded-full w-1" style="--delay:0.22s"></div>
+    <div class="wave-bar h-6 bg-primary-100 rounded-full w-1" style="--delay:0.10s"></div>
+    <div class="wave-bar h-2 bg-primary-100 rounded-full w-1" style="--delay:0.15s"></div>
+    <div class="wave-bar h-4 bg-primary-100 rounded-full w-1" style="--delay:0.07s"></div>
+  </div>
+
+  <!-- ── Mic Area ──────────────────────────── -->
+  <div class="flex flex-col items-center gap-3 mb-6">
+    <!-- Avatar reaction above mic -->
+    <div id="avatar-reaction" class="text-4xl relative" style="animation:float 2s ease-in-out infinite">
+      <div class="absolute top-4 right-4 text-2xl opacity-20 pointer-events-none" style="animation:float 4s ease-in-out infinite">🎵</div>
+      <div class="absolute top-4 left-4 text-2xl opacity-20 pointer-events-none" style="animation:float 5s ease-in-out 1s infinite">🎶</div>
+      🦅
+    </div>
+    <button class="mic-btn" id="mic-btn" onclick="startRecording()">
+      <div class="mic-ring"></div>
+      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/>
+        <line x1="8" y1="23" x2="16" y2="23"/>
+      </svg>
+    </button>
+    <p class="font-bold text-gray-400 text-sm" id="mic-label">Hold to speak</p>
+    <!-- Attempt counter -->
+    <div class="flex gap-1.5 items-center">
+      <span class="text-xs font-bold text-gray-300 uppercase tracking-wider">Attempts:</span>
+      <div id="heart-track" class="flex gap-1 text-base">❤️❤️❤️</div>
+    </div>
+  </div>
+
+  <!-- ── AI Thinking indicator ─────────────── -->
+  <div id="ai-thinking" class="hidden mb-4">
+    <div class="flex items-center gap-3 p-4 bg-primary-50 rounded-3xl border border-primary/10">
+      <div class="flex gap-1">
+        <div class="w-2 h-2 rounded-full bg-primary" style="animation:wave 1s ease-in-out 0s infinite"></div>
+        <div class="w-2 h-2 rounded-full bg-primary" style="animation:wave 1s ease-in-out 0.2s infinite"></div>
+        <div class="w-2 h-2 rounded-full bg-primary" style="animation:wave 1s ease-in-out 0.4s infinite"></div>
+      </div>
+      <p class="font-bold text-primary-700 text-sm">AI is analysing your pronunciation...</p>
+      <span class="ml-auto text-lg animate-sparkle">✨</span>
+    </div>
+  </div>
+
+  <!-- ── Feedback Box ──────────────────────── -->
+  <div id="feedback-correct" class="hidden mb-4">
+    <div class="flex items-start gap-3 p-4 bg-primary-50 rounded-3xl border-2 border-primary/15">
+      <div class="w-9 h-9 rounded-2xl bg-primary-100 flex items-center justify-center text-lg flex-shrink-0">✅</div>
+      <div>
+        <p class="font-display text-primary text-base mb-1">ممتاز! (Excellent!)</p>
+        <p class="text-gray-600 text-sm leading-relaxed" id="feedback-correct-text">
+          Your "بَ" was crystal clear — lips came together perfectly. Amazing work! 🌟
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="feedback-wrong" class="hidden mb-4">
+    <div class="flex items-start gap-3 p-4 bg-coral-50 rounded-3xl border-2 border-coral/15">
+      <div class="w-9 h-9 rounded-2xl bg-coral-100 flex items-center justify-center text-lg flex-shrink-0">🔄</div>
+      <div>
+        <p class="font-display text-coral text-base mb-1">Almost there! Try again 💪</p>
+        <p class="text-gray-600 text-sm leading-relaxed" id="feedback-wrong-text">
+          The sound was a bit soft. Press your lips together firmly before releasing the breath!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Action buttons ───────────────────── -->
+  <div class="flex gap-3 mt-4">
+    <button onclick="window.location.href='./lesson.html'"
+            class="btn btn-outline flex-1">← Back</button>
+  </div>
+</main>
+
+<script type="module">
+import { correctPop, wrongShake, showXPGain, spawnEmojis, avatarReact,
+         flashCorrect, flashWrong, toast, confettiCorrect } from '../js/utils/animations.js';
+import { startRecording as startRec, stopRecording as stopRec,
+         evaluatePronunciation, handleEvalResult, getIsRecording,
+         updateWaveformDOM, requestMicPermission } from '../js/modules/pronunciation.js';
+import { onLessonComplete } from '../js/modules/rewards.js';
+import { getState } from '../js/utils/storage.js';
+import { levelsAPI, progressAPI } from '../js/utils/api.js';
+
+// ─── State ─────────────────────────────────────────────
+let attempts   = 3;
+let waveAnim   = null;
+let waveBars   = [];
+let currentLesson = null;
+let stream     = null;
+const MAX_ATT  = 3;
+
+// ─── Load lesson from URL or use default ───────────────
+async function loadLesson() {
+  const params   = new URLSearchParams(window.location.search);
+  const stageId  = params.get('stage');
+  const lessonId = params.get('lesson');
+
+  try {
+    if (lessonId) {
+      const res = await levelsAPI.getLesson(lessonId);
+      currentLesson = res.data.data;
+    } else if (stageId) {
+      const res = await levelsAPI.getStageLessons(stageId);
+      const lessons = res.data.data || [];
+      currentLesson = lessons.find(l => l.type === 'PRONUNCIATION') || lessons[0];
+    }
+  } catch { /* use defaults */ }
+
+  if (currentLesson?.letterAr) {
+    document.querySelector('.letter-main').textContent = currentLesson.letterAr;
+    const nameEl = document.querySelector('.letter-name-en');
+    if (nameEl) nameEl.textContent = currentLesson.letterNameEn || '';
+    updateTashkeelCards(currentLesson);
+  }
+}
+
+function updateTashkeelCards(lesson) {
+  if (!lesson?.tashkeelForms?.length) return;
+  const container = document.getElementById('tashkeel-forms');
+  if (!container) return;
+  container.innerHTML = lesson.tashkeelForms.map((f, i) =>
+    `<div class="tashkeel-card ${i===0?'active':''}" onclick="selectTashkeel(this,'${f.form}','${f.sound}','${f.vowel}')">
+      <span class="font-arabic text-primary rtl-text text-3xl leading-tight">${f.form}</span>
+      <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mt-1">${f.label}</span>
+    </div>`
+  ).join('');
+}
+
+// ─── Tashkeel selection ────────────────────────────────
+window.selectTashkeel = (el, ar, en, vowel) => {
+  document.querySelectorAll('.tashkeel-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelector('.letter-main').textContent = ar;
+  // Update listen/speak targets
+  window._targetAr = ar;
+  window._targetEn = en;
+  spawnEmojis(['✨'], el, 2);
+};
+
+// ─── Step tabs ─────────────────────────────────────────
+window.setStep = (n) => {
+  [1,2,3].forEach(i => {
+    const t = document.getElementById('tab'+i);
+    if (!t) return;
+    t.classList.toggle('bg-white', i === n);
+    t.classList.toggle('text-primary', i === n);
+    t.classList.toggle('text-white/70', i !== n);
+  });
+};
+
+// ─── Listen: play audio example ────────────────────────
+window.simulateListen = () => {
+  const btn      = document.getElementById('listen-btn');
+  const txt      = document.getElementById('listen-txt');
+  const bars     = document.querySelectorAll('.wave-bar');
+  const targetAr = window._targetAr || 'ب';
+
+  txt.textContent = 'Playing... 🎵';
+  btn.classList.add('bg-gold','text-white','border-gold');
+  bars.forEach((b,i) => { b.style.setProperty('--delay',(i*0.06)+'s'); b.classList.add('active'); });
+
+  const done = () => {
+    txt.textContent = 'Listen again ↺';
+    btn.classList.remove('bg-gold','text-white','border-gold');
+    bars.forEach(b => b.classList.remove('active'));
+    setStep(2);
+    toast("Great! Now it's your turn 🎙", 'info', 2000);
+  };
+
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utter  = new SpeechSynthesisUtterance(targetAr);
+    utter.lang   = 'ar-SA'; utter.rate = 0.7; utter.pitch = 1.0;
+    const go = () => {
+      const v = window.speechSynthesis.getVoices().find(v => v.lang.startsWith('ar'));
+      if (v) utter.voice = v;
+      window.speechSynthesis.speak(utter);
+    };
+    utter.onend = done; utter.onerror = done;
+    if (window.speechSynthesis.getVoices().length) { go(); }
+    else { window.speechSynthesis.onvoiceschanged = go; setTimeout(go, 300); }
+  } else { setTimeout(done, 2200); }
+};
+
+// ─── Start real mic recording ──────────────────────────
+window.startRecording = async () => {
+  if (getIsRecording()) {
+    await stopAndEvaluate();
+    return;
+  }
+
+  const btn    = document.getElementById('mic-btn');
+  const lbl    = document.getElementById('mic-label');
+  const avatar = document.getElementById('avatar-reaction');
+
+  // Request mic permission
+  const hasMic = await requestMicPermission();
+  if (!hasMic) {
+    toast('Microphone access required! Enable it in browser settings.', 'error', 4000);
+    return;
+  }
+
+  try {
+    waveBars = [...document.querySelectorAll('.wave-bar')];
+    btn.classList.add('recording');
+    lbl.textContent = 'Listening... 🎙';
+    avatar.textContent = '💨';
+    avatar.style.animation = 'none';
+
+    // Start real recording with waveform update callback
+    stream = await startRec((level) => {
+      updateWaveformDOM(waveBars, level);
+    });
+
+    // Auto-stop after 4 seconds
+    setTimeout(() => { if (getIsRecording()) stopAndEvaluate(); }, 4000);
+
+  } catch (err) {
+    console.error('Recording error:', err);
+    toast('Could not start recording. Check microphone permissions.', 'error');
+    btn.classList.remove('recording');
+    lbl.textContent = 'Try Again 🔄';
+  }
+};
+
+// ─── Stop recording and call AI API ───────────────────
+async function stopAndEvaluate() {
+  const btn    = document.getElementById('mic-btn');
+  const lbl    = document.getElementById('mic-label');
+  const avatar = document.getElementById('avatar-reaction');
+  const thinkEl= document.getElementById('ai-thinking');
+  const child  = getState('activeChild');
+
+  btn.classList.remove('recording');
+  lbl.textContent = 'Analysing... ✨';
+  avatar.textContent = '🧐';
+  avatar.style.animation = 'pulse 1s ease-in-out infinite';
+  thinkEl?.classList.remove('hidden');
+  waveBars.forEach(b => b.classList.remove('active'));
+
+  try {
+    // Stop recording and get audio blob
+    const audioBlob = await stopRec();
+
+    // Get current targets
+    const targetAr = window._targetAr || document.querySelector('.letter-main')?.textContent || 'بَ';
+    const targetEn = window._targetEn || currentLesson?.letterNameEn || 'Ba';
+    const lessonId = currentLesson?.id || '';
+
+    // Call AI evaluation API
+    const result = await evaluatePronunciation({
+      childId:  child?.id || 'demo',
+      lessonId,
+      targetAr,
+      targetEn,
+      audioBlob,
+    });
+
+    thinkEl?.classList.add('hidden');
+
+    // Display result
+    const { passed } = await handleEvalResult({
+      result,
+      letterEl:   document.getElementById('letter-box'),
+      avatarEl:   avatar,
+      heartTrackEl: document.getElementById('heart-track'),
+      attempts,
+    });
+
+    if (passed) {
+      lbl.textContent = '✅ Amazing!';
+      avatar.textContent = '🦅';
+      avatar.style.animation = 'celebrate 0.6s ease, float 2s 0.6s ease-in-out infinite';
+      document.getElementById('feedback-correct').classList.remove('hidden');
+      document.getElementById('feedback-wrong').classList.add('hidden');
+
+      // Update score display
+      const scoreEl = document.querySelector('[data-score]');
+      if (scoreEl) scoreEl.textContent = `${result.score}%`;
+
+      flashCorrect();
+      setStep(3);
+
+      // Log session to server AND store for result page
+      const sessionPayload = {
+        lessonId,
+        score:       result.score,
+        accuracyPct: result.score,
+        starsEarned: result.score >= 90 ? 3 : result.score >= 70 ? 2 : 1,
+        attempts:    MAX_ATT - attempts + 1,
+        aiFeedback:  result.feedback,
+        completed:   true,
+      };
+      sessionStorage.setItem('last_session', JSON.stringify(sessionPayload));
+
+      if (child?.id && lessonId) {
+        progressAPI.logSession(child.id, sessionPayload).catch(console.error);
+      }
+
+    } else {
+      attempts--;
+      lbl.textContent = attempts > 0 ? 'Try again 🔄' : 'See explanation 📖';
+      document.getElementById('feedback-wrong').classList.remove('hidden');
+      document.getElementById('feedback-correct').classList.add('hidden');
+      flashWrong();
+
+      const wrongFeedback = document.getElementById('wrong-feedback-text');
+      if (wrongFeedback) wrongFeedback.textContent = result.feedback || 'Keep trying! Listen again carefully.';
+
+      if (attempts <= 0) {
+        // Show explanation and move on
+        setTimeout(() => {
+          toast('Great effort! Review the letter and try the next one.', 'info', 3000);
+          setStep(3);
+        }, 1500);
+      } else {
+        setTimeout(() => { avatar.style.animation = 'float 2.5s ease-in-out infinite'; }, 700);
+      }
+    }
+
+  } catch (err) {
+    console.error('Evaluation error:', err);
+    thinkEl?.classList.add('hidden');
+    btn.classList.remove('recording');
+    lbl.textContent = 'Try Again 🔄';
+    avatar.textContent = '🦅';
+    avatar.style.animation = 'float 2.5s ease-in-out infinite';
+    toast('Evaluation failed. Check your connection and try again.', 'error');
+  }
+}
+
+// ─── Init ──────────────────────────────────────────────
+window._targetAr = document.querySelector('.letter-main')?.textContent || 'بَ';
+window._targetEn = 'Ba';
+loadLesson();
+</script>
+</body>
+</html>

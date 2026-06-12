@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yantiq — Parent Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0A5744">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="bg-cream phone-wrap no-scrollbar overflow-y-auto">
+
+<header class="islamic-header safe-top pb-6 px-4 relative overflow-hidden"
+  style="background: linear-gradient(160deg, #042F24 0%, #0A5744 50%, #0D7055 100%); box-shadow: 0 8px 32px rgba(4,47,36,0.4);">
+  <div class="particle text-white/12 text-2xl pointer-events-none" style="--duration:6s;--delay:0s; top:25%;left:10%;">📊</div>
+  <div class="particle text-white/10 text-xl pointer-events-none" style="--duration:8s;--delay:1.5s; top:55%;left:80%;">🌙</div>
+  <div class="flex items-center justify-between mb-4">
+    <div>
+      <p class="text-white/60 text-xs font-bold uppercase tracking-wider">Parent View</p>
+      <h1 class="font-display text-white text-2xl mt-0.5">Dashboard 📊</h1>
+    </div>
+    <button onclick="window.location.href='./settings.html'"
+            class="w-10 h-10 rounded-2xl glass flex items-center justify-center text-lg">🪬</button>
+  </div>
+  <!-- Child row -->
+  <div class="glass rounded-3xl p-4 flex items-center gap-3">
+    <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl flex-shrink-0"
+         style="animation:float 2.5s ease-in-out infinite">🦅</div>
+    <div class="flex-1">
+      <p class="font-display text-white text-lg leading-tight">Layla Ahmed, age 5</p>
+      <p class="text-white/60 text-xs font-bold mt-0.5">Level 1 · Letters · Stage 3/5 · Beginner</p>
+    </div>
+    <div class="text-right">
+      <p class="font-display text-gold-light text-xl">🌟 47</p>
+      <p class="text-white/50 text-[10px] font-bold uppercase tracking-wider">Total Stars</p>
+    </div>
+  </div>
+</header>
+
+<!-- Gold accent band -->
+<div style="height:3px; background: linear-gradient(90deg, transparent, #D4940E, #F2BE3A, #D4940E, transparent); opacity:0.6;"></div>
+
+<main class="px-4 pt-5 pb-28">
+  <!-- ── Key metrics ─────────────────────── -->
+  <div class="grid grid-cols-2 gap-3 mb-5">
+    <div class="card animate-slide-up" style="animation-delay:0.05s">
+      <p class="font-display text-gray-900 text-3xl" data-metric="streak">7 🔥</p>
+      <p class="text-gray-400 font-extrabold text-[10px] uppercase tracking-wider mt-1">Day Streak</p>
+      <p class="text-primary font-extrabold text-xs mt-2 flex items-center gap-1">↑ Personal best!</p>
+    </div>
+    <div class="card animate-slide-up" style="animation-delay:0.1s">
+      <p class="font-display text-gray-900 text-3xl" data-metric="lessons">12</p>
+      <p class="text-gray-400 font-extrabold text-[10px] uppercase tracking-wider mt-1">Lessons Done</p>
+      <p class="text-primary font-extrabold text-xs mt-2">↑ 3 this week</p>
+    </div>
+    <div class="card animate-slide-up" style="animation-delay:0.15s">
+      <p class="font-display text-gray-900 text-3xl" data-metric="accuracy">94%</p>
+      <p class="text-gray-400 font-extrabold text-[10px] uppercase tracking-wider mt-1">Avg Accuracy</p>
+      <p class="text-primary font-extrabold text-xs mt-2">↑ +4% vs last week</p>
+    </div>
+    <div class="card animate-slide-up" style="animation-delay:0.2s">
+      <p class="font-display text-gray-900 text-3xl" data-metric="minutes">41m</p>
+      <p class="text-gray-400 font-extrabold text-[10px] uppercase tracking-wider mt-1">Time This Week</p>
+      <p class="text-gold font-extrabold text-xs mt-2">Goal: 45 min/wk</p>
+    </div>
+  </div>
+
+  <!-- ── Weekly activity chart ────────────── -->
+  <div class="card mb-4 animate-slide-up" style="animation-delay:0.25s">
+    <h2 class="font-display text-gray-900 text-base mb-4">Weekly Activity</h2>
+    <div class="flex items-end gap-2 h-24 mb-3" id="chart">
+      <!-- Bars rendered by JS -->
+    </div>
+    <div class="flex justify-between text-[10px] font-extrabold text-gray-300 uppercase tracking-wider px-1" id="chart-labels"></div>
+  </div>
+
+  <!-- ── Session log ────────────────────── -->
+  <div class="card mb-4 animate-slide-up" style="animation-delay:0.3s">
+    <h2 class="font-display text-gray-900 text-base mb-4">Recent Sessions</h2>
+    <div class="divide-y divide-cream" id="session-log" data-session-log>
+      <div class="flex items-center gap-3 py-3">
+        <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center font-arabic text-primary text-lg rtl-text flex-shrink-0">بَ</div>
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-gray-900 text-sm leading-tight">Letter بَ — Pronunciation</p>
+          <p class="text-gray-400 text-xs mt-0.5">Today · 3m 12s</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <p class="font-display text-primary text-base">94%</p>
+          <p class="text-[10px] text-gray-300 font-bold">Accuracy</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 py-3">
+        <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center font-arabic text-primary text-lg rtl-text flex-shrink-0">خَ</div>
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-gray-900 text-sm leading-tight">Stage 3 — Letter Quiz</p>
+          <p class="text-gray-400 text-xs mt-0.5">Today · 2m 40s</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <p class="font-display text-primary text-base">100%</p>
+          <p class="text-[10px] text-gray-300 font-bold">Accuracy</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 py-3">
+        <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center font-arabic text-primary text-lg rtl-text flex-shrink-0">حَ</div>
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-gray-900 text-sm leading-tight">Letter حَ — Pronunciation</p>
+          <p class="text-gray-400 text-xs mt-0.5">Yesterday · 4m 05s</p>
+        </div>
+        <div class="text-right flex-shrink-0">
+          <p class="font-display text-primary text-base">88%</p>
+          <p class="text-[10px] text-gray-300 font-bold">Accuracy</p>
+        </div>
+      </div>
+    </div>
+    <button class="mt-3 text-primary font-extrabold text-sm hover:underline">View all sessions →</button>
+  </div>
+
+  <!-- ── Export report ──────────────────── -->
+  <button class="w-full flex items-center gap-3 p-4 bg-white rounded-3xl border border-cream-darker mb-4 hover:border-primary/30 hover:bg-primary-50 transition-all animate-slide-up group" style="animation-delay:0.35s">
+    <div class="w-10 h-10 rounded-xl bg-primary-50 group-hover:bg-primary/10 flex items-center justify-center text-lg transition-colors">📄</div>
+    <div class="flex-1 text-left">
+      <p class="font-bold text-gray-900 text-sm">Export Progress Report</p>
+      <p class="text-gray-400 text-xs mt-0.5">Download weekly PDF summary</p>
+    </div>
+    <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+  </button>
+
+  <!-- ── Achievements ───────────────────── -->
+  <div class="mb-4 animate-slide-up" style="animation-delay:0.4s">
+    <h2 class="font-display text-gray-900 text-base mb-3">Recent Achievements</h2>
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-3 p-4 bg-gold-50 rounded-3xl border border-gold/15">
+        <div class="w-11 h-11 rounded-2xl bg-gold/15 flex items-center justify-center text-2xl flex-shrink-0">🏵️</div>
+        <div class="flex-1"><p class="font-bold text-gray-900 text-sm">Clear Speaker</p><p class="text-gray-400 text-xs mt-0.5">90%+ pronunciation accuracy</p></div>
+        <p class="text-primary font-extrabold text-xs">Today</p>
+      </div>
+      <div class="flex items-center gap-3 p-4 bg-coral-50 rounded-3xl border border-coral/15">
+        <div class="w-11 h-11 rounded-2xl bg-coral/15 flex items-center justify-center text-2xl flex-shrink-0" style="animation:heartBeat 1.4s ease infinite">🔥</div>
+        <div class="flex-1"><p class="font-bold text-gray-900 text-sm">Week Warrior</p><p class="text-gray-400 text-xs mt-0.5">7-day streak</p></div>
+        <p class="text-primary font-extrabold text-xs">Yesterday</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AI Insight ─────────────────────── -->
+  <div class="rounded-4xl p-5 animate-slide-up" style="background:linear-gradient(135deg,#FEF7E6,#FDEFC8);animation-delay:0.45s">
+    <p class="font-display text-gold text-base mb-2">💡 AI Parent Insight</p>
+    <p class="text-gray-700 font-semibold text-sm leading-relaxed">
+      <span data-insight-text>Layla excels at recognising letters visually but needs extra practice on throat sounds like
+      <span class="font-arabic text-primary text-base rtl-text">حَ</span> and
+      <span class="font-arabic text-primary text-base rtl-text">خَ</span>.
+      Try a 5-minute listening session together before her next lesson!
+    </p>
+    <div class="mt-3 pt-3 border-t border-gold/20">
+      <p class="text-gold font-extrabold text-xs uppercase tracking-wider">Suggested Next Step</p>
+      <p class="text-gray-700 font-semibold text-sm mt-1">Watch the Stage 3 intro video together for the throat letters 🎥</p>
+    </div>
+  </div>
+</main>
+
+<nav class="bnav">
+  <div class="bnav-item" onclick="window.location.href='./app.html'">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" onclick="window.location.href='./lesson.html'">
+    <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <span>Lessons</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" onclick="window.location.href='./badges.html'">
+    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <span>Badges</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item active">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span>Parent</span><div class="bnav-dot"></div>
+  </div>
+</nav>
+
+<script type="module">
+import { getState } from '../js/utils/storage.js';
+import { dashboardAPI } from '../js/utils/api.js';
+import { fetchDashboard, renderDashboard, getMockDashboard, exportReport } from '../js/modules/dashboard.js';
+import { renderWeeklyChart } from '../js/modules/progress.js';
+import { toast } from '../js/utils/animations.js';
+
+window.exportReport = () => {
+  const child = getState('activeChild');
+  exportReport(child?.name || 'Your Child');
+};
+
+async function loadDashboard() {
+  // Show skeleton
+  document.querySelectorAll('[data-skeleton]').forEach(el => el.classList.add('skeleton-pulse'));
+
+  try {
+    const data = await fetchDashboard();
+    const child = data.child;
+
+    // Update child header
+    const avatarEl = document.querySelector('[data-dash-avatar]');
+    const nameEl   = document.querySelector('[data-dash-name]');
+    const levelEl  = document.querySelector('[data-dash-level]');
+    const starsEl  = document.querySelector('[data-dash-stars]');
+    if (avatarEl) avatarEl.textContent = child.avatar || '🦅';
+    if (nameEl)   nameEl.textContent   = `${child.nickname || child.name}, age ${child.age}`;
+    if (starsEl)  starsEl.textContent  = `🌟 ${child.totalStars}`;
+    if (levelEl)  levelEl.textContent  = `Level 1 · Stage ${(child.progress?.filter(p=>p.completed).length||0)+1}/5`;
+
+    // Update KPI cards
+    const metrics = {
+      streak:   `${child.streakDays} 🔥`,
+      lessons:  child.totalLessons,
+      accuracy: `${data.stats.avgAccuracy}%`,
+      minutes:  `${data.stats.weeklyMinutes}m`,
+    };
+    document.querySelectorAll('[data-metric]').forEach(el => {
+      const v = metrics[el.dataset.metric];
+      if (v !== undefined) el.textContent = v;
+    });
+
+    // Weekly chart
+    const chartEl  = document.getElementById('chart');
+    const labelsEl = document.getElementById('chart-labels');
+    if (chartEl) {
+      chartEl.innerHTML = ''; labelsEl.innerHTML = '';
+      renderWeeklyChart(data.weeklyActivity || [], chartEl, labelsEl);
+    }
+
+    // Recent sessions
+    const sessionLog = document.querySelector('[data-session-log]') ||
+                       document.getElementById('session-log');
+    if (sessionLog && data.recentSessions?.length) {
+      sessionLog.innerHTML = data.recentSessions.map(s => {
+        const letter = s.lesson?.letterAr || s.lesson?.wordEn?.[0] || '?';
+        const title  = s.lesson?.letterAr
+          ? `Letter ${s.lesson.letterAr} — ${s.lesson.letterNameEn || 'Pronunciation'}`
+          : (s.lesson?.wordEn || 'Lesson');
+        const acc    = s.score != null ? `${Math.round(s.score)}%` : '–';
+        const now    = new Date(); const st = new Date(s.startedAt);
+        const diff   = (now - st) / 86400000;
+        const when   = diff < 1 ? 'Today' : diff < 2 ? 'Yesterday' : st.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+        const dur    = s.durationSeconds ? `${Math.round(s.durationSeconds/60)}m` : '';
+        const accCol = (s.score||0) >= 90 ? 'text-primary' : (s.score||0) >= 70 ? 'text-gold' : 'text-coral';
+        return `<div class="flex items-center gap-3 py-3 border-b border-cream last:border-0">
+          <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center font-arabic text-primary text-base flex-shrink-0" style="direction:rtl">${letter}</div>
+          <div class="flex-1 min-w-0"><p class="font-bold text-gray-900 text-sm leading-tight truncate">${title}</p><p class="text-gray-400 text-xs mt-0.5">${when}${dur?' · '+dur:''}</p></div>
+          <div class="text-right flex-shrink-0"><p class="font-display ${accCol} text-base">${acc}</p><p class="text-[10px] text-gray-300 font-bold">Accuracy</p></div>
+        </div>`;
+      }).join('');
+    }
+
+    // AI insight
+    if (data.aiInsight) {
+      const insightTitle = document.querySelector('[data-insight-title]');
+      const insightText  = document.querySelector('[data-insight-text]');
+      if (insightTitle) insightTitle.textContent = data.aiInsight.title;
+      if (insightText)  insightText.textContent  = data.aiInsight.text;
+    }
+
+  } catch (err) {
+    console.error('Dashboard load error:', err);
+    toast('Using demo data — connect to API for live stats', 'info', 3000);
+    // Fallback: build chart with mock data
+    const mockData = getMockDashboard();
+    const chartEl  = document.getElementById('chart');
+    const labelsEl = document.getElementById('chart-labels');
+    if (chartEl) {
+      chartEl.innerHTML = ''; labelsEl.innerHTML = '';
+      const { renderWeeklyChart } = await import('../js/modules/progress.js');
+      renderWeeklyChart(mockData.weeklyActivity, chartEl, labelsEl);
+    }
+  } finally {
+    document.querySelectorAll('[data-skeleton]').forEach(el => el.classList.remove('skeleton-pulse'));
+  }
+}
+
+loadDashboard();
+</script>
+</body>
+</html>

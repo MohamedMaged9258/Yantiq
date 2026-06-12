@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yantiq — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="bg-cream phone-wrap no-scrollbar overflow-y-auto">
+
+<header class="safe-top pb-5 px-4" style="background:linear-gradient(135deg,#172820,#0A5744)">
+  <div class="absolute inset-0 bg-geo-pattern pointer-events-none opacity-40"></div>
+  <div class="relative z-10 flex items-center gap-3 pt-2">
+    <div class="w-11 h-11 rounded-2xl bg-gold/20 border border-gold/30 flex items-center justify-center flex-shrink-0 text-gold font-display text-lg">⚙</div>
+    <div class="flex-1">
+      <p class="text-white/50 text-xs font-bold uppercase tracking-wider">Admin Console</p>
+      <h1 class="font-display text-white text-xl">Yantiq Platform</h1>
+    </div>
+    <a href="./app.html" class="text-white/60 text-xs font-bold hover:text-white">← Exit</a>
+  </div>
+</header>
+
+<main class="px-4 pt-5 pb-16">
+  <!-- Prototype notice -->
+  <div class="card mb-5 text-center py-8">
+    <div class="text-5xl mb-4">🚧</div>
+    <h2 class="font-display text-gray-900 text-xl mb-2">Admin Panel Unavailable</h2>
+    <p class="text-gray-500 text-sm mb-4">The admin panel requires a backend server connection.<br>This is a UI prototype — no backend is running.</p>
+    <a href="./dashboard.html" class="btn btn-primary btn-sm font-bold inline-block">View Parent Dashboard →</a>
+  </div>
+
+  <!-- Mock KPI cards (static demo data) -->
+  <div class="grid grid-cols-2 gap-3 mb-5">
+    <div class="card"><p class="font-display text-gray-900 text-3xl">1</p><p class="text-gray-400 text-[10px] font-extrabold uppercase tracking-wider mt-1">Registered Users</p><p class="text-primary text-xs font-bold mt-2">Demo mode</p></div>
+    <div class="card"><p class="font-display text-gray-900 text-3xl">1</p><p class="text-gray-400 text-[10px] font-extrabold uppercase tracking-wider mt-1">Child Profiles</p><p class="text-primary text-xs font-bold mt-2">Demo mode</p></div>
+    <div class="card"><p class="font-display text-gray-900 text-3xl">12</p><p class="text-gray-400 text-[10px] font-extrabold uppercase tracking-wider mt-1">Total Sessions</p><p class="text-gold text-xs font-bold mt-2">Demo mode</p></div>
+    <div class="card"><p class="font-display text-gray-900 text-3xl">94%</p><p class="text-gray-400 text-[10px] font-extrabold uppercase tracking-wider mt-1">Avg Accuracy</p><p class="text-primary text-xs font-bold mt-2">Platform-wide</p></div>
+  </div>
+
+  <!-- System health (prototype) -->
+  <div class="card mb-4">
+    <h2 class="font-display text-gray-900 text-base mb-4">System Health</h2>
+    <div class="flex flex-col gap-0 divide-y divide-cream">
+      <div class="flex items-center justify-between py-3"><span class="font-bold text-gray-700 text-sm">API Server</span><span class="text-xs font-extrabold px-3 py-1 rounded-full bg-coral-50 text-coral">⚠️ Prototype</span></div>
+      <div class="flex items-center justify-between py-3"><span class="font-bold text-gray-700 text-sm">PostgreSQL</span><span class="text-xs font-extrabold px-3 py-1 rounded-full bg-coral-50 text-coral">⚠️ Prototype</span></div>
+      <div class="flex items-center justify-between py-3"><span class="font-bold text-gray-700 text-sm">Redis Cache</span><span class="text-xs font-extrabold px-3 py-1 rounded-full bg-coral-50 text-coral">⚠️ Prototype</span></div>
+      <div class="flex items-center justify-between py-3"><span class="font-bold text-gray-700 text-sm">AI Service</span><span class="text-xs font-extrabold px-3 py-1 rounded-full bg-gold-50 text-gold">Optional</span></div>
+    </div>
+  </div>
+
+  <!-- Curriculum overview (static) -->
+  <div class="card mb-4">
+    <h2 class="font-display text-gray-900 text-base mb-4">Curriculum Status</h2>
+    <div class="divide-y divide-cream">
+      <div class="flex items-center gap-3 py-3 border-b border-cream"><span class="text-lg">🔤</span><div class="flex-1"><p class="font-bold text-gray-900 text-sm">Level 1: Letters</p><p class="text-gray-400 text-xs">5 stages · 75 lessons</p></div></div>
+      <div class="flex items-center gap-3 py-3 border-b border-cream"><span class="text-lg">📝</span><div class="flex-1"><p class="font-bold text-gray-900 text-sm">Level 2: Words</p><p class="text-gray-400 text-xs">5 stages · 15 lessons</p></div></div>
+      <div class="flex items-center gap-3 py-3 border-b border-cream"><span class="text-lg">📖</span><div class="flex-1"><p class="font-bold text-gray-900 text-sm">Level 3: Sentences</p><p class="text-gray-400 text-xs">3 stages · 9 lessons</p></div></div>
+      <div class="flex items-center gap-3 py-3 border-b border-cream"><span class="text-lg">📚</span><div class="flex-1"><p class="font-bold text-gray-900 text-sm">Level 4: Reading</p><p class="text-gray-400 text-xs">1 stage · 1 lesson</p></div></div>
+      <div class="flex items-center gap-3 py-3"><span class="text-lg">👑</span><div class="flex-1"><p class="font-bold text-gray-900 text-sm">Level 5: Advanced</p><p class="text-gray-400 text-xs">1 stage · 1 lesson</p></div></div>
+    </div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="card mb-4">
+    <h2 class="font-display text-gray-900 text-base mb-4">Quick Actions</h2>
+    <div class="grid grid-cols-2 gap-3">
+      <a href="./dashboard.html" class="btn btn-primary btn-sm font-bold text-xs text-center">Parent View</a>
+      <a href="./app.html" class="btn btn-outline btn-sm font-bold text-xs text-center">Learning Map</a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

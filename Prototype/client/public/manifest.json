@@ -1,0 +1,21 @@
+{
+  "name": "Yantiq — Arabic Tutor",
+  "short_name": "Yantiq",
+  "description": "AI-powered early Arabic reading tutor for children ages 3–8",
+  "start_url": "/src/pages/app.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A5744",
+  "theme_color": "#0A5744",
+  "categories": ["education", "kids"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/icons/badge-72.png",  "sizes": "72x72",  "type": "image/png" }
+  ],
+  "shortcuts": [
+    { "name": "Continue Lesson",    "url": "/src/pages/lesson.html",    "icons": [{"src":"/icons/icon-192.png","sizes":"192x192"}] },
+    { "name": "Parent Dashboard",   "url": "/src/pages/dashboard.html", "icons": [{"src":"/icons/icon-192.png","sizes":"192x192"}] }
+  ]
+}

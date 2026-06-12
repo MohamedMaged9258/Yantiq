@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yantiq — Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0A5744">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="bg-cream phone-wrap no-scrollbar overflow-y-auto">
+
+<!-- Gold accent band at top -->
+<div style="height:3px; background: linear-gradient(90deg, transparent, #D4940E, #F2BE3A, #D4940E, transparent);"></div>
+
+<header class="islamic-header safe-top pb-6 px-4 relative overflow-hidden"
+  style="background: linear-gradient(160deg, #042F24 0%, #0A5744 50%, #0D7055 100%); box-shadow: 0 8px 32px rgba(4,47,36,0.4);">
+  <div class="particle text-white/10 text-2xl pointer-events-none" style="--duration:7s;--delay:1s; top:40%;right:10%;">✨</div>
+  <div class="absolute top-3 right-6 text-xl opacity-20 pointer-events-none" style="animation:float 5s ease-in-out infinite">🪬</div>
+  <div class="flex items-center gap-3 mb-1">
+    <button onclick="window.location.href='./app.html'"
+            class="w-10 h-10 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-lg hover:bg-white/25 transition-colors">←</button>
+    <div>
+      <p class="text-white/60 text-xs font-bold uppercase tracking-wider">Account</p>
+      <h1 class="font-display text-white text-2xl mt-0.5">Settings ⚙️</h1>
+    </div>
+  </div>
+</header>
+
+<main class="px-4 pt-5 pb-16 flex flex-col gap-3">
+
+  <!-- Email not verified banner -->
+  <div id="unverified-banner" class="hidden verify-banner mx-0 mb-3 animate-slide-down">
+    <span class="text-xl flex-shrink-0">⚠️</span>
+    <div class="flex-1">
+      <p class="text-xs font-bold text-gold leading-snug">Your email is not verified. Some features may be limited.</p>
+    </div>
+    <button onclick="resendVerification()" class="text-xs font-extrabold text-gold underline flex-shrink-0">Resend</button>
+  </div>
+
+  <!-- ── Profile card ──────────────────────── -->
+  <div class="card flex items-center gap-4 cursor-pointer hover:shadow-card-hover transition-all animate-slide-up">
+    <div class="w-16 h-16 rounded-3xl bg-primary-50 flex items-center justify-center text-4xl flex-shrink-0 border border-primary/10"
+         style="animation:float 2.5s ease-in-out infinite" id="profile-avatar">🦅</div>
+    <div class="flex-1 min-w-0">
+      <p class="font-display text-gray-900 text-lg" id="profile-name">Layla Ahmed</p>
+      <p class="text-gray-400 text-sm font-semibold mt-0.5" id="profile-sub">Age 5 · Level 1 · Some Arabic exposure</p>
+      <p class="text-primary font-extrabold text-xs mt-1">🌟 47 Stars · 🔥 7-Day Streak</p>
+    </div>
+    <div class="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center text-lg cursor-pointer hover:bg-primary/10 transition-colors flex-shrink-0"
+         onclick="toast('Profile editing coming soon! 🚀','info')">✏️</div>
+  </div>
+
+  <!-- ── Audio & Sound ─────────────────────── -->
+  <div class="bg-white rounded-3xl border border-cream-darker overflow-hidden animate-slide-up" style="animation-delay:0.05s">
+    <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest px-5 pt-4 pb-2">🎵 Audio & Sound</p>
+    <div class="divide-y divide-cream">
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center text-lg flex-shrink-0">🔊</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">Playback Volume</span>
+        <input type="range" min="0" max="100" value="80" id="volume-slider"
+               class="w-24 accent-primary" oninput="updateVolumeLabel(this.value)">
+        <span class="text-primary font-bold text-xs w-8 text-right" id="vol-label">80%</span>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center text-lg flex-shrink-0">🐢</div>
+        <div class="flex-1">
+          <p class="font-bold text-gray-900 text-sm">Speaking Speed</p>
+          <p class="text-gray-400 text-xs mt-0.5" id="speed-label">Normal</p>
+        </div>
+        <div class="flex gap-1.5">
+          <button class="speed-btn px-3 py-1.5 rounded-full text-xs font-bold bg-primary text-white" data-speed="slow" onclick="setSpeed(this,'Slow')">Slow</button>
+          <button class="speed-btn px-3 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500" data-speed="normal" onclick="setSpeed(this,'Normal')">Normal</button>
+          <button class="speed-btn px-3 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500" data-speed="fast" onclick="setSpeed(this,'Fast')">Fast</button>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center text-lg flex-shrink-0">🎧</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">Sound Effects</span>
+        <label class="toggle-wrap"><input type="checkbox" checked id="sfx-toggle"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center text-lg flex-shrink-0">🎵</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">Background Music</span>
+        <label class="toggle-wrap"><input type="checkbox" id="music-toggle"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Daily Reminders ───────────────────── -->
+  <div class="bg-white rounded-3xl border border-cream-darker overflow-hidden animate-slide-up" style="animation-delay:0.1s">
+    <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest px-5 pt-4 pb-2">🔔 Daily Reminders</p>
+    <div class="divide-y divide-cream">
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-gold-50 flex items-center justify-center text-lg flex-shrink-0">⏰</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">Daily Reminder</span>
+        <label class="toggle-wrap"><input type="checkbox" checked id="reminder-toggle" onchange="toggleReminderSection()"><span class="toggle-slider"></span></label>
+      </div>
+      <div id="reminder-section">
+        <div class="flex items-center gap-3 px-5 py-4">
+          <div class="w-9 h-9 rounded-xl bg-gold-50 flex items-center justify-center text-lg flex-shrink-0">🕔</div>
+          <div class="flex-1">
+            <p class="font-bold text-gray-900 text-sm">Reminder Time</p>
+            <p class="text-gray-400 text-xs mt-0.5">Lesson reminder for Layla</p>
+          </div>
+          <input type="time" value="16:00" class="text-primary font-bold text-sm bg-primary-50 border border-primary/20 rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-primary/20">
+        </div>
+        <div class="flex items-center gap-3 px-5 py-4">
+          <div class="w-9 h-9 rounded-xl bg-gold-50 flex items-center justify-center text-lg flex-shrink-0">📅</div>
+          <div class="flex-1">
+            <p class="font-bold text-gray-900 text-sm">Reminder Days</p>
+            <p class="text-gray-400 text-xs mt-0.5" id="days-label">Every day</p>
+          </div>
+          <button onclick="showDayPicker()" class="text-primary font-bold text-xs bg-primary-50 px-3 py-1.5 rounded-full hover:bg-primary/10">Edit →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Learning Preferences ──────────────── -->
+  <div class="bg-white rounded-3xl border border-cream-darker overflow-hidden animate-slide-up" style="animation-delay:0.15s">
+    <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest px-5 pt-4 pb-2">📚 Learning</p>
+    <div class="divide-y divide-cream">
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-coral-50 flex items-center justify-center text-lg flex-shrink-0">⏱</div>
+        <div class="flex-1">
+          <p class="font-bold text-gray-900 text-sm">Session Length</p>
+          <p class="text-gray-400 text-xs mt-0.5" id="session-label">10 minutes</p>
+        </div>
+        <div class="flex gap-1.5">
+          <button class="sess-btn px-2.5 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500" onclick="setSession(this,5)">5m</button>
+          <button class="sess-btn px-2.5 py-1.5 rounded-full text-xs font-bold bg-primary text-white" onclick="setSession(this,10)">10m</button>
+          <button class="sess-btn px-2.5 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500" onclick="setSession(this,15)">15m</button>
+          <button class="sess-btn px-2.5 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500" onclick="setSession(this,20)">20m</button>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-coral-50 flex items-center justify-center text-lg flex-shrink-0">📊</div>
+        <div class="flex-1">
+          <p class="font-bold text-gray-900 text-sm">Difficulty</p>
+          <p class="text-gray-400 text-xs mt-0.5">Controls quiz and lesson complexity</p>
+        </div>
+        <select class="text-sm font-bold text-primary bg-primary-50 border border-primary/20 rounded-xl px-3 py-2 outline-none">
+          <option value="auto" selected>Auto (AI)</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-coral-50 flex items-center justify-center flex-shrink-0 font-arabic text-primary text-sm">تش</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">Always Show Tashkeel</span>
+        <label class="toggle-wrap"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-coral-50 flex items-center justify-center text-lg flex-shrink-0">🌐</div>
+        <div class="flex-1">
+          <p class="font-bold text-gray-900 text-sm">Interface Language</p>
+          <p class="text-gray-400 text-xs mt-0.5">Labels and instructions</p>
+        </div>
+        <select class="text-sm font-bold text-primary bg-primary-50 border border-primary/20 rounded-xl px-3 py-2 outline-none">
+          <option value="en" selected>English + عربي</option>
+          <option value="en">English only</option>
+          <option value="ar">عربي فقط</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Family ────────────────────────────── -->
+  <div class="bg-white rounded-3xl border border-cream-darker overflow-hidden animate-slide-up" style="animation-delay:0.2s">
+    <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest px-5 pt-4 pb-2">👨‍👩‍👧 Family</p>
+    <div class="divide-y divide-cream">
+      <div class="flex items-center gap-3 px-5 py-4 cursor-pointer hover:bg-cream transition-colors"
+           onclick="toast('Multiple child profiles coming in v2! 🚀','info')">
+        <div class="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center text-lg flex-shrink-0">➕</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">Add Another Child</span>
+        <span class="text-gray-300 text-xl">›</span>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center text-lg flex-shrink-0">🏛️</div>
+        <div class="flex-1">
+          <p class="font-bold text-gray-900 text-sm">Parent PIN Lock</p>
+          <p class="text-gray-400 text-xs mt-0.5">Require PIN for settings</p>
+        </div>
+        <label class="toggle-wrap"><input type="checkbox" id="pin-toggle" onchange="togglePINSetup()"><span class="toggle-slider"></span></label>
+      </div>
+      <div id="pin-section" class="hidden px-5 py-4">
+        <div class="flex gap-3">
+          <input type="password" maxlength="4" inputmode="numeric" placeholder="New PIN (4 digits)"
+                 class="input-field flex-1 text-center text-2xl tracking-widest" id="pin-input">
+          <button onclick="savePin()" class="btn btn-primary btn-sm px-5 font-display">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Subscription ──────────────────────── -->
+  <div class="rounded-3xl overflow-hidden animate-slide-up" style="background:linear-gradient(135deg,#FEF7E6,#FDEFC8);border:1.5px solid rgba(212,148,14,0.2);animation-delay:0.25s">
+    <div class="px-5 pt-4 pb-2">
+      <p class="text-xs font-extrabold text-gold uppercase tracking-widest">💳 Subscription</p>
+    </div>
+    <div class="divide-y divide-gold/10">
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-gold/15 flex items-center justify-center text-lg flex-shrink-0">🌟</div>
+        <div class="flex-1"><p class="font-bold text-gray-900 text-sm">Current Plan</p><p class="text-gold font-extrabold text-sm mt-0.5">Yantiq Pro ✓</p></div>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-gold/15 flex items-center justify-center text-lg flex-shrink-0">🔄</div>
+        <div class="flex-1"><p class="font-bold text-gray-900 text-sm">Renews</p></div>
+        <span class="font-bold text-gray-600 text-sm">Jun 18, 2026</span>
+      </div>
+      <div class="px-5 py-4">
+        <button onclick="toast('Manage your subscription at yantiq.app/billing','info',4000)"
+                class="btn btn-gold btn-sm w-full font-display">Manage Subscription →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Account ───────────────────────────── -->
+  <div class="bg-white rounded-3xl border border-cream-darker overflow-hidden animate-slide-up" style="animation-delay:0.3s">
+    <p class="text-xs font-extrabold text-gray-400 uppercase tracking-widest px-5 pt-4 pb-2">⚙️ Account</p>
+    <div class="divide-y divide-cream">
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-lg flex-shrink-0">✉️</div>
+        <div class="flex-1"><p class="font-bold text-gray-900 text-sm">Email</p></div>
+        <span class="text-gray-400 font-bold text-xs" id="account-email">sara@example.com</span>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4 cursor-pointer hover:bg-cream transition-colors"
+           onclick="toast('Password change email sent! Check your inbox.','success')">
+        <div class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-lg flex-shrink-0">🔑</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">Change Password</span>
+        <span class="text-gray-300 text-xl">›</span>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4 cursor-pointer hover:bg-cream transition-colors"
+           onclick="window.location.href='./privacy.html'">
+        <div class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-lg flex-shrink-0">📄</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">Privacy Policy</span>
+        <span class="text-gray-300 text-xl">›</span>
+      </div>
+      <div class="flex items-center gap-3 px-5 py-4">
+        <div class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-lg flex-shrink-0">ℹ</div>
+        <span class="font-bold text-gray-900 text-sm flex-1">App Version</span>
+        <span class="text-gray-400 font-bold text-xs">v2.0.0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Danger zone ────────────────────────── -->
+  <div class="bg-white rounded-3xl border border-cream-darker overflow-hidden animate-slide-up" style="animation-delay:0.35s">
+    <div class="flex items-center gap-3 px-5 py-4 cursor-pointer hover:bg-coral-50 transition-colors"
+         onclick="confirmLogout()">
+      <div class="w-9 h-9 rounded-xl bg-coral-50 flex items-center justify-center text-lg flex-shrink-0">🚪</div>
+      <span class="font-bold text-coral text-sm flex-1">Sign Out</span>
+    </div>
+    <div class="flex items-center gap-3 px-5 py-4 border-t border-cream cursor-pointer hover:bg-coral-50 transition-colors"
+         onclick="confirmDelete()">
+      <div class="w-9 h-9 rounded-xl bg-coral-50 flex items-center justify-center text-lg flex-shrink-0">🗑</div>
+      <div class="flex-1">
+        <p class="font-bold text-coral text-sm">Delete Account</p>
+        <p class="text-gray-400 text-xs mt-0.5">This action is permanent and cannot be undone</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-center text-gray-300 text-xs font-bold pb-4">Yantiq v2.0.0 · Built with ❤️ for young Arabic learners</p>
+</main>
+
+<!-- Confirm dialogs -->
+<div id="confirm-modal" class="hidden reward-popup">
+  <div class="reward-card" style="max-width:300px">
+    <div id="confirm-icon" class="text-5xl mb-4">🚪</div>
+    <h3 id="confirm-title" class="font-display text-gray-900 text-xl mb-2">Sign Out?</h3>
+    <p id="confirm-desc" class="text-gray-500 text-sm mb-6">You'll need to sign in again to access your account.</p>
+    <div class="flex gap-3">
+      <button onclick="closeConfirm()" class="btn btn-outline flex-1 btn-sm">Cancel</button>
+      <button id="confirm-action" class="btn btn-coral flex-1 btn-sm font-display">Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { toast } from '../js/utils/animations.js';
+import { getState, setState, storage } from '../js/utils/storage.js';
+window.toast = toast;
+
+// ─── Settings storage helpers ─────────────────────────
+const SETTINGS_KEY = 'yantiq_settings';
+const defaults = {
+  volume: 80, speed: 'normal', sfx: true, music: false,
+  reminder: true, reminderTime: '16:00', reminderDays: [1,2,3,4,5,6,0],
+  sessionMins: 10, difficulty: 'auto', tashkeel: true, language: 'en',
+  pinEnabled: false,
+};
+function loadSettings() {
+  try { return { ...defaults, ...JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}') }; }
+  catch { return defaults; }
+}
+function saveSettings(patch) {
+  const current = loadSettings();
+  const updated = { ...current, ...patch };
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(updated));
+  return updated;
+}
+
+// ─── Initialise UI from saved settings ───────────────
+function initUI() {
+  const s = loadSettings();
+
+  // User info
+  const user  = getState('currentUser');
+  const child = getState('activeChild');
+  if (user) {
+    const nameEl  = document.getElementById('profile-name');
+    const emailEl = document.getElementById('account-email');
+    const subEl   = document.getElementById('profile-sub');
+    if (nameEl)  nameEl.textContent  = `${user.firstName} ${user.lastName}`;
+    if (emailEl) emailEl.textContent = user.email;
+    if (subEl && child)  subEl.textContent = `Age ${child.age || '?'} · Level 1 · ${child.arabicExposure || 'Some'} Arabic exposure`;
+    // Show unverified warning if email not verified
+    if (!user.isVerified) {
+      document.getElementById('unverified-banner')?.classList.remove('hidden');
+    }
+  }
+
+  // Volume
+  const vol = document.getElementById('volume-slider');
+  const volLabel = document.getElementById('vol-label');
+  if (vol)      { vol.value = s.volume; }
+  if (volLabel) { volLabel.textContent = s.volume + '%'; }
+
+  // Speed
+  document.querySelectorAll('.speed-btn').forEach(b => {
+    const isActive = b.dataset.speed === s.speed;
+    b.className = isActive
+      ? 'speed-btn px-3 py-1.5 rounded-full text-xs font-bold bg-primary text-white'
+      : 'speed-btn px-3 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500';
+  });
+  const speedLabel = document.getElementById('speed-label');
+  if (speedLabel) speedLabel.textContent = { slow:'Slow', normal:'Normal', fast:'Fast' }[s.speed] || 'Normal';
+
+  // Toggles
+  const sfxToggle   = document.getElementById('sfx-toggle');
+  const musicToggle = document.getElementById('music-toggle');
+  const remToggle   = document.getElementById('reminder-toggle');
+  if (sfxToggle)   sfxToggle.checked   = s.sfx;
+  if (musicToggle) musicToggle.checked = s.music;
+  if (remToggle)   remToggle.checked   = s.reminder;
+
+  // Reminder time
+  const remTime = document.querySelector('input[type="time"]');
+  if (remTime) remTime.value = s.reminderTime;
+
+  // Reminder section visibility
+  const remSection = document.getElementById('reminder-section');
+  if (remSection) {
+    remSection.style.opacity = s.reminder ? '1' : '0.4';
+    remSection.style.pointerEvents = s.reminder ? '' : 'none';
+  }
+
+  // Session length
+  document.querySelectorAll('.sess-btn').forEach(b => {
+    const mins = parseInt(b.textContent);
+    const isActive = mins === s.sessionMins;
+    b.className = isActive
+      ? 'sess-btn px-2.5 py-1.5 rounded-full text-xs font-bold bg-primary text-white'
+      : 'sess-btn px-2.5 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500';
+  });
+  const sessLabel = document.getElementById('session-label');
+  if (sessLabel) sessLabel.textContent = `${s.sessionMins} minutes`;
+
+  // PIN toggle
+  const pinToggle = document.getElementById('pin-toggle');
+  if (pinToggle) pinToggle.checked = s.pinEnabled;
+  document.getElementById('pin-section')?.classList.toggle('hidden', !s.pinEnabled);
+
+  // Save toggle changes to storage
+  document.getElementById('sfx-toggle')?.addEventListener('change', e => {
+    saveSettings({ sfx: e.target.checked });
+    toast(e.target.checked ? 'Sound effects on 🔊' : 'Sound effects off 🔇', 'info', 1500);
+  });
+  document.getElementById('music-toggle')?.addEventListener('change', e => {
+    saveSettings({ music: e.target.checked });
+    toast(e.target.checked ? 'Background music on 🎵' : 'Background music off', 'info', 1500);
+  });
+  document.querySelector('input[type="time"]')?.addEventListener('change', e => {
+    saveSettings({ reminderTime: e.target.value });
+    toast(`Reminder set for ${e.target.value} ⏰`, 'success', 2000);
+  });
+  document.querySelector('select')?.addEventListener('change', e => {
+    saveSettings({ difficulty: e.target.value });
+  });
+  document.getElementById('volume-slider')?.addEventListener('change', e => {
+    saveSettings({ volume: parseInt(e.target.value) });
+  });
+}
+
+// ─── Action handlers ──────────────────────────────────
+window.updateVolumeLabel = (v) => {
+  document.getElementById('vol-label').textContent = v + '%';
+};
+
+window.setSpeed = (btn, label) => {
+  document.querySelectorAll('.speed-btn').forEach(b => {
+    b.className = 'speed-btn px-3 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500';
+  });
+  btn.className = 'speed-btn px-3 py-1.5 rounded-full text-xs font-bold bg-primary text-white';
+  document.getElementById('speed-label').textContent = label;
+  saveSettings({ speed: btn.dataset.speed });
+  toast(`Speed set to ${label} ✅`, 'info', 1500);
+};
+
+window.setSession = (btn, mins) => {
+  document.querySelectorAll('.sess-btn').forEach(b => {
+    b.className = 'sess-btn px-2.5 py-1.5 rounded-full text-xs font-bold bg-cream-darker text-gray-500';
+  });
+  btn.className = 'sess-btn px-2.5 py-1.5 rounded-full text-xs font-bold bg-primary text-white';
+  document.getElementById('session-label').textContent = `${mins} minutes`;
+  saveSettings({ sessionMins: mins });
+  toast(`Session set to ${mins} min ✅`, 'info', 1500);
+};
+
+window.toggleReminderSection = () => {
+  const on = document.getElementById('reminder-toggle').checked;
+  const sec = document.getElementById('reminder-section');
+  sec.style.opacity = on ? '1' : '0.4';
+  sec.style.pointerEvents = on ? '' : 'none';
+  saveSettings({ reminder: on });
+  toast(on ? 'Reminder enabled ✅' : 'Reminder disabled', 'info', 1500);
+};
+
+window.togglePINSetup = () => {
+  const on = document.getElementById('pin-toggle').checked;
+  document.getElementById('pin-section')?.classList.toggle('hidden', !on);
+  if (!on) saveSettings({ pinEnabled: false, pin: null });
+};
+
+window.savePin = () => {
+  const pin = document.getElementById('pin-input').value;
+  if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
+    toast('PIN must be exactly 4 digits', 'error'); return;
+  }
+  // Store hashed PIN (simple for localStorage — in prod use bcrypt)
+  const hash = btoa(pin + 'yantiq_salt');
+  saveSettings({ pinEnabled: true, pin: hash });
+  toast('PIN saved! ✅', 'success');
+  document.getElementById('pin-input').value = '';
+};
+
+window.showDayPicker = () => {
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const s    = loadSettings();
+  const current = s.reminderDays || [1,2,3,4,5,6,0];
+  const sel = prompt(`Enter reminder days (comma-separated numbers 0=Sun…6=Sat):\nCurrent: ${current.join(',')}`, current.join(','));
+  if (sel !== null) {
+    const parsed = sel.split(',').map(Number).filter(n => n>=0 && n<=6);
+    saveSettings({ reminderDays: parsed });
+    const labels = parsed.map(d => days[d]).join(', ');
+    document.getElementById('days-label').textContent = labels || 'No days selected';
+    toast(`Reminder days updated: ${labels}`, 'success', 2500);
+  }
+};
+
+window.confirmLogout = () => {
+  document.getElementById('confirm-icon').textContent = '🚪';
+  document.getElementById('confirm-title').textContent = 'Sign Out?';
+  document.getElementById('confirm-desc').textContent = "You'll need to sign in again to access your account.";
+  document.getElementById('confirm-action').textContent = 'Sign Out';
+  document.getElementById('confirm-action').onclick = async () => {
+    const { logout } = await import('../js/modules/auth.js');
+    await logout();
+  };
+  document.getElementById('confirm-modal').classList.remove('hidden');
+};
+
+window.confirmDelete = () => {
+  document.getElementById('confirm-icon').textContent = '⚠️';
+  document.getElementById('confirm-title').textContent = 'Delete Account?';
+  document.getElementById('confirm-desc').textContent = 'This permanently deletes all your data and your children\'s data. This cannot be undone.';
+  document.getElementById('confirm-action').textContent = 'Delete Forever';
+  document.getElementById('confirm-action').className = 'btn flex-1 btn-sm font-display bg-coral text-white';
+  document.getElementById('confirm-action').onclick = () => {
+    toast('To delete your account, email support@yantiq.app with your registered email.', 'info', 6000);
+    closeConfirm();
+  };
+  document.getElementById('confirm-modal').classList.remove('hidden');
+};
+
+window.closeConfirm = () => document.getElementById('confirm-modal').classList.add('hidden');
+
+// ─── Resend verification email ────────────────────────
+window.resendVerification = async () => {
+  try {
+    const { passwordAPI } = await import('../js/utils/api.js');
+    await passwordAPI.sendVerification();
+    toast('Verification email sent! Check your inbox 📬', 'success', 4000);
+  } catch { toast('Could not send verification email. Please try again.', 'error'); }
+};
+
+// Init
+initUI();
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Yantiq — My Badges</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0A5744">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="bg-cream phone-wrap no-scrollbar overflow-y-auto">
+
+<header class="islamic-header safe-top pb-6 px-4 relative overflow-hidden"
+  style="background: linear-gradient(160deg, #042F24 0%, #0A5744 50%, #0D7055 100%); box-shadow: 0 8px 32px rgba(4,47,36,0.4);">
+  <div class="particle text-white/15 text-3xl" style="--duration:5s;--delay:0s; top:20%;left:8%;">👑</div>
+  <div class="particle text-white/10 text-2xl" style="--duration:7s;--delay:1s; top:50%;left:82%;">🏵️</div>
+  <div class="particle text-white/12 text-xl" style="--duration:6s;--delay:2s; top:70%;left:25%;">✨</div>
+  <div class="flex items-center gap-3 mb-5">
+    <button onclick="window.location.href='./app.html'"
+            class="w-10 h-10 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white text-lg">←</button>
+    <div>
+      <p class="text-white/60 text-xs font-bold uppercase tracking-wider">Layla's Trophies</p>
+      <h1 class="font-display text-white text-2xl mt-0.5">Badge Collection 👑</h1>
+    </div>
+  </div>
+  <!-- Summary pills -->
+  <div class="flex gap-2 flex-wrap">
+    <div class="glass rounded-full px-4 py-2 flex items-center gap-2">
+      <span class="text-base">🏵️</span>
+      <span class="font-display text-white text-sm">3 Earned</span>
+    </div>
+    <div class="glass rounded-full px-4 py-2 flex items-center gap-2">
+      <span class="text-base">🏛️</span>
+      <span class="font-display text-white/80 text-sm">7 Locked</span>
+    </div>
+    <div class="glass rounded-full px-4 py-2 flex items-center gap-2">
+      <span class="text-base">🌟</span>
+      <span class="font-display text-gold-light text-sm">47 Stars</span>
+    </div>
+  </div>
+</header>
+
+<!-- Gold accent band -->
+<div style="height:3px; background: linear-gradient(90deg, transparent, #D4940E, #F2BE3A, #D4940E, transparent); opacity:0.6;"></div>
+
+<main class="px-4 pt-5 pb-28">
+  <!-- ── Featured / Latest Badge ─────────── -->
+  <div class="mb-5 animate-slide-up" style="animation-delay:0.05s">
+    <div class="rounded-4xl p-5 flex items-center gap-4 cursor-pointer hover:-translate-y-1 transition-all"
+         style="background:linear-gradient(135deg,#B8780A,#D4940E);box-shadow:0 8px 24px rgba(212,148,14,0.35)"
+         onclick="showBadge('Clear Speaker','Achieved 90%+ pronunciation accuracy in a single lesson','Today','🏵️')">
+      <div class="w-16 h-16 rounded-3xl bg-white/20 border border-white/20 flex items-center justify-center text-4xl flex-shrink-0"
+           style="animation:heartBeat 1.4s ease infinite">🏵️</div>
+      <div>
+        <p class="text-white/70 font-bold text-xs uppercase tracking-wider mb-1">Most Recent</p>
+        <p class="font-display text-white text-xl leading-tight">Clear Speaker</p>
+        <p class="text-white/75 text-sm mt-1">90%+ pronunciation — Earned today!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Earned ─────────────────────────── -->
+  <div class="flex items-center gap-3 mb-3 animate-slide-up" style="animation-delay:0.1s">
+    <p class="font-display text-gray-500 text-sm uppercase tracking-wider">Earned Badges</p>
+    <div class="flex-1 h-px bg-cream-darker"></div>
+  </div>
+  <div class="grid grid-cols-2 gap-3 mb-6" id="earned-grid">
+    <!-- Rendered -->
+    <div class="badge-card cursor-pointer animate-slide-up" style="animation-delay:0.15s"
+         onclick="showBadge('First Steps','Completed your very first Yantiq lesson','May 11','🌿')">
+      <div class="w-16 h-16 rounded-3xl bg-primary-50 mx-auto mb-3 flex items-center justify-center text-4xl border border-primary/10"
+           style="animation:float 3s ease-in-out infinite">🌿</div>
+      <p class="font-display text-gray-900 text-base mb-1">First Steps</p>
+      <p class="text-gray-400 text-xs leading-tight mb-2">Completed first lesson</p>
+      <p class="text-primary font-extrabold text-xs">May 11</p>
+    </div>
+    <div class="badge-card cursor-pointer animate-slide-up" style="animation-delay:0.2s"
+         onclick="showBadge('Week Warrior','Maintained a 7-day learning streak','Yesterday','🔥')">
+      <div class="w-16 h-16 rounded-3xl bg-coral-50 mx-auto mb-3 flex items-center justify-center text-4xl border border-coral/10"
+           style="animation:heartBeat 1.4s ease infinite">🔥</div>
+      <p class="font-display text-gray-900 text-base mb-1">Week Warrior</p>
+      <p class="text-gray-400 text-xs leading-tight mb-2">7-day streak achieved</p>
+      <p class="text-primary font-extrabold text-xs">Yesterday</p>
+    </div>
+    <div class="badge-card cursor-pointer animate-slide-up" style="animation-delay:0.25s"
+         onclick="showBadge('Clear Speaker','Scored 90%+ pronunciation accuracy in a lesson','Today','🏵️')">
+      <div class="w-16 h-16 rounded-3xl bg-gold-50 mx-auto mb-3 flex items-center justify-center text-4xl border border-gold/15"
+           style="animation:float 2.5s ease-in-out infinite">🏵️</div>
+      <p class="font-display text-gray-900 text-base mb-1">Clear Speaker</p>
+      <p class="text-gray-400 text-xs leading-tight mb-2">90%+ accuracy</p>
+      <p class="text-primary font-extrabold text-xs">Today</p>
+    </div>
+    <!-- Next achievable -->
+    <div class="badge-card cursor-pointer animate-slide-up border-2 border-dashed border-gold/30 bg-gold-50/50" style="animation-delay:0.3s"
+         onclick="showBadge('Sharpshooter','Get a perfect 100% score on any quiz','Locked 🏛️','📖')">
+      <div class="w-16 h-16 rounded-3xl bg-gray-100 mx-auto mb-3 flex items-center justify-center text-4xl border border-gray-100 grayscale opacity-60">📖</div>
+      <p class="font-display text-gray-500 text-base mb-1">Sharpshooter</p>
+      <p class="text-gray-400 text-xs leading-tight mb-2">Perfect quiz score</p>
+      <div class="bg-gold/10 rounded-full px-2 py-1 inline-block">
+        <p class="text-gold font-extrabold text-xs">0 / 1 ????</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Locked Badges ────────────────────── -->
+  <div class="flex items-center gap-3 mb-3 animate-slide-up" style="animation-delay:0.3s">
+    <p class="font-display text-gray-500 text-sm uppercase tracking-wider">Locked Badges</p>
+    <div class="flex-1 h-px bg-cream-darker"></div>
+  </div>
+  <div class="grid grid-cols-2 gap-3 mb-6">
+    <div class="badge-card locked animate-slide-up" style="animation-delay:0.35s"
+         onclick="showBadge('Night Owl','Practice after 8pm for 5 sessions','2 / 5 progress','🌙')">
+      <div class="w-16 h-16 rounded-3xl bg-gray-100 mx-auto mb-3 flex items-center justify-center text-4xl">🌙</div>
+      <p class="font-display text-gray-400 text-sm mb-1">Night Owl</p>
+      <p class="text-gray-300 text-xs mb-2">Practice after 8pm · 5×</p>
+      <div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-magic/50 h-2 rounded-full" style="width:40%"></div></div>
+      <p class="text-gray-400 text-xs mt-1 font-bold">2 / 5</p>
+    </div>
+    <div class="badge-card locked animate-slide-up" style="animation-delay:0.4s">
+      <div class="w-16 h-16 rounded-3xl bg-gray-100 mx-auto mb-3 flex items-center justify-center text-4xl">📚</div>
+      <p class="font-display text-gray-400 text-sm mb-1">Bookworm</p>
+      <p class="text-gray-300 text-xs mb-2">Complete Level 2</p>
+      <p class="text-gray-300 font-bold text-xs">🏛️ Locked</p>
+    </div>
+    <div class="badge-card locked animate-slide-up" style="animation-delay:0.45s">
+      <div class="w-16 h-16 rounded-3xl bg-gray-100 mx-auto mb-3 flex items-center justify-center text-4xl">🌟</div>
+      <p class="font-display text-gray-400 text-sm mb-1">Star Collector</p>
+      <p class="text-gray-300 text-xs mb-2">Earn 100 total stars</p>
+      <div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-star/50 h-2 rounded-full" style="width:47%"></div></div>
+      <p class="text-gray-400 text-xs mt-1 font-bold">47 / 100</p>
+    </div>
+    <div class="badge-card locked animate-slide-up" style="animation-delay:0.5s">
+      <div class="w-16 h-16 rounded-3xl bg-gray-100 mx-auto mb-3 flex items-center justify-center text-4xl">🌟</div>
+      <p class="font-display text-gray-400 text-sm mb-1">Consistent</p>
+      <p class="text-gray-300 text-xs mb-2">30-day streak</p>
+      <div class="w-full bg-gray-100 rounded-full h-2"><div class="bg-gold/50 h-2 rounded-full" style="width:23%"></div></div>
+      <p class="text-gray-400 text-xs mt-1 font-bold">7 / 30</p>
+    </div>
+    <div class="badge-card locked animate-slide-up" style="animation-delay:0.55s">
+      <div class="w-16 h-16 rounded-3xl bg-gray-100 mx-auto mb-3 flex items-center justify-center text-4xl">🚀</div>
+      <p class="font-display text-gray-400 text-sm mb-1">Rocket</p>
+      <p class="text-gray-300 text-xs mb-2">Complete all 5 levels</p>
+      <p class="text-gray-300 font-bold text-xs">🏛️ Locked</p>
+    </div>
+    <div class="badge-card locked animate-slide-up" style="animation-delay:0.6s">
+      <div class="w-16 h-16 rounded-3xl bg-gray-100 mx-auto mb-3 flex items-center justify-center text-4xl">👑</div>
+      <p class="font-display text-gray-400 text-sm mb-1">Arabic Master</p>
+      <p class="text-gray-300 text-xs mb-2">95%+ accuracy · 20 lessons</p>
+      <p class="text-gray-300 font-bold text-xs">🏛️ ???</p>
+    </div>
+  </div>
+
+  <!-- Motivational tip -->
+  <div class="rounded-4xl p-5 animate-slide-up" style="background:linear-gradient(135deg,#E6F5EF,#C3E8D9);animation-delay:0.65s">
+    <p class="font-display text-primary text-base mb-2">💡 Tip to unlock more!</p>
+    <p class="text-primary-700 font-semibold text-sm leading-relaxed">
+      You're 53 stars away from the 🌟 Star Collector badge, and 3 away from finishing your 7-day streak reward. Keep learning every day!
+    </p>
+  </div>
+</main>
+
+<!-- Badge detail modal -->
+<div id="badge-modal" class="hidden reward-popup" onclick="if(event.target===this)closeBadge()">
+  <div class="reward-card">
+    <div id="bm-icon" class="text-6xl mb-4" style="animation:celebrate 0.5s ease both"></div>
+    <h3 id="bm-name" class="font-display text-gray-900 text-2xl mb-2"></h3>
+    <p id="bm-desc" class="text-gray-500 text-sm leading-relaxed mb-3"></p>
+    <p id="bm-date" class="text-primary font-extrabold text-xs uppercase tracking-wider mb-6"></p>
+    <button onclick="closeBadge()"
+            class="btn btn-primary btn-md w-full font-display text-lg">Close ✨</button>
+  </div>
+</div>
+
+<nav class="bnav">
+  <div class="bnav-item" onclick="window.location.href='./app.html'">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" onclick="window.location.href='./lesson.html'">
+    <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <span>Lessons</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item active">
+    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <span>Badges</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" onclick="showPinModal()">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span>Parent</span><div class="bnav-dot"></div>
+  </div>
+</nav>
+
+<script type="module">
+import { confettiCorrect, toast } from '../js/utils/animations.js';
+import { fetchBadges, renderBadgeGrid, showBadgeDetail } from '../js/modules/badges.js';
+import { getState } from '../js/utils/storage.js';
+
+window.showBadgeDetail = showBadgeDetail;
+window.showBadge = (name, desc, date, icon) => showBadgeDetail(name, desc, date, icon);
+window.closeBadge = () => document.getElementById('badge-modal')?.classList.add('hidden');
+
+async function loadBadges() {
+  try {
+    const badges = await fetchBadges();
+    const earned = badges.filter(b => b.earned);
+    const locked = badges.filter(b => !b.earned);
+
+    // Update summary counts
+    document.querySelectorAll('[data-earned-count]').forEach(el => el.textContent = `${earned.length} Earned`);
+    document.querySelectorAll('[data-locked-count]').forEach(el => el.textContent = `${locked.length} Locked`);
+
+    // Render grids if not already rendered with live data
+    const earnedGrid = document.getElementById('earned-grid');
+    const lockedGrid = document.getElementById('locked-grid') ||
+                       document.querySelector('.grid.grid-cols-2.gap-3.mb-6:last-of-type');
+    if (earnedGrid) renderBadgeGrid(badges, earnedGrid, lockedGrid);
+
+    // Update latest badge feature card
+    if (earned.length > 0) {
+      const latest = earned[earned.length - 1];
+      const featIcon = document.getElementById('featured-badge-icon');
+      const featName = document.getElementById('featured-badge-name');
+      const featDesc = document.getElementById('featured-badge-desc');
+      if (featIcon) featIcon.textContent = latest.icon;
+      if (featName) featName.textContent = latest.name;
+      if (featDesc) featDesc.textContent = latest.description;
+    }
+
+    // Update total stars from child state
+    const child = getState('activeChild');
+    if (child) {
+      document.querySelectorAll('[data-total-stars]').forEach(el => el.textContent = `🌟 ${child.totalStars} Stars`);
+    }
+  } catch (err) {
+    console.error('Badges load error:', err);
+    toast('Using demo badges — API not connected', 'info', 3000);
+  }
+}
+
+loadBadges();
+</script>
+
+<!-- ── Parent PIN Gate Modal ───────────────────────────────────── -->
+<div id="pin-modal" class="fixed inset-0 z-[500] flex items-end justify-center pointer-events-none" style="opacity:0;transition:opacity 0.3s ease">
+  <div id="pin-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closePinModal()"></div>
+  <div id="pin-sheet" class="relative w-full max-w-sm bg-cream rounded-t-[40px] px-6 pt-8 pb-10 z-10"
+       style="transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1)">
+    <div class="w-10 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+    <div class="flex flex-col items-center mb-6">
+      <div class="w-16 h-16 rounded-3xl bg-primary flex items-center justify-center mb-3" style="box-shadow:0 8px 24px rgba(10,87,68,0.25)">
+        <span class="text-3xl">🔒</span>
+      </div>
+      <h2 class="font-display text-gray-900 text-xl">Parent Area</h2>
+      <p class="text-gray-400 font-semibold text-sm mt-1 text-center">Enter your 4-digit PIN to continue</p>
+    </div>
+    <div class="flex justify-center gap-4 mb-6" id="pin-dots">
+      <div class="w-4 h-4 rounded-full border-2 border-gray-300 transition-all" id="dot-0"></div>
+      <div class="w-4 h-4 rounded-full border-2 border-gray-300 transition-all" id="dot-1"></div>
+      <div class="w-4 h-4 rounded-full border-2 border-gray-300 transition-all" id="dot-2"></div>
+      <div class="w-4 h-4 rounded-full border-2 border-gray-300 transition-all" id="dot-3"></div>
+    </div>
+    <p id="pin-error" class="text-coral font-bold text-sm text-center mb-4 hidden">Incorrect PIN. Try again!</p>
+    <div class="grid grid-cols-3 gap-3">
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('1')">1</button>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('2')">2</button>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('3')">3</button>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('4')">4</button>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('5')">5</button>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('6')">6</button>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('7')">7</button>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('8')">8</button>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('9')">9</button>
+      <div></div>
+      <button class="pin-key h-14 rounded-2xl bg-white border-2 border-cream-darker font-display text-gray-900 text-2xl hover:border-primary hover:bg-primary-50 transition-all active:scale-95" onclick="pinInput('0')">0</button>
+      <button class="h-14 rounded-2xl bg-white border-2 border-cream-darker font-bold text-gray-500 text-xl hover:border-coral/40 hover:bg-coral-50 transition-all active:scale-95" onclick="pinDelete()">⌫</button>
+    </div>
+    <button onclick="closePinModal()" class="w-full mt-4 py-3 text-gray-400 font-bold text-sm hover:text-gray-600 transition-colors">Cancel</button>
+  </div>
+</div>
+<script>
+const PARENT_PIN = '1234';
+let pinBuffer = '';
+window.showPinModal = function() {
+  pinBuffer = ''; updatePinDots();
+  document.getElementById('pin-error').classList.add('hidden');
+  const modal = document.getElementById('pin-modal');
+  modal.style.opacity = '1'; modal.style.pointerEvents = 'auto';
+  document.getElementById('pin-sheet').style.transform = 'translateY(0)';
+};
+window.closePinModal = function() {
+  document.getElementById('pin-sheet').style.transform = 'translateY(100%)';
+  setTimeout(() => { const m = document.getElementById('pin-modal'); m.style.opacity = '0'; m.style.pointerEvents = 'none'; }, 350);
+  pinBuffer = ''; updatePinDots();
+  document.getElementById('pin-error').classList.add('hidden');
+};
+window.pinInput = function(digit) {
+  if (pinBuffer.length >= 4) return;
+  pinBuffer += digit; updatePinDots();
+  if (pinBuffer.length === 4) {
+    setTimeout(() => {
+      if (pinBuffer === PARENT_PIN) { closePinModal(); setTimeout(() => window.location.href = './dashboard.html', 350); }
+      else {
+        document.getElementById('pin-error').classList.remove('hidden');
+        const dots = document.getElementById('pin-dots');
+        dots.style.animation = 'shake 0.4s ease';
+        setTimeout(() => { dots.style.animation = ''; }, 400);
+        pinBuffer = ''; updatePinDots();
+      }
+    }, 300);
+  }
+};
+window.pinDelete = function() { if (pinBuffer.length === 0) return; pinBuffer = pinBuffer.slice(0,-1); updatePinDots(); };
+function updatePinDots() {
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (i < pinBuffer.length) { dot.style.background = '#0A5744'; dot.style.borderColor = '#0A5744'; }
+    else { dot.style.background = 'transparent'; dot.style.borderColor = '#D1C9B8'; }
+  }
+}
+</script>
+</body>
+</html>

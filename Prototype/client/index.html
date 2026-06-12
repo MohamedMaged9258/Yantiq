@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A5744">
+<meta name="description" content="Yantiq — AI-powered early Arabic reading tutor for children">
+<title>Yantiq — ينطق</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/src/css/main.css">
+</head>
+<body class="phone-wrap no-scrollbar overflow-hidden"
+      style="background:linear-gradient(160deg,#0A5744 0%,#0D7055 60%,#14A878 100%);height:100vh">
+
+<div class="absolute inset-0 bg-geo-pattern pointer-events-none"></div>
+
+<!-- Floating Islamic decorations -->
+<div class="fixed top-24 left-8 text-5xl opacity-10 pointer-events-none" style="animation:lanternFloat 5s ease-in-out infinite">🪔</div>
+<div class="fixed top-32 right-10 text-4xl opacity-10 pointer-events-none" style="animation:lanternFloat 4s ease-in-out 1s infinite">🌙</div>
+<div class="fixed bottom-48 left-8 text-3xl opacity-10 pointer-events-none" style="animation:float 6s ease-in-out 0.5s infinite">✦</div>
+<div class="fixed bottom-64 right-8 text-2xl opacity-10 pointer-events-none" style="animation:float 5s ease-in-out 2s infinite">✧</div>
+<div class="fixed top-1/2 left-4 text-xl opacity-8 pointer-events-none" style="animation:float 7s ease-in-out 1s infinite">☽</div>
+
+<div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-8 text-center">
+  <!-- Logo -->
+  <div class="w-28 h-28 rounded-5xl bg-white/15 border border-white/20 flex items-center justify-center mb-8"
+       style="animation:logoIn 0.8s cubic-bezier(0.175,0.885,0.32,1.275) both;box-shadow:0 12px 40px rgba(0,0,0,0.2)">
+    <svg width="64" height="64" viewBox="0 0 60 60" fill="none">
+      <path d="M30 8C18 8 10 16 10 28c0 8 4 14 10 18 2 1.5 4 6 10 6s8-4.5 10-6c6-4 10-10 10-18C50 16 42 8 30 8z"
+            fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+      <path d="M22 30Q30 22 38 30" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <circle cx="30" cy="34" r="3.5" fill="rgba(255,255,255,0.9)"/>
+      <path d="M30 18v5M23 20l2.5 3.5M37 20l-2.5 3.5" stroke="rgba(255,184,0,0.9)" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Brand -->
+  <h1 class="font-arabic text-white rtl-text mb-1"
+      style="font-size:64px;line-height:1;animation:fadeUp 0.7s 0.2s ease both;opacity:0;animation-fill-mode:both">
+    ينطق
+  </h1>
+  <p class="font-display text-white/90 text-2xl tracking-widest uppercase mb-3"
+     style="animation:fadeUp 0.7s 0.35s ease both;opacity:0;animation-fill-mode:both">Yantiq</p>
+  <p class="font-semibold text-white/60 text-base max-w-xs leading-relaxed mb-10"
+     style="animation:fadeUp 0.7s 0.5s ease both;opacity:0;animation-fill-mode:both">
+    AI-powered early Arabic reading tutor for young learners 🌟
+  </p>
+
+  <!-- Feature pills -->
+  <div class="flex flex-wrap justify-center gap-2 mb-10"
+       style="animation:fadeUp 0.7s 0.6s ease both;opacity:0;animation-fill-mode:both">
+    <span class="glass rounded-full px-4 py-2 text-white/80 text-xs font-bold">🎙 AI Pronunciation</span>
+    <span class="glass rounded-full px-4 py-2 text-white/80 text-xs font-bold">⭐ Gamified</span>
+    <span class="glass rounded-full px-4 py-2 text-white/80 text-xs font-bold">👨‍👩‍👧 Family Safe</span>
+    <span class="glass rounded-full px-4 py-2 text-white/80 text-xs font-bold">📊 Progress Tracking</span>
+  </div>
+
+  <!-- CTA Buttons -->
+  <div class="flex flex-col gap-3 w-full max-w-xs"
+       style="animation:fadeUp 0.7s 0.75s ease both;opacity:0;animation-fill-mode:both">
+    <a href="/src/pages/register.html"
+       class="btn btn-lg font-display text-xl rounded-4xl"
+       style="background:linear-gradient(135deg,#D4940E,#F2BE3A);color:white;box-shadow:0 8px 24px rgba(212,148,14,0.4);text-decoration:none;justify-content:center">
+      Get Started ✨
+    </a>
+    <a href="/src/pages/login.html"
+       class="btn btn-ghost btn-lg font-display text-lg text-decoration-none"
+       style="text-decoration:none;justify-content:center">
+      Sign In →
+    </a>
+    <a href="/src/pages/app.html"
+       class="text-white/50 font-bold text-sm text-center hover:text-white/80 transition-colors"
+       style="text-decoration:none">
+      Demo: Try without signing in →
+    </a>
+  </div>
+</div>
+
+<!-- Bottom branding -->
+<div class="fixed bottom-6 left-0 right-0 text-center">
+  <p class="text-white/25 text-xs font-bold tracking-widest uppercase">Powered by Anthropic AI</p>
+</div>
+
+<style>
+@keyframes logoIn {
+  from { transform: scale(0.5) translateY(30px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes fadeUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+</style>
+</body>
+</html>

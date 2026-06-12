@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A5744">
+<title>Yantiq — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0A5744">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <script type="module" crossorigin src="/assets/app-J7L1BOYE.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/animations-CD3NMRZt.js">
+  <link rel="modulepreload" crossorigin href="/assets/storage-CSc0t46S.js">
+  <link rel="modulepreload" crossorigin href="/assets/api-CXCcurua.js">
+  <link rel="modulepreload" crossorigin href="/assets/badges-Bj9v2hyQ.js">
+  <link rel="modulepreload" crossorigin href="/assets/progress-D1fj3uZc.js">
+  <link rel="modulepreload" crossorigin href="/assets/rewards-DNAFgenI.js">
+  <link rel="stylesheet" crossorigin href="/assets/main-cFoTJlwm.css">
+</head>
+<body class="bg-cream phone-wrap no-scrollbar">
+
+<!-- ── Celebration overlay (portal for confetti) ── -->
+<div id="page-loader" class="page-loader" style="z-index:600">
+  <div class="spinner"></div>
+  <p>Loading Layla's world...</p>
+</div>
+<div id="celebration-overlay" class="fixed inset-0 z-[250] pointer-events-none overflow-hidden"></div>
+
+<!-- ══════════════════════════════════════════════
+     HERO HEADER
+══════════════════════════════════════════════ -->
+<header class="islamic-header safe-top pb-6 px-5 relative overflow-hidden">
+  <!-- Decorative floating stars -->
+  <div class="particle text-white/10 text-2xl" style="--duration:5s;--delay:0s; top:15%;left:8%;">✦</div>
+  <div class="particle text-white/10 text-lg" style="--duration:7s;--delay:1s; top:35%;left:80%;">✧</div>
+  <div class="particle text-white/10 text-xl" style="--duration:6s;--delay:2s; top:60%;left:20%;">✦</div>
+  <div class="particle text-white/8 text-3xl" style="--duration:8s;--delay:0.5s; top:20%;left:65%;">☽</div>
+
+  <!-- Top bar -->
+  <div class="flex items-center justify-between mb-5">
+    <div class="flex items-center gap-3">
+      <!-- Avatar -->
+      <div id="hero-avatar"
+           class="avatar-circle w-12 h-12 bg-white/15 text-2xl border border-white/20 bouncing"
+           style="animation:float 2.5s ease-in-out infinite">
+        🦁
+      </div>
+      <div>
+        <p class="text-white/60 text-xs font-bold tracking-wider uppercase">Good morning,</p>
+        <h1 id="hero-name" class="font-display text-white text-xl leading-tight">Layla ✨</h1>
+      </div>
+    </div>
+    <!-- Settings + notifications -->
+    <div class="flex items-center gap-2">
+      <button onclick="window.location.href='./settings.html'"
+              class="w-10 h-10 rounded-2xl glass flex items-center justify-center text-lg hover:scale-105 transition-transform">
+        ⚙️
+      </button>
+    </div>
+  </div>
+
+  <!-- Child switcher (shown when parent has >1 child) -->
+  <div id="child-switcher" class="hidden flex gap-2 mb-3 overflow-x-auto no-scrollbar pb-1"></div>
+
+  <!-- XP + Streak row -->
+  <div class="flex items-center gap-3 mb-5">
+    <!-- Streak -->
+    <div class="glass rounded-2xl px-4 py-2.5 flex items-center gap-2 flex-shrink-0">
+      <div class="streak-fire text-2xl" id="streak-icon">🔥</div>
+      <div>
+        <p id="streak-num" class="font-display text-white text-lg leading-none">7</p>
+        <p class="text-white/60 text-[10px] font-bold uppercase tracking-wider">Day Streak</p>
+      </div>
+    </div>
+    <!-- XP bar -->
+    <div class="flex-1">
+      <div class="flex justify-between text-white/70 text-xs font-bold mb-1.5">
+        <span>Level 1 Progress</span>
+        <span id="xp-label">60%</span>
+      </div>
+      <div class="xp-bar-wrap">
+        <div class="xp-bar-fill" id="xp-fill" style="width:60%"></div>
+        <div class="xp-bar-shine"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  <div class="grid grid-cols-3 gap-2">
+    <div class="glass rounded-2xl p-3 text-center">
+      <p id="stat-stars" class="font-display text-amber-light text-xl">⭐ 47</p>
+      <p class="text-white/60 text-[10px] font-bold uppercase tracking-wider mt-0.5">Stars</p>
+    </div>
+    <div class="glass rounded-2xl p-3 text-center">
+      <p id="stat-lessons" class="font-display text-white text-xl">12</p>
+      <p class="text-white/60 text-[10px] font-bold uppercase tracking-wider mt-0.5">Lessons</p>
+    </div>
+    <div class="glass rounded-2xl p-3 text-center">
+      <p id="stat-badges" class="font-display text-white text-xl">3 🏅</p>
+      <p class="text-white/60 text-[10px] font-bold uppercase tracking-wider mt-0.5">Badges</p>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════ -->
+<main class="px-4 pt-5 pb-28">
+
+  <!-- No child yet prompt (hidden by default) -->
+  <div id="no-child-prompt" class="hidden flex flex-col items-center justify-center pt-12 px-4 text-center animate-slide-up">
+    <div class="text-7xl mb-4" style="animation:float 3s ease-in-out infinite">🌱</div>
+    <h2 class="font-display text-gray-900 text-2xl mb-3">Add Your First Child</h2>
+    <p class="text-gray-500 font-semibold text-sm leading-relaxed mb-6 max-w-xs">
+      Create a profile for your child and start their Arabic reading journey today!
+    </p>
+    <button onclick="window.location.href='./register.html'"
+            class="btn btn-primary btn-lg w-full max-w-xs font-display text-xl">
+      Add Child Profile →
+    </button>
+  </div>
+
+  <!-- ── Daily Challenge ────────────────────── -->
+  <div class="mb-5 animate-slide-up" style="animation-delay:0.05s">
+    <div onclick="window.location.href='./quiz.html'"
+         class="relative overflow-hidden rounded-4xl cursor-pointer
+                bg-gradient-to-r from-gold-600 to-gold-DEFAULT
+                p-5 flex items-center gap-4
+                hover:shadow-glow-gold hover:-translate-y-0.5 transition-all duration-200 group"
+         style="background:linear-gradient(135deg,#B8780A,#D4940E)">
+      <!-- geo pattern overlay -->
+      <div class="absolute inset-0 bg-geo-pattern-sm opacity-100 pointer-events-none"></div>
+      <!-- Floating lantern decoration -->
+      <div class="absolute right-4 top-1 text-4xl opacity-20 lantern pointer-events-none">🪔</div>
+      <div class="w-14 h-14 rounded-3xl bg-white/15 flex items-center justify-center text-3xl
+                  flex-shrink-0 group-hover:animate-wiggle">⚡</div>
+      <div class="relative z-10 flex-1">
+        <p class="font-bold text-white/80 text-xs uppercase tracking-wider mb-0.5">Today's Challenge</p>
+        <p class="font-display text-white text-xl leading-tight">Letter Quiz</p>
+        <p class="text-white/70 text-sm mt-1">Match letters to sounds!</p>
+      </div>
+      <div class="relative z-10 flex flex-col items-end gap-1.5">
+        <span class="bg-white/20 text-white text-xs font-black px-3 py-1 rounded-full border border-white/20">
+          +25 ⭐ BONUS
+        </span>
+        <span class="text-white text-xl">→</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section: Learning Levels ──────────── -->
+  <div class="mb-2 flex items-center justify-between animate-slide-up" style="animation-delay:0.1s">
+    <h2 class="font-display text-gray-800 text-xl">Learning Levels</h2>
+    <span class="text-xs font-bold text-primary bg-primary-50 px-3 py-1.5 rounded-full">1/5 Active</span>
+  </div>
+
+  <!-- Level 1 — Active -->
+  <div class="level-card animate-slide-up" style="animation-delay:0.15s" onclick="window.location.href='./lesson.html'">
+    <div class="p-4 pb-0 flex items-center gap-3">
+      <div class="w-11 h-11 rounded-2xl bg-primary flex items-center justify-center
+                  font-display text-white text-lg flex-shrink-0">1</div>
+      <div class="flex-1 min-w-0">
+        <p class="font-display text-gray-900 text-base leading-tight">Letters — <span class="font-arabic text-primary text-xl">الحروف</span></p>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="stage-pill stage-pill-active text-[10px]">✓ In Progress</span>
+        </div>
+      </div>
+      <div class="flex gap-0.5 flex-shrink-0">
+        <span class="text-star text-lg">⭐</span><span class="text-star text-lg">⭐</span><span class="text-gray-200 text-lg">⭐</span>
+      </div>
+    </div>
+    <!-- Letters preview with tashkeel -->
+    <div class="px-4 py-3 flex items-center gap-2">
+      <div class="w-11 h-11 rounded-xl bg-primary-50 flex items-center justify-center font-arabic text-primary text-2xl border border-primary/10 rtl-text">بَ</div>
+      <div class="w-11 h-11 rounded-xl bg-primary-50 flex items-center justify-center font-arabic text-primary text-2xl border border-primary/10 rtl-text">تَ</div>
+      <div class="w-11 h-11 rounded-xl bg-primary-50 flex items-center justify-center font-arabic text-primary text-2xl border border-primary/10 rtl-text">ثَ</div>
+      <div class="w-11 h-11 rounded-xl bg-primary-50/40 flex items-center justify-center font-arabic text-primary/40 text-2xl border border-primary/5 rtl-text">جَ</div>
+      <div class="w-11 h-11 rounded-xl bg-primary-50/40 flex items-center justify-center font-arabic text-primary/40 text-2xl border border-primary/5 rtl-text">حَ</div>
+    </div>
+    <!-- Progress bar -->
+    <div class="px-4 pb-4">
+      <div class="flex justify-between text-xs font-bold text-gray-400 mb-1.5">
+        <span>Stage 3 of 5</span><span>60%</span>
+      </div>
+      <div class="progress-track h-2.5">
+        <div class="progress-fill" style="width:60%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level 2 — Preview -->
+  <div class="level-card animate-slide-up" style="animation-delay:0.2s" onclick="window.location.href='./word-lesson.html'">
+    <div class="p-4 flex items-center gap-3">
+      <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-display text-white text-lg flex-shrink-0"
+           style="background:linear-gradient(135deg,#B8780A,#D4940E)">2</div>
+      <div class="flex-1">
+        <p class="font-display text-gray-900 text-base leading-tight">Words — <span class="font-arabic text-gold text-xl">الكلمات</span></p>
+        <p class="text-xs font-bold text-gold-600 mt-0.5">👁 Preview available</p>
+      </div>
+      <span class="text-gray-300 text-xl">›</span>
+    </div>
+  </div>
+
+  <!-- Levels 3–5 Locked -->
+  <div id="locked-levels">
+    <div class="level-card locked animate-slide-up" style="animation-delay:0.25s">
+      <div class="p-4 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-gray-200 flex items-center justify-center font-display text-gray-400 text-lg">3</div>
+        <div class="flex-1"><p class="font-display text-gray-500 text-base">Short Sentences</p><p class="text-xs font-bold text-gray-400 mt-0.5">🔒 Complete Level 2 first</p></div>
+      </div>
+    </div>
+    <div class="level-card locked animate-slide-up" style="animation-delay:0.3s">
+      <div class="p-4 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-gray-200 flex items-center justify-center font-display text-gray-400 text-lg">4</div>
+        <div class="flex-1"><p class="font-display text-gray-500 text-base">Reading — <span class="font-arabic">القراءة</span></p></div>
+      </div>
+    </div>
+    <div class="level-card locked animate-slide-up" style="animation-delay:0.35s">
+      <div class="p-4 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-display text-white text-lg"
+             style="background:linear-gradient(135deg,#B8780A,#D4940E)">5</div>
+        <div class="flex-1"><p class="font-display text-gray-500 text-base">Advanced — <span class="font-arabic">المتقدم</span></p><p class="text-xs font-bold text-amber-500 mt-0.5">🏆 Master of Arabic</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Recent Badges strip ────────────────── -->
+  <div class="mt-6 animate-slide-up" style="animation-delay:0.4s">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-display text-gray-800 text-xl">My Badges</h2>
+      <button onclick="window.location.href='./badges.html'"
+              class="text-xs font-bold text-primary bg-primary-50 px-3 py-1.5 rounded-full">
+        See All →
+      </button>
+    </div>
+    <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1" id="badges-strip">
+      <!-- Rendered by JS -->
+      <div class="flex-shrink-0 w-20 h-20 rounded-3xl bg-gold-50 border border-gold/20
+                  flex flex-col items-center justify-center gap-1 cursor-pointer
+                  hover:shadow-glow-gold hover:-translate-y-1 transition-all duration-200"
+           onclick="window.location.href='./badges.html'">
+        <span class="text-3xl">🌱</span>
+        <span class="text-[10px] font-bold text-gold leading-tight text-center px-1">First Steps</span>
+      </div>
+      <div class="flex-shrink-0 w-20 h-20 rounded-3xl bg-coral-50 border border-coral/20
+                  flex flex-col items-center justify-center gap-1 cursor-pointer
+                  hover:shadow-glow-coral hover:-translate-y-1 transition-all duration-200"
+           onclick="window.location.href='./badges.html'">
+        <span class="text-3xl animate-heart-beat">🔥</span>
+        <span class="text-[10px] font-bold text-coral leading-tight text-center px-1">Week Warrior</span>
+      </div>
+      <div class="flex-shrink-0 w-20 h-20 rounded-3xl bg-gold-50 border border-gold/20
+                  flex flex-col items-center justify-center gap-1 cursor-pointer
+                  hover:-translate-y-1 transition-all duration-200"
+           onclick="window.location.href='./badges.html'">
+        <span class="text-3xl">🏅</span>
+        <span class="text-[10px] font-bold text-gold leading-tight text-center px-1">Clear Speaker</span>
+      </div>
+      <!-- Locked badge teaser -->
+      <div class="flex-shrink-0 w-20 h-20 rounded-3xl bg-gray-50 border border-gray-100
+                  flex flex-col items-center justify-center gap-1 opacity-50">
+        <span class="text-3xl grayscale">🎯</span>
+        <span class="text-[10px] font-bold text-gray-400 leading-tight text-center px-1">🔒 Locked</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Continue where you left off ──────── -->
+  <div class="mt-6 animate-slide-up" style="animation-delay:0.45s">
+    <h2 class="font-display text-gray-800 text-xl mb-3">Continue Learning</h2>
+    <div onclick="window.location.href='./pronunciation.html'"
+         class="card-hover flex items-center gap-4 cursor-pointer group">
+      <div class="w-14 h-14 rounded-3xl bg-primary-50 flex items-center justify-center
+                  font-arabic text-primary text-4xl border border-primary/10 rtl-text
+                  flex-shrink-0 group-hover:animate-wiggle">خَ</div>
+      <div class="flex-1">
+        <p class="font-display text-gray-900 text-base">Stage 3 — Letter <span class="font-arabic text-primary text-xl">خَ</span></p>
+        <p class="text-sm text-gray-400 font-semibold mt-0.5">Lesson 2 of 3 · Pronunciation</p>
+        <div class="progress-track h-2 mt-2">
+          <div class="progress-fill" style="width:50%"></div>
+        </div>
+      </div>
+      <div class="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center
+                  text-white text-lg font-bold flex-shrink-0">→</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══════════════════════════════════════════════
+     BOTTOM NAVIGATION
+══════════════════════════════════════════════ -->
+<nav class="bnav">
+  <div class="bnav-item active" onclick="window.location.href='./app.html'">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" onclick="window.location.href='./lesson.html'">
+    <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <span>Lessons</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" onclick="window.location.href='./badges.html'">
+    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <span>Badges</span><div class="bnav-dot"></div>
+  </div>
+  <div class="bnav-item" onclick="window.location.href='./dashboard.html'">
+    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span>Parent</span><div class="bnav-dot"></div>
+  </div>
+</nav>
+
+</body>
+</html>
