@@ -245,6 +245,27 @@ def load_model_for_msa(model_name: str, device: str = "cuda") -> nn.Module:
     return model
 
 
+def select_cuda_device(preferred: int | None = None) -> int:
+    """Return a CUDA device index to train on.
+
+    If ``preferred`` is given, validate and use it. Otherwise pick the device with the
+    most free memory, scanned via ``torch.cuda.mem_get_info`` (works even when NVML /
+    nvidia-smi is unavailable due to a driver/library mismatch).
+    """
+    n = torch.cuda.device_count()
+    if preferred is not None:
+        if not (0 <= preferred < n):
+            raise ValueError(f"--gpu {preferred} out of range (found {n} CUDA device(s))")
+        return preferred
+
+    best_idx, best_free = 0, -1
+    for i in range(n):
+        free, _ = torch.cuda.mem_get_info(i)
+        if free > best_free:
+            best_idx, best_free = i, free
+    return best_idx
+
+
 def main():
     parser = argparse.ArgumentParser(description="Train MSA phoneme recognition model")
     parser.add_argument(
@@ -296,6 +317,14 @@ def main():
         help="Device (cuda or cpu)",
     )
     parser.add_argument(
+        "--gpu",
+        type=int,
+        default=None,
+        help="CUDA device index to pin training to. If omitted (and --device cuda), "
+             "the GPU with the most free memory is chosen automatically. Useful on "
+             "shared multi-GPU boxes, especially where nvidia-smi is unavailable.",
+    )
+    parser.add_argument(
         "--num_workers",
         type=int,
         default=0,
@@ -333,9 +362,16 @@ def main():
         print("CUDA not available, falling back to CPU")
         args.device = "cpu"
 
-    print(f"Device: {args.device}")
     if args.device == "cuda":
-        print(f"GPU: {torch.cuda.get_device_name(0)}")
+        # Pin to one GPU. On shared boxes (and where nvidia-smi/NVML is broken) we
+        # pick the freest card via torch itself so we don't OOM on a busy cuda:0.
+        gpu_idx = select_cuda_device(args.gpu)
+        torch.cuda.set_device(gpu_idx)  # makes unindexed "cuda" resolve to gpu_idx
+        free, total = torch.cuda.mem_get_info(gpu_idx)
+        print(f"Device: cuda:{gpu_idx} ({torch.cuda.get_device_name(gpu_idx)})")
+        print(f"GPU memory: {free/1e9:.1f} GB free / {total/1e9:.1f} GB total")
+    else:
+        print(f"Device: {args.device}")
 
     # Create dataloaders
     print("\nLoading datasets...")
