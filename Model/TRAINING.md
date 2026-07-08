@@ -14,7 +14,7 @@ This document covers the full training pipeline: from prepared dataset to a fine
                                                                    │
                                                                    ▼
    adapt_model_for_msa.py        msa_model_adapted          msa_dataset.py
-   (resize phoneme head)   ───►  checkpoint (31 classes) ◄── (PyTorch Dataset)
+   (resize phoneme head)   ───►  checkpoint (35 classes) ◄── (PyTorch Dataset)
                                                                    │
                                                                    ▼
                                                             train_msa.py
@@ -41,7 +41,7 @@ This adds `soundfile`, `librosa`, `tqdm`, and `accelerate` on top of the base in
 python3.14 -m uv run python -c "import torch, librosa, soundfile; print(torch.__version__)"
 ```
 
-If you have an NVIDIA GPU and want CUDA, the project's `pyproject.toml` already pins `torch` to the `pytorch-cu121` index. Confirm with:
+Note: `pyproject.toml` pins `torch` to the **CPU** wheel index (`pytorch-cpu`), so a plain `uv sync` installs CPU-only PyTorch. If you have an NVIDIA GPU and want CUDA, install a CUDA build of `torch` separately (e.g. from the `pytorch-cu121` index) after syncing. Confirm CUDA is visible with:
 
 ```bash
 python3.14 -m uv run python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else '')"
@@ -168,7 +168,7 @@ checkpoints/msa_model_v1/
 └── training_history.json      # {"train_loss": [...], "val_loss": [...], "lr": [...]}
 ```
 
-`best_model/` is what you'd plug back into the engine — see [RUNNING.md](RUNNING.md) for swapping checkpoints.
+`best_model/` is what you point the MSA API at (via `MSA_MODEL_PATH`) — see [RUNNING.md](RUNNING.md) for swapping checkpoints.
 
 ---
 
@@ -197,6 +197,6 @@ checkpoints/msa_model_v1/
 |---|---|
 | [src/quran_muaalem/data/prepare_common_voice.py](src/quran_muaalem/data/prepare_common_voice.py) | TSV → WAV + phoneme manifest. |
 | [src/quran_muaalem/data/msa_dataset.py](src/quran_muaalem/data/msa_dataset.py) | `MSAPhonemeDataset` and `get_data_loaders`. |
-| [src/quran_muaalem/modeling/adapt_model_for_msa.py](src/quran_muaalem/modeling/adapt_model_for_msa.py) | One-shot head resize: 43 → 31. |
+| [src/quran_muaalem/modeling/adapt_model_for_msa.py](src/quran_muaalem/modeling/adapt_model_for_msa.py) | One-shot head resize: 43 → 35. |
 | [src/quran_muaalem/training/train_msa.py](src/quran_muaalem/training/train_msa.py) | `CTCTrainer` + CLI `main()`. |
 | [train_msa_simple.py](train_msa_simple.py) | Thin wrapper that calls `train_msa.main`. |

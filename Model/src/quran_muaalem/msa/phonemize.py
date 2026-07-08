@@ -5,14 +5,14 @@ Mirrors the mapping used during data preparation
 but exposes it as a small standalone helper that does not pull in librosa /
 soundfile / tqdm.
 
-Note: the 31-class MSA inventory does NOT include alif `ا` or alif maksura
+Note: the 35-class MSA inventory does NOT include alif `ا` or alif maksura
 `ى` — these are long-vowel markers that were dropped during training, so the
 model never predicts them. This phonemizer drops them too so that
 `predicted` and `expected` sequences are directly comparable.
 """
 
 # Arabic character -> MSA phoneme. Identity-mapped because we treat each
-# letter / diacritic as its own phoneme symbol in the 31-class inventory.
+# letter / diacritic as its own phoneme symbol in the 35-class inventory.
 PHONEME_MAP: dict[str, str] = {
     # Consonants
     "ء": "ء", "ب": "ب", "ت": "ت", "ث": "ث", "ج": "ج", "ح": "ح", "خ": "خ",

@@ -135,7 +135,7 @@ For a 15-second clip: `T_audio = 240,000` → `T_feat ≈ 1500` → `T_enc ≈ 1
 |---|---|
 | **Freeze the encoder** | It was pre-trained on 53k hours of speech. Fine-tuning it on ~17 hours of MSA would mostly hurt generalization. The CTC head has all the capacity we need to learn the new vocabulary. The trainer enforces this in [`load_model_for_msa`](src/quran_muaalem/training/train_msa.py): every parameter is set to `requires_grad=False`, then only the `phonemes` head is re-enabled. AdamW is built from the trainable subset, so no optimizer state is allocated for frozen weights — fits on a 4 GB GPU. |
 | **Phoneme-only output** | The other levels (tajweed, sifat) are Quran-specific. MSA doesn't need them, and dropping them simplifies labels, loss, and evaluation. |
-| **Reuse the multi-level class** | We keep the original `Wav2Vec2BertForMultilevelCTC` and just resize one head, so the engine/inference code keeps working unchanged. |
+| **Reuse the multi-level class** | We keep the original `Wav2Vec2BertForMultilevelCTC` and just resize one head, so the training and serving code loads it the same way as any upstream checkpoint. |
 | **35-class inventory** | The 28 canonical MSA consonants (including the emphatics `ص ض ط ظ`) + 5 vowel/diacritic tokens + `[PAD]`/`[UNK]`. Dropping the emphatics — as an earlier 31-class version did — silently maps them to `[UNK]` and corrupts ~10–15% of training labels. |
 
 ### Trainable parameter count
@@ -156,7 +156,7 @@ The training run touches only ~0.005% of the total parameter count.
 |---|---|
 | [src/quran_muaalem/modeling/modeling_multi_level_ctc.py](src/quran_muaalem/modeling/modeling_multi_level_ctc.py) | Original multi-level CTC model class. Untouched. |
 | [src/quran_muaalem/modeling/configuration_multi_level_ctc.py](src/quran_muaalem/modeling/configuration_multi_level_ctc.py) | Config object holding `level_to_vocab_size` and friends. |
-| [src/quran_muaalem/modeling/msa_vocab.py](src/quran_muaalem/modeling/msa_vocab.py) | The 31-token MSA phoneme inventory. |
+| [src/quran_muaalem/modeling/msa_vocab.py](src/quran_muaalem/modeling/msa_vocab.py) | The 35-token MSA phoneme inventory. |
 | [src/quran_muaalem/modeling/msa_tokenizer.py](src/quran_muaalem/modeling/msa_tokenizer.py) | Encode / decode between phoneme strings and IDs. |
 | [src/quran_muaalem/modeling/adapt_model_for_msa.py](src/quran_muaalem/modeling/adapt_model_for_msa.py) | One-shot script that produces `checkpoints/msa_model_adapted/`. |
 

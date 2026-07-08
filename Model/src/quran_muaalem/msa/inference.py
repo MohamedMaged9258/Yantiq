@@ -70,7 +70,7 @@ class MSAInference:
         )
         feats = {k: v.to(self.device) for k, v in feats.items()}
         out = self.model(**feats, return_dict=True)
-        # (batch=1, T_enc, 31) -> (T_enc, 31) on CPU for downstream maths.
+        # (batch=1, T_enc, 35) -> (T_enc, 35) on CPU for downstream maths.
         return out.logits["phonemes"][0].float().cpu()
 
     def transcribe(self, audio: NDArray[np.float32]) -> str:
