@@ -1,6 +1,89 @@
-# DATASET — Common Voice Arabic for MSA Training
+# DATASET — MSA Training Data
 
-This document covers downloading, extracting, and preparing the Common Voice Arabic dataset that feeds the MSA fine-tuning pipeline. For what to do *with* the prepared data, see [TRAINING.md](TRAINING.md).
+This document covers preparing the training data that feeds the MSA fine-tuning pipeline.
+For what to do *with* the prepared data, see [TRAINING.md](TRAINING.md).
+
+There are two sources:
+- **Recitations dataset (current, recommended)** — `obadx/mualem-recitations-annotated`,
+  a large 16 kHz Arabic recitation corpus. See section 0 below.
+- **Common Voice Arabic (legacy fallback)** — the original source, documented from
+  section 1 onward.
+
+Both emit the **same** `datasets/msa_speech/manifest.json`, so training is identical
+regardless of which you use.
+
+---
+
+## 0. Recitations Dataset (current)
+
+`obadx/mualem-recitations-annotated` is a ~97.8 GB / 286,586-row 16 kHz Arabic recitation
+dataset (by the same author as the base model). It ships audio + Quranic text but **no
+phoneme labels**, so preparation phonemizes a text column (`uthmani` by default) into the
+existing 35-class MSA inventory using the same map as Common Voice, then emits the standard
+manifest. The source only has a `train` split per reciter config, so train/val/test are
+synthesized by a seeded shuffle.
+
+### One-shot bootstrap (Linux server)
+
+`setup_recitations.py` installs the `training` extra and prepares the dataset in one go:
+
+```bash
+# tiny end-to-end smoke run (streams only ~50 rows, no full download)
+python setup_recitations.py --configs moshaf_0.0 --max-total 50
+
+# a real subset: two reciters, capped per reciter
+python setup_recitations.py --configs moshaf_0.0,moshaf_1.0 --max-samples-per-config 5000
+
+# everything (~100 GB streamed; large disk + long run)
+python setup_recitations.py --configs all
+
+# skip the dependency install step if deps are already present
+python setup_recitations.py --skip-install --configs moshaf_0.0 --max-total 50
+```
+
+The dataset is streamed (`streaming=True`), so caps like `--max-total` stop early without
+downloading the full corpus. Audio is written as flat WAVs under
+`datasets/msa_speech/audio/` and referenced by `manifest.json`.
+
+### Running the prep module directly
+
+If deps are already installed, skip the bootstrap and call the module (needs `src/` on
+`PYTHONPATH`, or run via `uv`):
+
+```bash
+python -m quran_muaalem.data.prepare_recitations --configs moshaf_0.0 --max-total 50
+python -m quran_muaalem.data.prepare_recitations --help   # all flags
+```
+
+Key flags: `--configs` (comma list or `all`), `--text-field` (`uthmani`|`imlaey`),
+`--max-samples-per-config`, `--max-total`, `--val-ratio`/`--test-ratio`, `--seed`,
+`--min-duration`/`--max-duration`, `--output-dir`.
+
+> Note: `uthmani` carries orthography the 35-class map lacks (superscript alif, hamzat
+> wasl, madda, small letters, shadda, tanween) — those glyphs are simply dropped during
+> phonemization. Switch to `--text-field imlaey` for plainer spelling if desired.
+
+Once the manifest exists, proceed to [TRAINING.md](TRAINING.md) exactly as with Common
+Voice. Everything below documents the legacy Common Voice path.
+
+### Thread-limited servers (OpenBLAS / nproc)
+
+Some GPU boxes ship a low `RLIMIT_NPROC` (e.g. 512 soft / 1024 hard) on a many-core host.
+OpenBLAS then tries to spawn one thread per core at import and dies with
+`pthread_create failed / Resource temporarily unavailable`, and the HF download stack hits
+`can't start new thread`. `setup_recitations.py` already handles this for the prep step.
+For the **torch-heavy** steps (head adapt + training), run them through `run_msa.sh`, which
+raises the soft nproc limit and forces single-threaded BLAS before exec'ing your command:
+
+```bash
+chmod +x run_msa.sh
+./run_msa.sh python3 -c "from src.quran_muaalem.modeling.adapt_model_for_msa import adapt_model_for_msa; adapt_model_for_msa()"
+./run_msa.sh python3 train_msa_simple.py --model_name checkpoints/msa_model_adapted --device cuda --epochs 20 --batch_size 4
+```
+
+The wrapper respects thread vars you set yourself, so `OPENBLAS_NUM_THREADS=4 ./run_msa.sh ...`
+gives the CPU-side ops more threads for GPU training. Also note: on this box the default
+`python` is Python 2 — always use `python3`.
 
 ---
 

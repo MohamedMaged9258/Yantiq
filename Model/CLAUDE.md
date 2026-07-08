@@ -97,8 +97,12 @@ are no test modules yet — add them under `tests/` and mark model-loading tests
 ### MSA fine-tuning workflow
 
 ```bash
-# 1. Prepare Common Voice Arabic into datasets/msa_speech/
-python3.14 -m uv run python -m quran_muaalem.data.prepare_common_voice
+# 1. Prepare training data into datasets/msa_speech/manifest.json.
+#    Current source: obadx/mualem-recitations-annotated (streamed, phonemized to 35 classes).
+#    setup_recitations.py installs the training extra then runs the prep module.
+python3.14 setup_recitations.py --configs moshaf_0.0 --max-total 50   # smoke run
+# Legacy alternative (Common Voice Arabic, must be downloaded first):
+# python3.14 -m uv run python -m quran_muaalem.data.prepare_common_voice
 
 # 2. Resize phoneme head 43 -> 35 (one-shot, produces checkpoints/msa_model_adapted/)
 python3.14 -m uv run python -c "from src.quran_muaalem.modeling.adapt_model_for_msa import adapt_model_for_msa; adapt_model_for_msa()"
@@ -163,9 +167,10 @@ Note: serving (`MSAInference`) always loads the checkpoint in `float32` regardle
 ### MSA fine-tuning data flow
 
 ```
-Common Voice (mp3 + tsv)
-    └── prepare_common_voice.py: resample to 16kHz WAV + char→phoneme map
-        └── datasets/msa_speech/{train,val,test}/*.wav  +  manifest.json
+Training source (current: obadx/mualem-recitations-annotated; legacy: Common Voice)
+    └── prepare_recitations.py (stream + phonemize) OR prepare_common_voice.py
+        (both reuse the same char→phoneme map, 16kHz WAV, and manifest schema)
+        └── datasets/msa_speech/audio/*.wav (or {train,val,test}/*.wav)  +  manifest.json
 
 manifest.json
     └── MSAPhonemeDataset (msa_dataset.py): pads features to fixed max_features,
