@@ -12,6 +12,7 @@
 #   ./run_full_training.sh --configs moshaf_0.0,moshaf_1.0 --epochs 30 --batch-size 32
 #   ./run_full_training.sh --max-per-config 0       # 0 = no per-config cap (full dataset)
 #   ./run_full_training.sh --install                # also (re)install deps first
+#   ./run_full_training.sh --dataset-ready          # dataset already prepared: skip step [1/3]
 #
 # Options (all optional):
 #   --configs LIST         comma list or 'all'            (default: all)
@@ -26,6 +27,7 @@
 #   --train-threads N      OPENBLAS/OMP threads for training  (default: 8)
 #   --output-dir DIR       checkpoint dir                (default: checkpoints/msa_model_v1)
 #   --install              run dependency install (default: skip; deps assumed present)
+#   --dataset-ready        skip dataset prep [1/3]; use the existing manifest as-is
 #   --log FILE             log file                      (default: training_run.log)
 
 # --- resolve absolute paths so relative project paths work regardless of cwd ----------
@@ -46,6 +48,7 @@ GPU=""
 TRAIN_THREADS="8"
 OUTPUT_DIR="checkpoints/msa_model_v1"
 INSTALL="0"
+SKIP_PREP="0"
 LOG_FILE="training_run.log"
 
 ALL_ARGS=("$@")
@@ -65,6 +68,7 @@ while [ $# -gt 0 ]; do
     --train-threads)  TRAIN_THREADS="$2"; shift 2;;
     --output-dir)     OUTPUT_DIR="$2"; shift 2;;
     --install)        INSTALL="1"; shift;;
+    --dataset-ready)  SKIP_PREP="1"; shift;;
     --log)            LOG_FILE="$2"; shift 2;;
     -h|--help)        grep '^#' "$SCRIPT_PATH" | sed 's/^# \{0,1\}//'; exit 0;;
     *) echo "Unknown option: $1 (use --help)"; exit 1;;
@@ -114,31 +118,41 @@ echo "              gpu=${GPU:-auto} threads=$TRAIN_THREADS output=$OUTPUT_DIR"
 echo "======================================================================"
 
 # --- Step 1/3: prepare dataset --------------------------------------------------------
-echo ""; echo "### [1/3] Preparing dataset ($(date -u))"
-install_flag="--skip-install"
-[ "$INSTALL" = "1" ] && install_flag=""
+if [ "$SKIP_PREP" = "1" ]; then
+  echo ""; echo "### [1/3] Preparing dataset -- SKIPPED (--dataset-ready)"
+  if [ ! -f datasets/msa_speech/manifest.json ]; then
+    echo "ERROR: --dataset-ready given but datasets/msa_speech/manifest.json is missing."
+    echo "Run without --dataset-ready to build it first."
+    exit 1
+  fi
+  echo "Using existing manifest: datasets/msa_speech/manifest.json"
+else
+  echo ""; echo "### [1/3] Preparing dataset ($(date -u))"
+  install_flag="--skip-install"
+  [ "$INSTALL" = "1" ] && install_flag=""
 
-cap_flag=""
-if [ -n "$MAX_PER_CONFIG" ] && [ "$MAX_PER_CONFIG" != "0" ] && [ "$MAX_PER_CONFIG" != "none" ]; then
-  cap_flag="--max-samples-per-config $MAX_PER_CONFIG"
+  cap_flag=""
+  if [ -n "$MAX_PER_CONFIG" ] && [ "$MAX_PER_CONFIG" != "0" ] && [ "$MAX_PER_CONFIG" != "none" ]; then
+    cap_flag="--max-samples-per-config $MAX_PER_CONFIG"
+  fi
+
+  disk_flag=""
+  if [ -n "$MAX_DISK_GB" ] && [ "$MAX_DISK_GB" != "0" ] && [ "$MAX_DISK_GB" != "off" ]; then
+    disk_flag="--max-disk-gb $MAX_DISK_GB"
+  fi
+
+  # shellcheck disable=SC2086
+  python3 setup_recitations.py $install_flag \
+      --configs "$CONFIGS" --text-field "$TEXT_FIELD" --audio-format "$AUDIO_FORMAT" \
+      $cap_flag $disk_flag
 fi
-
-disk_flag=""
-if [ -n "$MAX_DISK_GB" ] && [ "$MAX_DISK_GB" != "0" ] && [ "$MAX_DISK_GB" != "off" ]; then
-  disk_flag="--max-disk-gb $MAX_DISK_GB"
-fi
-
-# shellcheck disable=SC2086
-python3 setup_recitations.py $install_flag \
-    --configs "$CONFIGS" --text-field "$TEXT_FIELD" --audio-format "$AUDIO_FORMAT" \
-    $cap_flag $disk_flag
 
 # --- Step 2/3: adapt phoneme head 43 -> 35 (once) -------------------------------------
 echo ""; echo "### [2/3] Adapting phoneme head 43 -> 35 ($(date -u))"
 if [ -d checkpoints/msa_model_adapted ]; then
   echo "checkpoints/msa_model_adapted already exists; skipping adapt."
 else
-  ./run_msa.sh python3 -c "from src.quran_muaalem.modeling.adapt_model_for_msa import adapt_model_for_msa; adapt_model_for_msa()"
+  bash run_msa.sh python3 -c "from src.quran_muaalem.modeling.adapt_model_for_msa import adapt_model_for_msa; adapt_model_for_msa()"
 fi
 
 # --- Step 3/3: train ------------------------------------------------------------------
@@ -148,7 +162,7 @@ gpu_flag=""
 
 # shellcheck disable=SC2086
 OPENBLAS_NUM_THREADS="$TRAIN_THREADS" OMP_NUM_THREADS="$TRAIN_THREADS" \
-  ./run_msa.sh python3 train_msa_simple.py \
+  bash run_msa.sh python3 train_msa_simple.py \
     --model_name checkpoints/msa_model_adapted \
     --device cuda --epochs "$EPOCHS" --batch_size "$BATCH_SIZE" \
     --num_workers "$NUM_WORKERS" --output_dir "$OUTPUT_DIR" $gpu_flag
