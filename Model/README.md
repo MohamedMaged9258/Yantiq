@@ -53,16 +53,23 @@
 
 ## MSA fork (Modern Standard Arabic) / نسخة فصحى
 
-This branch additionally includes a fine-tuning pipeline that adapts the upstream Quranic model to recognize **Modern Standard Arabic** phonemes (35-class inventory) using Common Voice Arabic. The MSA stack ships its own FastAPI service and Gradio UI, independent of the Quranic services.
+This branch additionally includes a fine-tuning pipeline that adapts the upstream Quranic model to recognize **Modern Standard Arabic** phonemes (35-class inventory). It now trains on **[`obadx/mualem-recitations-annotated`](https://huggingface.co/datasets/obadx/mualem-recitations-annotated)** — a large 16 kHz Arabic recitation corpus whose `uthmani` text is phonemized into the 35-class inventory (Common Voice Arabic remains a legacy fallback). The MSA stack ships its own FastAPI service and Gradio UI, independent of the Quranic services.
 
 | Doc | Topic |
 |---|---|
 | [MODEL.md](MODEL.md) | Architecture, the 35-token MSA inventory, the head-resize procedure |
-| [DATASET.md](DATASET.md) | Common Voice Arabic download, extraction, and manifest preparation |
-| [TRAINING.md](TRAINING.md) | Fine-tuning pipeline (assumes the manifest is ready) |
+| [DATASET.md](DATASET.md) | Recitations dataset prep (+ legacy Common Voice), disk/quota guidance |
+| [TRAINING.md](TRAINING.md) | Fine-tuning pipeline + the one-command `run_full_training.sh` runbook |
 | [RUNNING.md](RUNNING.md) | Install + serve both stacks (Quranic + MSA) |
 
-Quick start for the MSA stack:
+Train (Linux GPU server, one self-detaching command):
+
+```bash
+./run_full_training.sh --configs all --max-per-config 0   # prep → adapt → train
+tail -f training_run.log
+```
+
+Serve the MSA stack:
 
 ```bash
 python3.14 -m uv run quran-muaalem-msa-api   # :8010

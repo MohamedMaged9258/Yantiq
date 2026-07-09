@@ -9,23 +9,44 @@ This document covers the full training pipeline: from prepared dataset to a fine
 ## 1. Pipeline Overview
 
 ```
-  Common Voice Arabic        prepare_common_voice.py         manifest.json
-  (mp3 + sentence.tsv)  ───►  (resample + phonemize)   ───►  + 16 kHz WAVs
-                                                                   │
-                                                                   ▼
+  obadx/mualem-recitations-annotated    prepare_recitations.py       manifest.json
+  (streamed 16 kHz audio + text)   ───► (phonemize uthmani→35)  ───►  + 16 kHz WAV/FLAC
+  [legacy: Common Voice via prepare_common_voice.py]                       │
+                                                                           ▼
    adapt_model_for_msa.py        msa_model_adapted          msa_dataset.py
    (resize phoneme head)   ───►  checkpoint (35 classes) ◄── (PyTorch Dataset)
-                                                                   │
-                                                                   ▼
+                                                                           │
+                                                                           ▼
                                                             train_msa.py
-                                                            (CTC fine-tune)
-                                                                   │
-                                                                   ▼
+                                                            (CTC fine-tune, auto-GPU)
+                                                                           │
+                                                                           ▼
                                                        checkpoints/msa_model_v1/
                                                        best_model/
 ```
 
 Everything lives under [src/quran_muaalem/data/](src/quran_muaalem/data/), [src/quran_muaalem/modeling/](src/quran_muaalem/modeling/), and [src/quran_muaalem/training/](src/quran_muaalem/training/).
+
+### One command for the whole pipeline
+
+On a Linux GPU server, [`run_full_training.sh`](run_full_training.sh) chains prep → adapt →
+train, self-detaches (`setsid`+`nohup`) so it survives SSH drops, and logs to
+`training_run.log`:
+
+```bash
+chmod +x run_full_training.sh
+./run_full_training.sh --configs all --max-per-config 0   # full dataset, FLAC, 80 GB guard
+tail -f training_run.log
+```
+
+If the dataset is already prepared, skip prep with `--dataset-ready`:
+
+```bash
+bash run_full_training.sh --dataset-ready
+```
+
+The rest of this document explains each step the script runs, so you can also run them
+individually.
 
 ---
 
@@ -35,7 +56,9 @@ Everything lives under [src/quran_muaalem/data/](src/quran_muaalem/data/), [src/
 python3.14 -m uv sync --extra training
 ```
 
-This adds `soundfile`, `librosa`, `tqdm`, and `accelerate` on top of the base install. Verify with:
+This adds `soundfile`, `librosa`, `tqdm`, `accelerate`, `datasets` (<4.0), and
+`huggingface_hub` on top of the base install. (On a Linux server, `setup_recitations.py`
+installs this extra for you.) Verify with:
 
 ```bash
 python3.14 -m uv run python -c "import torch, librosa, soundfile; print(torch.__version__)"
@@ -51,15 +74,22 @@ python3.14 -m uv run python -c "import torch; print(torch.cuda.is_available(), t
 
 ## 3. Step 2 — Prepare the Dataset
 
-Download Common Voice Arabic, extract it under `datasets/common_voice_ar/`, then run the conversion script to produce `datasets/msa_speech/manifest.json`. Full instructions, expected layout, statistics, and troubleshooting are in **[DATASET.md](DATASET.md)**.
-
-Quick version:
+**Current source: `obadx/mualem-recitations-annotated`** — a large 16 kHz Arabic recitation
+corpus that ships audio + Quranic text but no phoneme labels. Preparation streams it,
+phonemizes the `uthmani` field into the 35-class MSA inventory, and writes
+`datasets/msa_speech/manifest.json` (same schema the trainer already reads). The
+`setup_recitations.py` bootstrap installs the training extra then runs the prep module:
 
 ```bash
-python3.14 -m uv run python -m quran_muaalem.data.prepare_common_voice
+# smoke run (streams ~50 rows, no full download)
+python3 setup_recitations.py --configs moshaf_0.0 --max-total 50
+
+# a real subset / the full corpus (FLAC halves disk; --max-disk-gb guards a quota)
+python3 setup_recitations.py --skip-install --configs all --max-samples-per-config 5000 --audio-format flac
 ```
 
-After this step you should have ~49,601 samples / 17.4 h split 70 / 15 / 15.
+Full instructions, the config/scope flags, disk-footprint guidance, and the legacy
+Common Voice path are in **[DATASET.md](DATASET.md)**.
 
 ---
 
@@ -91,25 +121,51 @@ The entry point is [train_msa_simple.py](train_msa_simple.py), which delegates t
 | `--lr` | `1e-4` | Initial learning rate (cosine decay over `--epochs`). |
 | `--accumulation_steps` | `1` | Gradient accumulation. |
 | `--device` | `cuda` | `cuda` or `cpu`. Auto-falls back to CPU if no GPU. |
-| `--num_workers` | `0` | DataLoader workers. Keep `0` on Windows. |
+| `--gpu` | `None` | CUDA device index to pin to. If omitted (and `--device cuda`), the GPU with the **most free memory** is auto-selected — handy on shared multi-GPU boxes, especially where `nvidia-smi` is unavailable. |
+| `--num_workers` | `0` | DataLoader workers. Keep `0` on Windows; 2–4 is fine on Linux. |
 | `--max_samples` | `None` | Cap the train/val sets. Useful for quick smoke tests. |
+
+At startup with `--device cuda`, training prints the chosen device and its free/total
+memory (via `torch.cuda.mem_get_info`), so you can monitor even without `nvidia-smi`.
 
 ### Recommended GPU command
 
 ```bash
-# 4 GB GPU (e.g. RTX 2050) — keep activations small, accumulate gradients.
-python3.14 -m uv run python train_msa_simple.py --model_name checkpoints/msa_model_adapted --device cuda --epochs 20 --batch_size 1 --accumulation_steps 4 --lr 1e-4 --output_dir checkpoints/msa_model_v1
+# Big GPU (e.g. RTX A6000, 48 GB) — auto-picks a free card, large batch.
+python3 train_msa_simple.py --model_name checkpoints/msa_model_adapted \
+    --device cuda --epochs 20 --batch_size 32 --num_workers 4 --output_dir checkpoints/msa_model_v1
 
-# 8+ GB GPU — drop the accumulation, raise batch size.
-python3.14 -m uv run python train_msa_simple.py --model_name checkpoints/msa_model_adapted --device cuda --epochs 20 --batch_size 4 --lr 1e-4 --output_dir checkpoints/msa_model_v1
+# Small GPU (e.g. 4 GB) — keep activations small, accumulate gradients.
+python3 train_msa_simple.py --model_name checkpoints/msa_model_adapted \
+    --device cuda --epochs 20 --batch_size 1 --accumulation_steps 4 --output_dir checkpoints/msa_model_v1
 ```
 
-Because the encoder is frozen, the GPU memory footprint is dominated by **activations** during the forward pass, not by optimizer state. `batch_size 1 + accumulation_steps 4` keeps activations small while preserving an effective batch size of 4.
+Because the encoder is frozen, GPU memory is dominated by **activations** during the
+forward pass, not optimizer state. On a small card, `batch_size 1 + accumulation_steps 4`
+keeps activations small while preserving an effective batch size of 4. Pin a specific
+card with `--gpu N` (e.g. `--gpu 5`).
+
+### Thread-limited servers (OpenBLAS / nproc)
+
+Some GPU boxes ship a low `RLIMIT_NPROC`, which makes OpenBLAS die at import
+(`pthread_create failed`) and starves the HF download stack. Run the torch-heavy steps
+through [`run_msa.sh`](run_msa.sh), which raises the soft limit and forces single-threaded
+BLAS before exec'ing your command:
+
+```bash
+bash run_msa.sh python3 train_msa_simple.py --model_name checkpoints/msa_model_adapted \
+    --device cuda --epochs 20 --batch_size 32 --num_workers 4
+```
+
+It respects thread vars you set yourself, so `OPENBLAS_NUM_THREADS=8 bash run_msa.sh ...`
+gives the CPU-side ops more threads. (`run_full_training.sh` already wraps every step this
+way.)
 
 ### Quick CPU smoke test (5 minutes)
 
 ```bash
-python3.14 -m uv run python train_msa_simple.py --model_name checkpoints/msa_model_adapted --device cpu --epochs 1 --batch_size 1 --max_samples 100
+python3 train_msa_simple.py --model_name checkpoints/msa_model_adapted \
+    --device cpu --epochs 1 --batch_size 1 --max_samples 100
 ```
 
 This validates the whole pipeline end-to-end without committing to a real training run.
@@ -195,8 +251,12 @@ checkpoints/msa_model_v1/
 
 | File | Role |
 |---|---|
-| [src/quran_muaalem/data/prepare_common_voice.py](src/quran_muaalem/data/prepare_common_voice.py) | TSV → WAV + phoneme manifest. |
+| [src/quran_muaalem/data/prepare_recitations.py](src/quran_muaalem/data/prepare_recitations.py) | **Current** prep: stream recitations dataset → WAV/FLAC + phoneme manifest. |
+| [src/quran_muaalem/data/prepare_common_voice.py](src/quran_muaalem/data/prepare_common_voice.py) | Legacy prep (Common Voice); supplies the shared `ArabicToPhonemes` map. |
+| [setup_recitations.py](setup_recitations.py) | Bootstrap: install training extra + run the recitations prep. |
 | [src/quran_muaalem/data/msa_dataset.py](src/quran_muaalem/data/msa_dataset.py) | `MSAPhonemeDataset` and `get_data_loaders`. |
 | [src/quran_muaalem/modeling/adapt_model_for_msa.py](src/quran_muaalem/modeling/adapt_model_for_msa.py) | One-shot head resize: 43 → 35. |
-| [src/quran_muaalem/training/train_msa.py](src/quran_muaalem/training/train_msa.py) | `CTCTrainer` + CLI `main()`. |
+| [src/quran_muaalem/training/train_msa.py](src/quran_muaalem/training/train_msa.py) | `CTCTrainer` + CLI `main()` (with `--gpu` auto-select). |
 | [train_msa_simple.py](train_msa_simple.py) | Thin wrapper that calls `train_msa.main`. |
+| [run_msa.sh](run_msa.sh) | Env wrapper for torch-heavy steps on thread-limited servers. |
+| [run_full_training.sh](run_full_training.sh) | One-command, self-detaching prep → adapt → train pipeline. |

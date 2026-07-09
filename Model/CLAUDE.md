@@ -221,8 +221,11 @@ These are non-obvious calls that came out of past debugging — they're not deri
 | MSA vocab / tokenizer | [src/quran_muaalem/modeling/msa_vocab.py](src/quran_muaalem/modeling/msa_vocab.py), [msa_tokenizer.py](src/quran_muaalem/modeling/msa_tokenizer.py) |
 | MSA head resize | [src/quran_muaalem/modeling/adapt_model_for_msa.py](src/quran_muaalem/modeling/adapt_model_for_msa.py) |
 | MSA dataset / data prep | [src/quran_muaalem/data/](src/quran_muaalem/data/) |
-| MSA trainer | [src/quran_muaalem/training/train_msa.py](src/quran_muaalem/training/train_msa.py) |
+| MSA trainer (with `--gpu` auto-select) | [src/quran_muaalem/training/train_msa.py](src/quran_muaalem/training/train_msa.py) |
 | Train entry point | [train_msa_simple.py](train_msa_simple.py) |
+| Dataset prep bootstrap (Linux) | [setup_recitations.py](setup_recitations.py) |
+| Server env wrapper (BLAS/nproc) | [run_msa.sh](run_msa.sh) |
+| One-command pipeline (prep→adapt→train) | [run_full_training.sh](run_full_training.sh) |
 | MSA serving (API + UI + helpers) | [src/quran_muaalem/msa/](src/quran_muaalem/msa/) |
 | Pytest config | [tests/conftest.py](tests/conftest.py) |
 | Runtime config | [.env](.env), [pyproject.toml](pyproject.toml) |
