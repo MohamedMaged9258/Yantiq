@@ -17,6 +17,8 @@
 #   --configs LIST         comma list or 'all'            (default: all)
 #   --max-per-config N     cap samples per reciter; 0/none = uncapped  (default: 5000)
 #   --text-field FIELD     uthmani | imlaey              (default: uthmani)
+#   --audio-format FMT     wav | flac (flac ~halves disk) (default: flac)
+#   --max-disk-gb N        stop ingest at N GB of audio (quota guard); 0=off (default: 80)
 #   --epochs N             training epochs               (default: 20)
 #   --batch-size N         batch size                    (default: 32)
 #   --num-workers N        dataloader workers            (default: 4)
@@ -35,6 +37,8 @@ cd "$PROJECT_DIR"
 CONFIGS="all"
 MAX_PER_CONFIG="5000"
 TEXT_FIELD="uthmani"
+AUDIO_FORMAT="flac"
+MAX_DISK_GB="80"
 EPOCHS="20"
 BATCH_SIZE="32"
 NUM_WORKERS="4"
@@ -52,6 +56,8 @@ while [ $# -gt 0 ]; do
     --configs)        CONFIGS="$2"; shift 2;;
     --max-per-config) MAX_PER_CONFIG="$2"; shift 2;;
     --text-field)     TEXT_FIELD="$2"; shift 2;;
+    --audio-format)   AUDIO_FORMAT="$2"; shift 2;;
+    --max-disk-gb)    MAX_DISK_GB="$2"; shift 2;;
     --epochs)         EPOCHS="$2"; shift 2;;
     --batch-size)     BATCH_SIZE="$2"; shift 2;;
     --num-workers)    NUM_WORKERS="$2"; shift 2;;
@@ -82,6 +88,7 @@ if [ "${RUN_FULL_TRAINING_DETACHED:-0}" != "1" ]; then
   echo "   PID:     $pid   (saved to $PID_FILE)"
   echo "   Log:     $PROJECT_DIR/$LOG_FILE"
   echo "   Configs: $CONFIGS   per-config cap: $MAX_PER_CONFIG   text: $TEXT_FIELD"
+  echo "   Audio:   $AUDIO_FORMAT   disk budget: ${MAX_DISK_GB} GB"
   echo ""
   echo " Monitor:  tail -f $LOG_FILE"
   echo " Running?  ps -p $pid  (or: pgrep -af train_msa_simple)"
@@ -101,6 +108,7 @@ echo "======================================================================"
 echo " MSA full training pipeline  |  started $(date -u) UTC"
 echo " project:     $PROJECT_DIR"
 echo " configs:     $CONFIGS   (per-config cap: $MAX_PER_CONFIG, text: $TEXT_FIELD)"
+echo " audio:       $AUDIO_FORMAT   (disk budget: ${MAX_DISK_GB} GB)"
 echo " training:    epochs=$EPOCHS batch=$BATCH_SIZE workers=$NUM_WORKERS"
 echo "              gpu=${GPU:-auto} threads=$TRAIN_THREADS output=$OUTPUT_DIR"
 echo "======================================================================"
@@ -115,9 +123,15 @@ if [ -n "$MAX_PER_CONFIG" ] && [ "$MAX_PER_CONFIG" != "0" ] && [ "$MAX_PER_CONFI
   cap_flag="--max-samples-per-config $MAX_PER_CONFIG"
 fi
 
+disk_flag=""
+if [ -n "$MAX_DISK_GB" ] && [ "$MAX_DISK_GB" != "0" ] && [ "$MAX_DISK_GB" != "off" ]; then
+  disk_flag="--max-disk-gb $MAX_DISK_GB"
+fi
+
 # shellcheck disable=SC2086
 python3 setup_recitations.py $install_flag \
-    --configs "$CONFIGS" --text-field "$TEXT_FIELD" $cap_flag
+    --configs "$CONFIGS" --text-field "$TEXT_FIELD" --audio-format "$AUDIO_FORMAT" \
+    $cap_flag $disk_flag
 
 # --- Step 2/3: adapt phoneme head 43 -> 35 (once) -------------------------------------
 echo ""; echo "### [2/3] Adapting phoneme head 43 -> 35 ($(date -u))"

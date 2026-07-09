@@ -57,7 +57,18 @@ python -m quran_muaalem.data.prepare_recitations --help   # all flags
 
 Key flags: `--configs` (comma list or `all`), `--text-field` (`uthmani`|`imlaey`),
 `--max-samples-per-config`, `--max-total`, `--val-ratio`/`--test-ratio`, `--seed`,
-`--min-duration`/`--max-duration`, `--output-dir`.
+`--min-duration`/`--max-duration`, `--output-dir`,
+`--audio-format` (`wav`|`flac`), `--max-disk-gb`.
+
+### Disk footprint on quota'd servers
+
+Each kept clip is materialized as 16 kHz audio in `<output-dir>/audio/`. WAV is uncompressed
+(~32 KB per second); **`--audio-format flac` roughly halves that** and the loader
+(`librosa.load`) reads FLAC transparently, so there's no downstream change. On a machine with
+a per-user disk **quota** (not just filesystem free space), guard it with **`--max-disk-gb N`**:
+ingest stops once the written audio reaches N GB and the manifest is finalized with whatever
+was collected. The prep run prints running audio size per config and a final total. Estimate
+your real per-sample size after a run with `du -sh datasets/msa_speech/audio`.
 
 > Note: `uthmani` carries orthography the 35-class map lacks (superscript alif, hamzat
 > wasl, madda, small letters, shadda, tanween) — those glyphs are simply dropped during
