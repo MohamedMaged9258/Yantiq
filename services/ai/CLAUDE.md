@@ -1,12 +1,21 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this
+directory. It covers `services/ai` only — it does **not** auto-load for work elsewhere in
+the monorepo. The root `CLAUDE.md` and [`../../docs/phase-0-baseline.md`](../../docs/phase-0-baseline.md)
+cover the wider project; the baseline is authoritative wherever the two disagree.
 
 ## What This Repo Is
 
-This tree (`Yantiq/Model`) is the **MSA fine-tuning stack**: it adapts a pre-trained
-Quranic phoneme model to recognize **Modern Standard Arabic** phonemes (**35 classes**
-instead of the upstream 43 Quranic classes) using Common Voice Arabic.
+This tree (`Yantiq/services/ai`, formerly `Yantiq/Model`) is the **MSA fine-tuning stack**:
+it adapts a pre-trained Quranic phoneme model to recognize **Modern Standard Arabic**
+phonemes (**35 classes** instead of the upstream 43 Quranic classes) using Common Voice
+Arabic.
+
+Within the Yantiq product it is the **AI service** of the architecture baseline: it returns
+phoneme-level evaluation data, and it never decides whether a child passed. Thresholds,
+stars, progression and child-facing wording all belong to `services/backend`. Keep that
+boundary clean — see [README.md](README.md) and baseline §9.1.
 
 It started life as the upstream `obadx/quran-muaalem` package (a Wav2Vec2-BERT +
 Multi-Level CTC model for Quranic recitation), but the tree was **stripped down to the
@@ -36,8 +45,14 @@ they disagree, and fix the doc while you're there.
 
 ## Common Commands
 
-All commands assume `cwd = C:\Users\Mohamed Maged\Projects\Yantiq\Model` and use `uv` as
-the package manager. The user's Python launcher is `python3.14`.
+All commands assume **`cwd = services/ai`** (the directory holding this file) and use `uv`
+as the package manager. The user's Python launcher is `python3.14`.
+
+The cwd is load-bearing, not a convention: almost every path in this service —
+`checkpoints/`, `datasets/`, the manifest's audio paths — is resolved against the current
+working directory rather than against the package. Running from the repo root silently
+looks in the wrong place. (Imports are unaffected: they are all relative, which is why the
+`Model/` → `services/ai/` move needed no source edits.)
 
 ### Install
 
@@ -66,18 +81,22 @@ python3.14 -m uv run quran-muaalem-msa-ui   # port 7870, Gradio UI (single page)
 
 The MSA UI expects the MSA API. Start the API first.
 
-Configuration is via `.env` at the repo root. The shipped values are:
+Configuration is by `MSA_`-prefixed environment variables, read by `MSASettings`
+([src/quran_muaalem/msa/settings.py](src/quran_muaalem/msa/settings.py)).
+[.env.example](.env.example) documents every variable and its default.
 
-```dotenv
-MSA_MODEL_PATH=checkpoints/msa_model_v1/best_model
-MSA_DEVICE=cpu
+**A `.env` file is not read automatically — an earlier version of this document claimed it
+was, and that was wrong.** `MSASettings` sets `env_prefix="MSA_"` but no `env_file`, and
+nothing in the package calls `load_dotenv()`. So the variables have to reach the process
+environment yourself:
+
+```powershell
+$env:MSA_DEVICE = "cpu"; $env:MSA_MODEL_PATH = "checkpoints/msa_model_v1/best_model"
 ```
 
-Only `MSA_`-prefixed variables are read (via `MSASettings`, [src/quran_muaalem/msa/settings.py](src/quran_muaalem/msa/settings.py)).
-`MSA_MODEL_PATH` matches the default in `settings.py` — keep `.env` in sync with whatever
-checkpoint dir actually exists after training. (Older `.env` files carried dead
-`ACCELERATOR`/`DTYPE`/`ENGINE_URL` keys left over from the removed upstream engine; nothing
-reads them, so they've been dropped.)
+The practical consequence: the effective device default is **`cuda`** (the `settings.py`
+default), not the `cpu` a `.env` file appears to set. Adding `env_file` is a tracked
+follow-up; until it lands, don't trust `.env` to do anything.
 
 ### Tests
 
@@ -188,8 +207,9 @@ These are non-obvious calls that came out of past debugging — they're not deri
 - **Encoder always frozen.** It was pre-trained on 53k hours; fine-tuning it on ~17 h of MSA hurts more than it helps. Plus optimizer state for 605 M params doesn't fit on a 4 GB GPU. Don't unfreeze without a strong reason.
 - **Inputs cast to `model.dtype` in `_forward_loss`.** The bf16/fp32 mismatch is silent in Python but blows up inside layer_norm. We deliberately do NOT use `torch.autocast` — it's redundant when model + inputs share a dtype, and it hid the dtype bug for a long time.
 - **Label-length clip uses `shape[1]`.** `features["input_features"]` is `(batch=1, T_feat, 160)` *before* the `squeeze(0)` further down. An older bug used `shape[0]` (always 1), so `max_label_len = max(1, 0-5) = 1` and **every label was clipped to a single phoneme**. Symptom: empty greedy decode regardless of training duration. Old `msa_model_v1` and the in-flight `msa_model_v2` were both products of this bug — unsalvageable.
-- **`MSA_MODEL_PATH` lives in `.env`.** It's currently in sync with the `settings.py` default (`checkpoints/msa_model_v1/best_model`). Keep the `.env` value in sync after each retrain rather than chasing whatever checkpoint dir exists.
-- **`.env` is MSA-only now.** The removed upstream engine read `ACCELERATOR`/`DTYPE`/`ENGINE_URL`; those keys are dead and were dropped. If you see them reappear, they're leftovers — nothing reads them.
+- **`MSA_MODEL_PATH` is the setting to keep current after each retrain.** The `settings.py` default is `checkpoints/msa_model_v1/best_model`; point it at whatever checkpoint dir actually exists rather than chasing the default. Set it in the environment — see the configuration note above about `.env` not being loaded.
+- **The old `ACCELERATOR`/`DTYPE`/`ENGINE_URL` keys are dead.** They belonged to the removed upstream engine; nothing reads them. If they reappear, they're leftovers.
+- **`.env` was untracked during the monorepo restructure** and replaced by `.env.example`. It held no secrets (only a model path and device), so no credential rotation was needed.
 - **MSA UI uses `gr.Audio(type="filepath")`, not `"numpy"`.** `type="numpy"` runs Gradio's pydub/ffmpeg path; `type="filepath"` ships the raw upload to the API, which decodes via librosa. Lets the system work without ffmpeg as long as inputs are WAV (microphone records as WAV; MP3 upload still needs system ffmpeg for the API's fallback decode).
 - **`MSAInference._logits` was promoted to a `diagnostics()` method.** The `/debug` endpoint uses it. Don't reach back into `_logits` from elsewhere — extend `diagnostics()` instead.
 - **`MSASettings` uses `protected_namespaces=()`.** Pydantic v2 reserves `model_*` field names; the user-facing setting is `model_path`, so we silence the warning rather than rename to something less natural.
@@ -220,4 +240,6 @@ These are non-obvious calls that came out of past debugging — they're not deri
 | Train entry point | [train_msa_simple.py](train_msa_simple.py) |
 | MSA serving (API + UI + helpers) | [src/quran_muaalem/msa/](src/quran_muaalem/msa/) |
 | Pytest config | [tests/conftest.py](tests/conftest.py) |
-| Runtime config | [.env](.env), [pyproject.toml](pyproject.toml) |
+| Runtime config | [.env.example](.env.example), [pyproject.toml](pyproject.toml) |
+| Service overview / HTTP surface | [README.md](README.md) |
+| Upstream project READMEs (attribution) | [docs/upstream-README.md](docs/upstream-README.md), [docs/upstream-README_EN.md](docs/upstream-README_EN.md) |
