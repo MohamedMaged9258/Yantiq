@@ -1,3 +1,9 @@
+# ---------------------------------------------------------------------------
+# Yantiq monorepo .gitignore
+# Layout: apps/ services/ contracts/ infra/ docs/ prototype-archive/
+# See docs/phase-0-baseline.md §15.3 for the cleanup rules this encodes.
+# ---------------------------------------------------------------------------
+
 # Dependencies
 node_modules/
 .pnp
@@ -7,11 +13,14 @@ node_modules/
 dist/
 build/
 out/
+.expo/
+.vite/
 
-# Environment variables
+# Environment variables — templates must stay tracked
 .env
 .env.local
 .env.*.local
+!.env.example
 
 # Logs
 logs/
@@ -22,8 +31,10 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# IDE
+# Editors / IDEs
 .vscode/
+.idea/
+*.iml
 *.swp
 *.swo
 
@@ -34,21 +45,26 @@ __pycache__/
 *.pyd
 .Python
 *.egg-info/
-dist/
 venv/
 .venv/
 env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
 
 # Jupyter
 .ipynb_checkpoints/
 
-# Model checkpoints & large files
+# ML artifacts — never commit weights, checkpoints, or datasets.
+# The directory rules matter: without them a checkpoint's config.json and
+# preprocessor_config.json are still committable even though the weights aren't.
+# NOTE: services/ai keys "is this a local path?" off the literal name
+# `checkpoints` (src/quran_muaalem/data/msa_dataset.py) — do not rename it.
+checkpoints/
+datasets/
 *.bin
 *.pt
 *.pth
 *.safetensors
 *.ckpt
 *.gguf
-
-/Prototype/node_modules
-/Prototype/client/node_modules

@@ -1,1 +1,0 @@
-import{setState as e,storage as t}from"./storage-CSc0t46S.js";import"./animations-CD3NMRZt.js";async function n(){e("accessToken",null),e("currentUser",null),e("activeChild",null),t.remove("rewards_state"),window.location.href="/index.html"}export{n as logout};
