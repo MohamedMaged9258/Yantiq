@@ -26,31 +26,34 @@ are preserved for attribution at [`docs/upstream-README.md`](docs/upstream-READM
 All commands assume **`cwd = services/ai`**. Nearly every path in this service resolves
 against the current working directory, so running from elsewhere silently looks for
 `checkpoints/` and `datasets/` in the wrong place. `uv` is the package manager; the
-project's Python launcher is `python3.14`.
+project's launcher is `python3.14`, but **pin the interpreter to 3.13 with `-p 3.13`**:
+`librosa` pulls in `numba`, and numba 0.61.2 caps at Python `<3.14`, so `uv sync` fails on
+3.14 for every extra. (`pyproject.toml` declares `>=3.11,<3.15`, which is more permissive
+than what actually resolves.)
 
 ```bash
 # Serving (API + Gradio UI)
-python3.14 -m uv sync --extra engine --extra ui
+python3.14 -m uv sync -p 3.13 --extra engine --extra ui
 
 # Training extras
-python3.14 -m uv sync --extra training
+python3.14 -m uv sync -p 3.13 --extra training
 
 # Test extras
-python3.14 -m uv sync --extra test
+python3.14 -m uv sync -p 3.13 --extra test
 ```
 
 Run the stack in two terminals, API first:
 
 ```bash
-python3.14 -m uv run quran-muaalem-msa-api   # port 8010
-python3.14 -m uv run quran-muaalem-msa-ui    # port 7870, talks to the API over HTTP
+python3.14 -m uv run -p 3.13 quran-muaalem-msa-api   # port 8010
+python3.14 -m uv run -p 3.13 quran-muaalem-msa-ui    # port 7870, talks to the API over HTTP
 ```
 
 Tests:
 
 ```bash
-python3.14 -m uv run pytest
-python3.14 -m uv run pytest --skip-slow   # skips model-loading tests
+python3.14 -m uv run -p 3.13 pytest
+python3.14 -m uv run -p 3.13 pytest --skip-slow   # skips model-loading tests
 ```
 
 `tests/` currently holds only `conftest.py`, which defines the `--skip-slow` flag and the

@@ -46,7 +46,14 @@ they disagree, and fix the doc while you're there.
 ## Common Commands
 
 All commands assume **`cwd = services/ai`** (the directory holding this file) and use `uv`
-as the package manager. The user's Python launcher is `python3.14`.
+as the package manager.
+
+**Use Python 3.13, via `-p 3.13`.** The launcher on this machine is `python3.14`, but the
+dependency tree does not support 3.14: `librosa` requires `numba`, and numba 0.61.2 (the
+pinned version) caps at `<3.14`. On 3.14 `uv sync` fails during the numba build with
+`Cannot install on Python version 3.14.6; only versions >=3.10,<3.14 are supported` — for
+every extra, since librosa is a base dependency. `pyproject.toml` says
+`requires-python = ">=3.11,<3.15"`, which is more permissive than what actually resolves.
 
 The cwd is load-bearing, not a convention: almost every path in this service —
 `checkpoints/`, `datasets/`, the manifest's audio paths — is resolved against the current
@@ -59,13 +66,13 @@ looks in the wrong place. (Imports are unaffected: they are all relative, which 
 ```bash
 # Runtime serving (MSA API + MSA UI). `engine` supplies FastAPI/uvicorn for the API;
 # `ui` supplies Gradio + httpx for the UI (msa/ui.py talks to the API over HTTP).
-python3.14 -m uv sync --extra engine --extra ui
+python3.14 -m uv sync -p 3.13 --extra engine --extra ui
 
 # Add the training extras for MSA fine-tuning
-python3.14 -m uv sync --extra training
+python3.14 -m uv sync -p 3.13 --extra training
 
 # For tests
-python3.14 -m uv sync --extra test
+python3.14 -m uv sync -p 3.13 --extra test
 ```
 
 The `engine`/`ui` extra names are inherited from the upstream layout; there is no longer
@@ -75,8 +82,8 @@ the MSA stack needs.
 ### Run the MSA stack (two terminals)
 
 ```bash
-python3.14 -m uv run quran-muaalem-msa-api  # port 8010, FastAPI + fine-tuned model
-python3.14 -m uv run quran-muaalem-msa-ui   # port 7870, Gradio UI (single page)
+python3.14 -m uv run -p 3.13 quran-muaalem-msa-api  # port 8010, FastAPI + fine-tuned model
+python3.14 -m uv run -p 3.13 quran-muaalem-msa-ui   # port 7870, Gradio UI (single page)
 ```
 
 The MSA UI expects the MSA API. Start the API first.
@@ -102,10 +109,10 @@ follow-up; until it lands, don't trust `.env` to do anything.
 
 ```bash
 # All tests
-python3.14 -m uv run pytest
+python3.14 -m uv run -p 3.13 pytest
 
 # Skip the slow / model-loading tests
-python3.14 -m uv run pytest --skip-slow
+python3.14 -m uv run -p 3.13 pytest --skip-slow
 ```
 
 `tests/` currently contains only `conftest.py`, which defines the custom `--skip-slow`
@@ -117,18 +124,18 @@ are no test modules yet — add them under `tests/` and mark model-loading tests
 
 ```bash
 # 1. Prepare Common Voice Arabic into datasets/msa_speech/
-python3.14 -m uv run python -m quran_muaalem.data.prepare_common_voice
+python3.14 -m uv run -p 3.13 python -m quran_muaalem.data.prepare_common_voice
 
 # 2. Resize phoneme head 43 -> 35 (one-shot, produces checkpoints/msa_model_adapted/)
-python3.14 -m uv run python -c "from src.quran_muaalem.modeling.adapt_model_for_msa import adapt_model_for_msa; adapt_model_for_msa()"
+python3.14 -m uv run -p 3.13 python -c "from src.quran_muaalem.modeling.adapt_model_for_msa import adapt_model_for_msa; adapt_model_for_msa()"
 
 # 3. Quick CPU smoke test (~10-25 min)
-python3.14 -m uv run python train_msa_simple.py \
+python3.14 -m uv run -p 3.13 python train_msa_simple.py \
     --model_name checkpoints/msa_model_adapted \
     --device cpu --epochs 1 --batch_size 1 --max_samples 100
 
 # 4. Full training (GPU recommended)
-python3.14 -m uv run python train_msa_simple.py \
+python3.14 -m uv run -p 3.13 python train_msa_simple.py \
     --model_name checkpoints/msa_model_adapted \
     --device cuda --epochs 20 --batch_size 4
 ```
@@ -219,7 +226,7 @@ These are non-obvious calls that came out of past debugging — they're not deri
 
 ## Environment Notes
 
-- **Shell**: PowerShell is the primary shell (a Bash tool is also available for POSIX scripts). Heavy PyTorch operations (loading the 2.3 GB MSA-adapted checkpoint, full CPU training) can segfault when invoked through the bash bridge in this environment. PowerShell is the more reliable shell for long-running training/inference. Reach for `python3.14 -m uv run python <script>` from PowerShell when stability matters.
+- **Shell**: PowerShell is the primary shell (a Bash tool is also available for POSIX scripts). Heavy PyTorch operations (loading the 2.3 GB MSA-adapted checkpoint, full CPU training) can segfault when invoked through the bash bridge in this environment. PowerShell is the more reliable shell for long-running training/inference. Reach for `python3.14 -m uv run -p 3.13 python <script>` from PowerShell when stability matters.
 - **Path style**: prefer forward slashes in arguments (`checkpoints/msa_model_adapted`); both shells accept them.
 - **Console encoding**: Windows `cp1252` will choke on Unicode emoji (✅, ❌) and arrows (`→`) in `print` statements. When adding stdout, use ASCII or call `sys.stdout.reconfigure(encoding='utf-8')`.
 - **Module-level prints**: don't add them — `msa_vocab.py` used to `print()` on every import, which was noisy. Inventory introspection should be a `__main__` block, not a side effect.

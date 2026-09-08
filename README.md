@@ -54,15 +54,18 @@ diagrams.
 
 ### `services/ai` — working
 
-The only component that currently runs. Requires `uv`, Python 3.11–3.14, and `ffmpeg` on
+The only component that currently runs. Requires `uv`, **Python 3.13**, and `ffmpeg` on
 `PATH` for compressed audio formats.
 
 ```bash
 cd services/ai
-uv sync --extra engine --extra ui
-uv run quran-muaalem-msa-api    # port 8010
-uv run quran-muaalem-msa-ui     # port 7870 (start the API first)
+uv sync -p 3.13 --extra engine --extra ui
+uv run -p 3.13 quran-muaalem-msa-api    # port 8010
+uv run -p 3.13 quran-muaalem-msa-ui     # port 7870 (start the API first)
 ```
+
+Pin the interpreter: `librosa` pulls in `numba`, which caps at Python `<3.14`, so a sync on
+3.14 fails for every extra even though `pyproject.toml` declares `>=3.11,<3.15`.
 
 Run everything from `services/ai` — its paths resolve against the current working
 directory. Full detail in [`services/ai/README.md`](services/ai/README.md).
