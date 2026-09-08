@@ -1,6 +1,6 @@
 <div align="center">
 
-**English** | [العربية](README.md)
+**English** | [العربية](upstream-README.md)
 
 </div>
 
@@ -58,10 +58,10 @@ This branch additionally includes a fine-tuning pipeline that adapts the upstrea
 
 | Doc | Topic |
 |---|---|
-| [MODEL.md](MODEL.md) | Architecture, the 35-token MSA inventory, the head-resize procedure |
-| [DATASET.md](DATASET.md) | Common Voice Arabic download, extraction, and manifest preparation |
-| [TRAINING.md](TRAINING.md) | Fine-tuning pipeline (assumes the manifest is ready) |
-| [RUNNING.md](RUNNING.md) | Install + serve both stacks (Quranic + MSA) |
+| [MODEL.md](../MODEL.md) | Architecture, the 35-token MSA inventory, the head-resize procedure |
+| [DATASET.md](../DATASET.md) | Common Voice Arabic download, extraction, and manifest preparation |
+| [TRAINING.md](../TRAINING.md) | Fine-tuning pipeline (assumes the manifest is ready) |
+| [RUNNING.md](../RUNNING.md) | Install + serve both stacks (Quranic + MSA) |
 
 Quick start for the MSA stack:
 
@@ -83,7 +83,7 @@ python3.14 -m uv run quran-muaalem-msa-ui    # :7870
 
 Innovative architecture: Multi-level CTC, where each level trains on a specific aspect.
 
-![multi-lvel-ctc](assetsigures/mutli-level-ctc.png)
+![multi-lvel-ctc](../assets/figures/mutli-level-ctc.png)
 
 ## Development Steps
 

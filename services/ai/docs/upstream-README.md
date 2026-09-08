@@ -1,6 +1,6 @@
 <div align="center">
 
-[English](README_EN.md) | **العربية**
+[English](upstream-README_EN.md) | **العربية**
 
 </div>
 
@@ -57,10 +57,10 @@ This branch additionally includes a fine-tuning pipeline that adapts the upstrea
 
 | Doc | Topic |
 |---|---|
-| [MODEL.md](MODEL.md) | Architecture, the 35-token MSA inventory, the head-resize procedure |
-| [DATASET.md](DATASET.md) | Common Voice Arabic download, extraction, and manifest preparation |
-| [TRAINING.md](TRAINING.md) | Fine-tuning pipeline (assumes the manifest is ready) |
-| [RUNNING.md](RUNNING.md) | Install + serve both stacks (Quranic + MSA) |
+| [MODEL.md](../MODEL.md) | Architecture, the 35-token MSA inventory, the head-resize procedure |
+| [DATASET.md](../DATASET.md) | Common Voice Arabic download, extraction, and manifest preparation |
+| [TRAINING.md](../TRAINING.md) | Fine-tuning pipeline (assumes the manifest is ready) |
+| [RUNNING.md](../RUNNING.md) | Install + serve both stacks (Quranic + MSA) |
 
 Quick start for the MSA stack:
 
@@ -81,7 +81,7 @@ python3.14 -m uv run quran-muaalem-msa-ui    # :7870
 ## المعمارية
 معمارية مبتكرة: CTC متعدد المستويات. حيث كل مستوي يتدرب على وجه معين
 
-![multi-lvel-ctc](assetsigures/mutli-level-ctc.png)
+![multi-lvel-ctc](../assets/figures/mutli-level-ctc.png)
 
 ## الخطوات المختصرة للتطوير
 
