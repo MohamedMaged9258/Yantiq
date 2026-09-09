@@ -6,7 +6,27 @@ Owner: Backend + admin developers.
 
 Entry: Phase 01 runtime and test database.
 
+## Status
+
+| Status | Owner | Branch / PR | Updated |
+|---|---|---|---|
+| Not started | Backend + admin developers | — | 2026-09-09 |
+
+`Not started` → `In progress` → `Blocked` / `In review` → `Completed`. Mark this phase Completed only when every exit-acceptance box below is ticked. Update the [dashboard](../README.md) in the same pull request.
+
 ## Work packages
+
+| ID | Work package | Status | Branch / PR |
+|---|---|---|---|
+| P02-01 | Guardian bootstrap | Not started | — |
+| P02-02 | Child ownership | Not started | — |
+| P02-03 | Lifecycle | Not started | — |
+| P02-04 | Curriculum APIs | Not started | — |
+| P02-05 | Admin editing | Not started | — |
+| P02-06 | Binary reference media | Not started | — |
+| P02-07 | Revision model | Not started | — |
+
+Each work package is described in full below. Change a row's status as the work moves, and reflect the phase-level roll-up on the [dashboard](../README.md).
 
 ### P02-01 — Guardian bootstrap
 

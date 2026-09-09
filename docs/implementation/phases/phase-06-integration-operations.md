@@ -6,7 +6,27 @@ Owner: Backend/platform owner; all developers verify.
 
 Entry: End-to-end mock journey; phase 05 needed for real integration.
 
+## Status
+
+| Status | Owner | Branch / PR | Updated |
+|---|---|---|---|
+| Not started | Backend/platform owner; all developers verify | — | 2026-09-09 |
+
+`Not started` → `In progress` → `Blocked` / `In review` → `Completed`. Mark this phase Completed only when every exit-acceptance box below is ticked. Update the [dashboard](../README.md) in the same pull request.
+
 ## Work packages
+
+| ID | Work package | Status | Branch / PR |
+|---|---|---|---|
+| P06-01 | Private networking | Not started | — |
+| P06-02 | Deployment | Not started | — |
+| P06-03 | Secrets/auth | Not started | — |
+| P06-04 | Retention/backup | Not started | — |
+| P06-05 | Monitoring | Not started | — |
+| P06-06 | Failure drills | Not started | — |
+| P06-07 | Release rollback | Not started | — |
+
+Each work package is described in full below. Change a row's status as the work moves, and reflect the phase-level roll-up on the [dashboard](../README.md).
 
 ### P06-01 — Private networking
 

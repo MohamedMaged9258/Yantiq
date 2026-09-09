@@ -11,6 +11,14 @@ Graduation project, targeting a working delivery by December 2026.
 > baseline.** Where any document, diagram, or piece of code conflicts with it, the baseline
 > wins until that file is corrected. Read it before starting work.
 
+## Implementation progress
+
+Start here: [Implementation dashboard](docs/implementation/README.md)
+
+It tracks the current phase and its objective, the status of phases 00-07, active tasks with
+their owners and branches, the open decisions blocking progress, and what has actually been
+finished. Update it in the same pull request that changes phase or task state.
+
 ## Repository layout
 
 ```

@@ -6,7 +6,26 @@ Owner: Product owner + backend lead + AI owner.
 
 Entry: Existing monorepo PR #1 and the planning documents under docs/implementation.
 
+## Status
+
+| Status | Owner | Branch / PR | Updated |
+|---|---|---|---|
+| In progress | Product owner + backend lead + AI owner | — | 2026-09-09 |
+
+`Not started` → `In progress` → `Blocked` / `In review` → `Completed`. Mark this phase Completed only when every exit-acceptance box below is ticked. Update the [dashboard](../README.md) in the same pull request.
+
 ## Work packages
+
+| ID | Work package | Status | Branch / PR |
+|---|---|---|---|
+| P00-01 | Review decision ledger | In progress | — |
+| P00-02 | Agree data ownership | Not started | — |
+| P00-03 | Freeze AI contract | Blocked | — |
+| P00-04 | Freeze application contract | In progress | — |
+| P00-05 | Seed acceptance scenarios | Not started | — |
+| P00-06 | Approve implementation order | Not started | — |
+
+Each work package is described in full below. Change a row's status as the work moves, and reflect the phase-level roll-up on the [dashboard](../README.md).
 
 ### P00-01 — Review decision ledger
 

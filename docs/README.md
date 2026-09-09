@@ -9,9 +9,11 @@
    success criteria, risks, and deliverables.
 3. **[`architecture/diagrams.md`](architecture/diagrams.md)** — the 17 software diagrams
    required as a project deliverable.
-4. **[`implementation/README.md`](implementation/README.md)** — the phased implementation
-   plan, decision ledger, and the contracts it proposes. **Proposed, not approved:** where
-   it conflicts with the baseline, the baseline wins until Phase 00 says otherwise.
+4. **[`implementation/README.md`](implementation/README.md)** — the **implementation
+   dashboard**: current phase, phase 00-07 status, active tasks, blockers, next steps and
+   completion evidence, plus the plan and decision ledger behind them. This is the starting
+   point for day-to-day work. **Proposed, not approved:** where the plan conflicts with the
+   baseline, the baseline wins until Phase 00 says otherwise.
 
 ## Directory map
 
@@ -23,7 +25,7 @@
 | `decisions/` | Architecture decision records |
 | `api/` | API conventions, privacy constraints, and the operation map |
 | `testing/` | Test strategy and coverage expectations |
-| `implementation/` | The phased implementation plan, decision ledger, and per-phase guides |
+| `implementation/` | The implementation dashboard (status, tasks, blockers), decision ledger, and per-phase guides |
 | `database/` | Proposed persistence design and reference DDL — not executed migrations |
 | `delivery/` | Backlog and graduation handoff |
 | `operations/` | Home Lab runbook |

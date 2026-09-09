@@ -6,7 +6,26 @@ Owner: Backend/platform developer; mobile/admin developers in parallel.
 
 Entry: Phase 00 draft accepted for development; blocking decisions recorded.
 
+## Status
+
+| Status | Owner | Branch / PR | Updated |
+|---|---|---|---|
+| Not started | Backend/platform developer; mobile/admin developers in parallel | — | 2026-09-09 |
+
+`Not started` → `In progress` → `Blocked` / `In review` → `Completed`. Mark this phase Completed only when every exit-acceptance box below is ticked. Update the [dashboard](../README.md) in the same pull request.
+
 ## Work packages
+
+| ID | Work package | Status | Branch / PR |
+|---|---|---|---|
+| P01-01 | Audit existing scaffold | Not started | — |
+| P01-02 | Backend shell | Not started | — |
+| P01-03 | Local database/migrations | Not started | — |
+| P01-04 | UI shells | Not started | — |
+| P01-05 | Mock AI | Not started | — |
+| P01-06 | CI gates | Not started | — |
+
+Each work package is described in full below. Change a row's status as the work moves, and reflect the phase-level roll-up on the [dashboard](../README.md).
 
 ### P01-01 — Audit existing scaffold
 

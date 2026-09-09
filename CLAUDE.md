@@ -72,6 +72,11 @@ exist rather than writing files that imply it does.
   (§3). Anything mentioning five levels is stale.
 - All user-facing strings go through centralized translation keys, Arabic and English, with
   RTL and LTR verified.
+- Phase and task state lives in [`docs/implementation/README.md`](docs/implementation/README.md)
+  (the dashboard) and in the phase files under `docs/implementation/phases/`. Update both in
+  the same PR that changes the state, using only these statuses: `Not started`, `In progress`,
+  `Blocked`, `In review`, `Completed`. A phase is `Completed` only when every exit-acceptance
+  box in its own file is ticked.
 
 ## Git workflow
 

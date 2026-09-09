@@ -6,7 +6,26 @@ Owner: Owner + all developers + AI/education reviewer.
 
 Entry: Phase 06 security/restore checks; phase 05 real-scoring gate.
 
+## Status
+
+| Status | Owner | Branch / PR | Updated |
+|---|---|---|---|
+| Not started | Owner + all developers + AI/education reviewer | — | 2026-09-09 |
+
+`Not started` → `In progress` → `Blocked` / `In review` → `Completed`. Mark this phase Completed only when every exit-acceptance box below is ticked. Update the [dashboard](../README.md) in the same pull request.
+
 ## Work packages
+
+| ID | Work package | Status | Branch / PR |
+|---|---|---|---|
+| P07-01 | Acceptance matrix | Not started | — |
+| P07-02 | Controlled usability | Not started | — |
+| P07-03 | Quality/performance report | Not started | — |
+| P07-04 | Release candidate | Not started | — |
+| P07-05 | Handoff | Not started | — |
+| P07-06 | iOS follow-up | Not started | — |
+
+Each work package is described in full below. Change a row's status as the work moves, and reflect the phase-level roll-up on the [dashboard](../README.md).
 
 ### P07-01 — Acceptance matrix
 

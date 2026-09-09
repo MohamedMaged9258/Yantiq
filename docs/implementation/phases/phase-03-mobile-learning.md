@@ -6,7 +6,27 @@ Owner: Mobile developer; backend supports integration.
 
 Entry: Phase 02 identity, catalog and media APIs; mock evaluation endpoint can be under development.
 
+## Status
+
+| Status | Owner | Branch / PR | Updated |
+|---|---|---|---|
+| Not started | Mobile developer; backend supports integration | — | 2026-09-09 |
+
+`Not started` → `In progress` → `Blocked` / `In review` → `Completed`. Mark this phase Completed only when every exit-acceptance box below is ticked. Update the [dashboard](../README.md) in the same pull request.
+
 ## Work packages
+
+| ID | Work package | Status | Branch / PR |
+|---|---|---|---|
+| P03-01 | Navigation and identity | Not started | — |
+| P03-02 | Localization/layout | Not started | — |
+| P03-03 | Caching | Not started | — |
+| P03-04 | Offline behavior | Not started | — |
+| P03-05 | Recorder | Not started | — |
+| P03-06 | Waiting/results | Not started | — |
+| P03-07 | Guardian views | Not started | — |
+
+Each work package is described in full below. Change a row's status as the work moves, and reflect the phase-level roll-up on the [dashboard](../README.md).
 
 ### P03-01 — Navigation and identity
 

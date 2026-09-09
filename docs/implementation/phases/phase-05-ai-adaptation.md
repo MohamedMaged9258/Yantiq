@@ -6,7 +6,27 @@ Owner: Separate AI owner; backend contract reviewer.
 
 Entry: Can run alongside phases 01–04; real hardware needed only for inference validation.
 
+## Status
+
+| Status | Owner | Branch / PR | Updated |
+|---|---|---|---|
+| Not started | Separate AI owner; backend contract reviewer | — | 2026-09-09 |
+
+`Not started` → `In progress` → `Blocked` / `In review` → `Completed`. Mark this phase Completed only when every exit-acceptance box below is ticked. Update the [dashboard](../README.md) in the same pull request.
+
 ## Work packages
+
+| ID | Work package | Status | Branch / PR |
+|---|---|---|---|
+| P05-01 | Capability audit | Not started | — |
+| P05-02 | Adapter | Not started | — |
+| P05-03 | Metric/scoring | Not started | — |
+| P05-04 | Evaluation data | Not started | — |
+| P05-05 | Hardware and latency | Not started | — |
+| P05-06 | Quality gate | Not started | — |
+| P05-07 | Contract conformance | Not started | — |
+
+Each work package is described in full below. Change a row's status as the work moves, and reflect the phase-level roll-up on the [dashboard](../README.md).
 
 ### P05-01 — Capability audit
 

@@ -6,7 +6,26 @@ Owner: Backend developer with mobile/admin collaboration.
 
 Entry: Phase 02 domain state and phase 03 submission UX; deterministic mock.
 
+## Status
+
+| Status | Owner | Branch / PR | Updated |
+|---|---|---|---|
+| Not started | Backend developer with mobile/admin collaboration | — | 2026-09-09 |
+
+`Not started` → `In progress` → `Blocked` / `In review` → `Completed`. Mark this phase Completed only when every exit-acceptance box below is ticked. Update the [dashboard](../README.md) in the same pull request.
+
 ## Work packages
+
+| ID | Work package | Status | Branch / PR |
+|---|---|---|---|
+| P04-01 | Orchestration endpoint | Not started | — |
+| P04-02 | Best transaction | Not started | — |
+| P04-03 | Guided progression | Not started | — |
+| P04-04 | Stars and badges | Not started | — |
+| P04-05 | Aggregates | Not started | — |
+| P04-06 | Concurrency/failure | Not started | — |
+
+Each work package is described in full below. Change a row's status as the work moves, and reflect the phase-level roll-up on the [dashboard](../README.md).
 
 ### P04-01 — Orchestration endpoint
 
