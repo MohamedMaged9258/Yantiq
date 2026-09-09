@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "generated_at": "2026-09-09T00:00:00Z",
+  "levels": [
+    {
+      "id": "00000000-0000-4000-8000-000000000300",
+      "position": 1,
+      "title": {
+        "ar": "أصوات الحروف",
+        "en": "Basic letter sounds"
+      }
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000301",
+      "position": 2,
+      "title": {
+        "ar": "أشكال الحروف والحركات",
+        "en": "Letter forms and diacritics"
+      }
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000302",
+      "position": 3,
+      "title": {
+        "ar": "الكلمات",
+        "en": "Words"
+      }
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000303",
+      "position": 4,
+      "title": {
+        "ar": "الجمل القصيرة",
+        "en": "Short sentences"
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "00000000-0000-4000-8000-000000000400",
+      "level_id": "00000000-0000-4000-8000-000000000300",
+      "position": 1,
+      "title": {
+        "ar": "مرحلة تجريبية",
+        "en": "Mock demonstration stage"
+      },
+      "active": true
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000401",
+      "level_id": "00000000-0000-4000-8000-000000000301",
+      "position": 1,
+      "title": {
+        "ar": "مرحلة تجريبية",
+        "en": "Mock demonstration stage"
+      },
+      "active": true
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000402",
+      "level_id": "00000000-0000-4000-8000-000000000302",
+      "position": 1,
+      "title": {
+        "ar": "مرحلة تجريبية",
+        "en": "Mock demonstration stage"
+      },
+      "active": true
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000403",
+      "level_id": "00000000-0000-4000-8000-000000000303",
+      "position": 1,
+      "title": {
+        "ar": "مرحلة تجريبية",
+        "en": "Mock demonstration stage"
+      },
+      "active": true
+    }
+  ],
+  "lessons": [
+    {
+      "id": "00000000-0000-4000-8000-000000000500",
+      "stage_id": "00000000-0000-4000-8000-000000000400",
+      "position": 1,
+      "title": {
+        "ar": "درس تجريبي",
+        "en": "Mock demonstration lesson"
+      },
+      "instructions": {
+        "ar": "استمع ثم اقرأ",
+        "en": "Listen, then read"
+      },
+      "active": true
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000501",
+      "stage_id": "00000000-0000-4000-8000-000000000401",
+      "position": 1,
+      "title": {
+        "ar": "درس تجريبي",
+        "en": "Mock demonstration lesson"
+      },
+      "instructions": {
+        "ar": "استمع ثم اقرأ",
+        "en": "Listen, then read"
+      },
+      "active": true
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000502",
+      "stage_id": "00000000-0000-4000-8000-000000000402",
+      "position": 1,
+      "title": {
+        "ar": "درس تجريبي",
+        "en": "Mock demonstration lesson"
+      },
+      "instructions": {
+        "ar": "استمع ثم اقرأ",
+        "en": "Listen, then read"
+      },
+      "active": true
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000503",
+      "stage_id": "00000000-0000-4000-8000-000000000403",
+      "position": 1,
+      "title": {
+        "ar": "درس تجريبي",
+        "en": "Mock demonstration lesson"
+      },
+      "instructions": {
+        "ar": "استمع ثم اقرأ",
+        "en": "Listen, then read"
+      },
+      "active": true
+    }
+  ],
+  "exercises": [
+    {
+      "id": "00000000-0000-4000-8000-000000000010",
+      "revision_id": "00000000-0000-4000-8000-000000000020",
+      "assessment_key": "00000000-0000-4000-8000-000000000021",
+      "lesson_id": "00000000-0000-4000-8000-000000000500",
+      "position": 1,
+      "type": "letter",
+      "title": {
+        "ar": "تدريب تجريبي",
+        "en": "Mock exercise"
+      },
+      "instructions": {
+        "ar": "اقرأ بصوت واضح",
+        "en": "Read clearly"
+      },
+      "expected_text": "بَ",
+      "language": "ar-MSA",
+      "pass_score": 75,
+      "required": true,
+      "active": true,
+      "image_media_id": null,
+      "reference_audio_media_id": null
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000011",
+      "revision_id": "00000000-0000-4000-8000-000000000022",
+      "assessment_key": "00000000-0000-4000-8000-000000000023",
+      "lesson_id": "00000000-0000-4000-8000-000000000501",
+      "position": 1,
+      "type": "letter",
+      "title": {
+        "ar": "تدريب تجريبي",
+        "en": "Mock exercise"
+      },
+      "instructions": {
+        "ar": "اقرأ بصوت واضح",
+        "en": "Read clearly"
+      },
+      "expected_text": "بِ",
+      "language": "ar-MSA",
+      "pass_score": 75,
+      "required": true,
+      "active": true,
+      "image_media_id": null,
+      "reference_audio_media_id": null
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000012",
+      "revision_id": "00000000-0000-4000-8000-000000000024",
+      "assessment_key": "00000000-0000-4000-8000-000000000025",
+      "lesson_id": "00000000-0000-4000-8000-000000000502",
+      "position": 1,
+      "type": "word",
+      "title": {
+        "ar": "تدريب تجريبي",
+        "en": "Mock exercise"
+      },
+      "instructions": {
+        "ar": "اقرأ بصوت واضح",
+        "en": "Read clearly"
+      },
+      "expected_text": "بَاب",
+      "language": "ar-MSA",
+      "pass_score": 75,
+      "required": true,
+      "active": true,
+      "image_media_id": null,
+      "reference_audio_media_id": null
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000013",
+      "revision_id": "00000000-0000-4000-8000-000000000026",
+      "assessment_key": "00000000-0000-4000-8000-000000000027",
+      "lesson_id": "00000000-0000-4000-8000-000000000503",
+      "position": 1,
+      "type": "sentence",
+      "title": {
+        "ar": "تدريب تجريبي",
+        "en": "Mock exercise"
+      },
+      "instructions": {
+        "ar": "اقرأ بصوت واضح",
+        "en": "Read clearly"
+      },
+      "expected_text": "هَذَا بَابٌ",
+      "language": "ar-MSA",
+      "pass_score": 75,
+      "required": true,
+      "active": true,
+      "image_media_id": null,
+      "reference_audio_media_id": null
+    }
+  ],
+  "media": []
+}

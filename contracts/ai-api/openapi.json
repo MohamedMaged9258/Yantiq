@@ -1,0 +1,492 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Yantiq Private AI API — DESIGN",
+    "version": "1.0.0",
+    "description": "Backend-only inference contract. No child/guardian identifiers or pass thresholds. O01/O02 resource budgets and O03 score calibration remain review gates."
+  },
+  "servers": [
+    {
+      "url": "https://ai.example.invalid",
+      "description": "Private NVIDIA laptop service; not a live host."
+    }
+  ],
+  "security": [
+    {
+      "ServiceBearer": []
+    }
+  ],
+  "paths": {
+    "/health/live": {
+      "get": {
+        "operationId": "aiLiveness",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Service token required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "aiReadiness",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Service token required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "AI_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/evaluations": {
+      "post": {
+        "operationId": "evaluatePronunciation",
+        "description": "Echo request_id. Unscorable audio/unsupported targets return 422 without score; service must not fabricate a score. Synchronous response; backend owns durable progress.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluationInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluationEvidence"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "VALIDATION_OR_UNSCORABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "AI_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "EVALUATION_TIMEOUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ServiceBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Rotated server-to-server service token"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "retryable": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "request_id",
+          "retryable"
+        ]
+      },
+      "Health": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "degraded",
+              "unavailable"
+            ]
+          },
+          "service": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "service",
+          "version"
+        ]
+      },
+      "ExerciseType": {
+        "type": "string",
+        "enum": [
+          "letter",
+          "word",
+          "sentence"
+        ]
+      },
+      "FeedbackCode": {
+        "type": "string",
+        "enum": [
+          "GOOD_TRY",
+          "KEEP_PRACTICING",
+          "SOUND_SUBSTITUTION",
+          "MISSING_SOUND",
+          "EXTRA_SOUND",
+          "CLEAR_PRONUNCIATION"
+        ]
+      },
+      "AlignmentItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "op": {
+            "type": "string",
+            "enum": [
+              "match",
+              "substitution",
+              "insertion",
+              "deletion"
+            ]
+          },
+          "expected": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recognized": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expected_index": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recognized_index": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "op",
+          "expected",
+          "recognized",
+          "expected_index",
+          "recognized_index"
+        ]
+      },
+      "EvaluationEvidence": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "1.0.0"
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "mock",
+              "real"
+            ]
+          },
+          "model_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scoring_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "processing_ms": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "pronunciation_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "phoneme_error_rate": {
+            "type": "number",
+            "minimum": 0
+          },
+          "expected_phonemes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "recognized_phonemes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "alignment": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlignmentItem"
+            }
+          },
+          "error_counts": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "matches": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "substitutions": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "insertions": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "deletions": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "matches",
+              "substitutions",
+              "insertions",
+              "deletions"
+            ]
+          },
+          "feedback_codes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeedbackCode"
+            }
+          }
+        },
+        "required": [
+          "schema_version",
+          "request_id",
+          "mode",
+          "model_version",
+          "scoring_version",
+          "processing_ms",
+          "pronunciation_score",
+          "confidence",
+          "phoneme_error_rate",
+          "expected_phonemes",
+          "recognized_phonemes",
+          "alignment",
+          "error_counts",
+          "feedback_codes"
+        ]
+      },
+      "EvaluationInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary"
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "exercise_type": {
+            "$ref": "#/components/schemas/ExerciseType"
+          },
+          "language": {
+            "type": "string",
+            "const": "ar-MSA"
+          }
+        },
+        "required": [
+          "audio",
+          "request_id",
+          "expected_text",
+          "exercise_type",
+          "language"
+        ]
+      }
+    }
+  }
+}

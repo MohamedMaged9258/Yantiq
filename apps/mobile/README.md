@@ -29,3 +29,12 @@ Defined by [`docs/phase-0-baseline.md`](../../docs/phase-0-baseline.md) §5.1 an
 
 `prototype-archive/` holds the original UI mock. Read its README first — the design
 tokens and Arabic content tables are worth reusing; the scoring logic is not.
+
+
+## The plan for this component
+
+[`docs/implementation-plan.md`](docs/implementation-plan.md) is the detailed build plan —
+work packages, dependencies, and acceptance. It is a **proposal** awaiting the Phase 00
+contract freeze, so where it conflicts with
+[`../../docs/phase-0-baseline.md`](../../docs/phase-0-baseline.md), the baseline wins. See
+the divergence note in [`../../docs/implementation/README.md`](../../docs/implementation/README.md).

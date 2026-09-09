@@ -2,6 +2,12 @@
 
 Derived from [`../phase-0-baseline.md`](../phase-0-baseline.md) §16.
 
+| Document | What it is |
+|---|---|
+| This README | The digest of baseline §16 — the merge-blocking suites and the targets they gate |
+| [`test-strategy.md`](test-strategy.md) | The expanded strategy from the implementation plan: contract fixtures, the numbered critical cases, and how to run the contract validator. **Proposed**, and subordinate to the baseline |
+| [`planning-export-validation.md`](planning-export-validation.md) | A dated record of the checks run against the planning documents themselves. Not a claim about the running system |
+
 ## Merge-blocking suites
 
 | Suite | Covers |

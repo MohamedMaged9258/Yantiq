@@ -9,6 +9,12 @@ exported snapshots, and the notes that OpenAPI cannot express.
 
 - Client-facing surface: `contracts/application-api/`
 - Backend↔AI surface: `contracts/ai-api/`
+- Cross-service semantics: `contracts/shared/integration-rules.md`
+
+[`operation-map.md`](operation-map.md) is a readable index of both contracts — one row per
+operation, with the authorization and ownership rule each one enforces. It describes the
+**proposed** surface; the field definitions stay authoritative in the OpenAPI files, and
+where those conflict with the baseline, the baseline wins.
 
 ## Conventions (baseline §10)
 

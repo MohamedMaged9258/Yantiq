@@ -451,14 +451,16 @@ All endpoints use consistent error envelopes, correlation IDs, validated schemas
 ```text
 Yantiq/
   apps/
-    mobile/
-    admin/
+    mobile/            docs/
+    admin/             docs/
   services/
-    backend/
-    ai/
+    backend/           docs/
+    ai/                docs/
   contracts/
-    application-api/
-    ai-api/
+    application-api/   examples/
+    ai-api/            examples/
+    shared/
+    tools/
   infra/
     compose/
     scripts/
@@ -467,8 +469,17 @@ Yantiq/
     decisions/
     api/
     testing/
+    implementation/    phases/
+    database/
+    delivery/
+    operations/
   prototype-archive/
 ```
+
+Each component carries its own `docs/` directory for the plan that governs it. The
+`docs/implementation/` tree holds the cross-cutting planning package; `contracts/shared/`
+holds the cross-service integration rules and the fixture manifest, and `contracts/tools/`
+holds the contract validator.
 
 ### 15.2 Git workflow
 

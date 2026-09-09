@@ -12,6 +12,13 @@ baseline. Where any document, diagram, prototype, or comment conflicts with it, 
 wins and the other file is a bug. Section references written as §N throughout the repo point
 into that document.
 
+[`docs/implementation/`](docs/implementation/README.md) and the contracts under
+`contracts/` are a **design proposal awaiting the Phase 00 contract freeze** — detailed,
+internally consistent, and not yet approved. They do not outrank the baseline. The one known
+conflict today is the AI response shape (`alignment[].op` and four error counters, versus
+§9.3's `alignment[].operation` and three); implement §9.3 and treat the proposal as the
+thing to be reconciled, not the thing to build.
+
 ## Layout and ownership
 
 | Path | What it is | Status |
@@ -20,13 +27,18 @@ into that document.
 | `apps/admin` | React + Vite administrator portal | Not scaffolded |
 | `services/backend` | FastAPI application backend | Not scaffolded |
 | `services/ai` | MSA pronunciation service | **Working** |
-| `contracts/` | OpenAPI / JSON Schema contracts and mock fixtures | Not authored |
+| `contracts/application-api`, `contracts/ai-api` | Proposed OpenAPI contracts and mock fixtures | Design — not frozen |
+| `contracts/shared` | Cross-service integration rules and the scenario manifest | Design — not frozen |
+| `contracts/tools` | Contract validator and pinned requirements | Runnable |
 | `infra/` | Docker Compose and operational scripts | Not authored |
-| `docs/` | Baseline, product overview, diagrams, ADRs, reports | Current |
+| `docs/` | Baseline, product overview, diagrams, implementation plan, ADRs, reports | Current |
+| `<component>/docs/` | The implementation plan for that component | Design — not frozen |
 | `prototype-archive/` | The original UI mock | Reference only — never ship from it |
 
-Most of this repository is a skeleton. When a task touches a component that is "not
-scaffolded", say so rather than inventing files that imply it exists.
+Most of this repository is still a skeleton, but the *plan* for it is now written down.
+When a task touches a component that is "not scaffolded", check that component's
+`docs/implementation-plan.md` before inventing an approach — and say the component does not
+exist rather than writing files that imply it does.
 
 ## Invariants that are easy to violate
 
@@ -42,6 +54,9 @@ scaffolded", say so rather than inventing files that imply it exists.
   output. Commit `.env.example` templates instead. The `.gitignore` covers all of these;
   this repository previously had 2,589 `node_modules` files and a `.env` tracked because the
   ignore rules were added after the files, so check `git status` before staging broadly.
+- **`Yantiq_Implementation_Plans/` at the repo root is a stale local staging copy** of
+  content already relocated into `docs/`, `contracts/`, and the component `docs/`
+  directories. It is gitignored. Never edit it and never cite it — edit the relocated file.
 - **Do not rename `services/ai/checkpoints/`.** `src/quran_muaalem/data/msa_dataset.py` uses
   that literal directory name as its "local path vs HuggingFace repo id" heuristic.
 

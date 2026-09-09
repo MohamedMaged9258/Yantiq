@@ -250,3 +250,4 @@ These are non-obvious calls that came out of past debugging — they're not deri
 | Runtime config | [.env.example](.env.example), [pyproject.toml](pyproject.toml) |
 | Service overview / HTTP surface | [README.md](README.md) |
 | Upstream project READMEs (attribution) | [docs/upstream-README.md](docs/upstream-README.md), [docs/upstream-README_EN.md](docs/upstream-README_EN.md) |
+| Plan for the v1 evaluation contract | [docs/integration-plan.md](docs/integration-plan.md) — **proposed**, not approved; see the baseline-divergence note in [../../docs/implementation/README.md](../../docs/implementation/README.md) |

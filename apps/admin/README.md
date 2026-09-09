@@ -23,3 +23,12 @@ Defined by [`docs/phase-0-baseline.md`](../../docs/phase-0-baseline.md) §5.2 an
 - Every save increments the relevant content revision automatically, so connected mobile
   clients pick the change up on their next synchronization.
 - Published content that children already reference is archived, not deleted.
+
+
+## The plan for this component
+
+[`docs/implementation-plan.md`](docs/implementation-plan.md) is the detailed build plan —
+work packages, dependencies, and acceptance. It is a **proposal** awaiting the Phase 00
+contract freeze, so where it conflicts with
+[`../../docs/phase-0-baseline.md`](../../docs/phase-0-baseline.md), the baseline wins. See
+the divergence note in [`../../docs/implementation/README.md`](../../docs/implementation/README.md).
