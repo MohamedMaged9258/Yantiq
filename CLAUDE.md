@@ -12,12 +12,28 @@ baseline. Where any document, diagram, prototype, or comment conflicts with it, 
 wins and the other file is a bug. Section references written as §N throughout the repo point
 into that document.
 
-[`docs/implementation/`](docs/implementation/README.md) and the contracts under
-`contracts/` are a **design proposal awaiting the Phase 00 contract freeze** — detailed,
-internally consistent, and not yet approved. They do not outrank the baseline. The one known
-conflict today is the AI response shape (`alignment[].op` and four error counters, versus
-§9.3's `alignment[].operation` and three); implement §9.3 and treat the proposal as the
-thing to be reconciled, not the thing to build.
+[`docs/implementation/README.md`](docs/implementation/README.md) is the **implementation
+dashboard**: where the project stands, which phase is current, what is actively being worked
+on, what is blocked, and what comes next. It is the first file to open for any task. The
+phase files under `docs/implementation/phases/` hold the per-task detail behind it.
+
+## Working from the plan
+
+- **Before starting.** Open the dashboard. Identify the current phase, whether the work
+  already has a row in Active tasks, and whether anything in Blockers and decisions gates it.
+  If a blocker does gate it, say so before writing code rather than picking an answer.
+- **Naming.** Work is identified by work-package IDs — `P00-01` through `P07-06`, defined in
+  the phase files. Use them in branch names, commit messages and PR titles.
+- **Before finishing.** Update the dashboard — Current phase, Active tasks, Blockers,
+  Completion evidence, whichever the change touched — **and** the work-package row in the
+  relevant `docs/implementation/phases/phase-NN-*.md`. Both belong in the same PR as the
+  change itself, not a follow-up.
+- **Statuses** are exactly `Not started` → `In progress` → `Blocked` / `In review` →
+  `Completed`, and nothing else. Decisions in the Blockers table are `Open` or `Resolved`.
+- A phase is `Completed` **only** when every exit-acceptance box in its own file is ticked.
+  Do not mark one Completed to reflect that its work packages are done.
+- Completion evidence needs something checkable — a merged PR, a passing command with its
+  output. Never add a row for work that has not been verified.
 
 ## Layout and ownership
 
@@ -72,11 +88,6 @@ exist rather than writing files that imply it does.
   (§3). Anything mentioning five levels is stale.
 - All user-facing strings go through centralized translation keys, Arabic and English, with
   RTL and LTR verified.
-- Phase and task state lives in [`docs/implementation/README.md`](docs/implementation/README.md)
-  (the dashboard) and in the phase files under `docs/implementation/phases/`. Update both in
-  the same PR that changes the state, using only these statuses: `Not started`, `In progress`,
-  `Blocked`, `In review`, `Completed`. A phase is `Completed` only when every exit-acceptance
-  box in its own file is ticked.
 
 ## Git workflow
 
