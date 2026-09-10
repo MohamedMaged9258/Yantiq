@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0.0",
+  "synthetic": true,
+  "note": "Scores are deliberately injected mock values; identical phonemes across samples do not demonstrate score calibration. Badge definitions are disabled in these fixtures to isolate comparison behavior. Step file paths are relative to the repository root.",
+  "initial_pass_score": 75,
+  "steps": [
+    {
+      "file": "contracts/application-api/examples/application-first.mock.json",
+      "expected_best": 70,
+      "expected_count": 1
+    },
+    {
+      "file": "contracts/application-api/examples/application-lower.mock.json",
+      "expected_best": 70,
+      "expected_count": 2
+    },
+    {
+      "file": "contracts/application-api/examples/application-improved.mock.json",
+      "expected_best": 80,
+      "expected_count": 3
+    },
+    {
+      "file": "contracts/application-api/examples/application-equal.mock.json",
+      "expected_best": 80,
+      "expected_count": 4
+    }
+  ],
+  "additional_cases": [
+    {
+      "name": "duplicate_completed_key",
+      "http_status": 409,
+      "code": "ALREADY_PROCESSED",
+      "mutates_progress": false
+    },
+    {
+      "name": "silence",
+      "http_status": 422,
+      "code": "SILENCE",
+      "mutates_progress": false
+    },
+    {
+      "name": "unavailable",
+      "http_status": 503,
+      "code": "AI_UNAVAILABLE",
+      "mutates_progress": false
+    },
+    {
+      "name": "stale_target",
+      "http_status": 409,
+      "code": "STALE_EXERCISE",
+      "mutates_progress": false
+    },
+    {
+      "name": "wrong_guardian",
+      "http_status": 404,
+      "code": "NOT_FOUND",
+      "mutates_progress": false
+    },
+    {
+      "name": "soft_deleted_child",
+      "http_status": 404,
+      "code": "NOT_FOUND",
+      "mutates_progress": false
+    }
+  ]
+}

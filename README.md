@@ -11,6 +11,14 @@ Graduation project, targeting a working delivery by December 2026.
 > baseline.** Where any document, diagram, or piece of code conflicts with it, the baseline
 > wins until that file is corrected. Read it before starting work.
 
+## Implementation progress
+
+Start here: [Implementation dashboard](docs/implementation/README.md)
+
+It tracks the current phase and its objective, the status of phases 00-07, active tasks with
+their owners and branches, the open decisions blocking progress, and what has actually been
+finished. Update it in the same pull request that changes phase or task state.
+
 ## Repository layout
 
 ```
@@ -22,13 +30,18 @@ Yantiq/
     backend/           FastAPI application backend                  — not scaffolded yet
     ai/                MSA pronunciation service (fine-tuned model) — working
   contracts/
-    application-api/   OpenAPI snapshot for the client-facing API   — not authored yet
-    ai-api/            Versioned backend↔AI contract + mock fixtures — not authored yet
+    application-api/   Proposed client-facing OpenAPI + fixtures    — design, not frozen
+    ai-api/            Proposed backend↔AI contract + fixtures      — design, not frozen
+    shared/            Integration rules and the scenario manifest  — design, not frozen
+    tools/             Contract validator and pinned requirements
   infra/
     compose/           Docker Compose for local + Home Lab          — not authored yet
     scripts/           Backup, deploy, and maintenance scripts      — not authored yet
-  docs/                Baseline, product overview, diagrams, ADRs, reports
+  docs/                Baseline, product overview, diagrams, the implementation plan, ADRs, reports
   prototype-archive/   The original UI mock — reference only, never shipped
+
+Each component also carries a `docs/` directory holding the plan that governs it —
+`apps/mobile/docs/implementation-plan.md`, `services/ai/docs/integration-plan.md`, and so on.
 ```
 
 Each directory has a `README.md` explaining what belongs in it and which baseline section
@@ -76,7 +89,8 @@ is Phase 5.
 
 ### `services/backend`, `apps/mobile`, `apps/admin` — not scaffolded
 
-Phase 1 backlog items 5–10. Their READMEs describe the intended shape and constraints.
+Phase 1 backlog items 5–10. Their READMEs describe the intended shape and constraints, and
+each has an `implementation-plan.md` under its `docs/` directory.
 
 ## Ground rules
 
@@ -111,6 +125,15 @@ Start at [`docs/README.md`](docs/README.md).
 | [`docs/phase-0-baseline.md`](docs/phase-0-baseline.md) | The approved baseline and roadmap — authoritative |
 | [`docs/product-overview.md`](docs/product-overview.md) | Product definition, scope, success criteria, risks |
 | [`docs/architecture/diagrams.md`](docs/architecture/diagrams.md) | The 17 required software diagrams |
+| [`docs/implementation/README.md`](docs/implementation/README.md) | The phased implementation plan and decision ledger — **proposed**, not approved |
 | [`docs/api/README.md`](docs/api/README.md) | API conventions and privacy constraints |
+| [`docs/api/operation-map.md`](docs/api/operation-map.md) | Readable index of every proposed operation and its authorization rule |
+| [`docs/database/database-design.md`](docs/database/database-design.md) | Proposed persistence design and reference DDL |
 | [`docs/testing/README.md`](docs/testing/README.md) | Test strategy and performance targets |
+| [`docs/operations/home-lab-runbook.md`](docs/operations/home-lab-runbook.md) | Home Lab deployment and recovery runbook |
 | [`docs/decisions/`](docs/decisions/) | Architecture decision records |
+
+The implementation plan is a **design proposal awaiting the Phase 00 contract freeze**.
+Where it conflicts with the baseline — it currently does, on the AI response field names —
+the baseline wins. The divergence is recorded at the top of
+[`docs/implementation/README.md`](docs/implementation/README.md).

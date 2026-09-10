@@ -21,6 +21,11 @@ remains of upstream is the `Wav2Vec2BertForMultilevelCTC` model class that MSA b
 are preserved for attribution at [`docs/upstream-README.md`](docs/upstream-README.md) and
 [`docs/upstream-README_EN.md`](docs/upstream-README_EN.md).
 
+[`docs/integration-plan.md`](docs/integration-plan.md) is the plan for closing the gap
+between today's endpoints and the `POST /v1/evaluations` contract the backend will call.
+It is a **proposal** awaiting the Phase 00 contract freeze, and it currently diverges from
+baseline §9.3 — see [`../../docs/implementation/README.md`](../../docs/implementation/README.md).
+
 ## Quick start
 
 All commands assume **`cwd = services/ai`**. Nearly every path in this service resolves

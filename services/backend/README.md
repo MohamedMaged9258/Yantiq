@@ -26,3 +26,12 @@ selects the child-friendly message key. See §9.1 and §9.4 of the baseline.
 
 FastAPI, SQLAlchemy 2.x-style ORM, Alembic migrations, Pydantic validation.
 REST under `/api/v1`; OpenAPI is the authoritative client-facing specification.
+
+
+## The plan for this component
+
+[`docs/implementation-plan.md`](docs/implementation-plan.md) is the detailed build plan —
+work packages, dependencies, and acceptance. It is a **proposal** awaiting the Phase 00
+contract freeze, so where it conflicts with
+[`../../docs/phase-0-baseline.md`](../../docs/phase-0-baseline.md), the baseline wins. See
+the divergence note in [`../../docs/implementation/README.md`](../../docs/implementation/README.md).

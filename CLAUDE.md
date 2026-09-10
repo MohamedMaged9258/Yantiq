@@ -12,6 +12,29 @@ baseline. Where any document, diagram, prototype, or comment conflicts with it, 
 wins and the other file is a bug. Section references written as §N throughout the repo point
 into that document.
 
+[`docs/implementation/README.md`](docs/implementation/README.md) is the **implementation
+dashboard**: where the project stands, which phase is current, what is actively being worked
+on, what is blocked, and what comes next. It is the first file to open for any task. The
+phase files under `docs/implementation/phases/` hold the per-task detail behind it.
+
+## Working from the plan
+
+- **Before starting.** Open the dashboard. Identify the current phase, whether the work
+  already has a row in Active tasks, and whether anything in Blockers and decisions gates it.
+  If a blocker does gate it, say so before writing code rather than picking an answer.
+- **Naming.** Work is identified by work-package IDs — `P00-01` through `P07-06`, defined in
+  the phase files. Use them in branch names, commit messages and PR titles.
+- **Before finishing.** Update the dashboard — Current phase, Active tasks, Blockers,
+  Completion evidence, whichever the change touched — **and** the work-package row in the
+  relevant `docs/implementation/phases/phase-NN-*.md`. Both belong in the same PR as the
+  change itself, not a follow-up.
+- **Statuses** are exactly `Not started` → `In progress` → `Blocked` / `In review` →
+  `Completed`, and nothing else. Decisions in the Blockers table are `Open` or `Resolved`.
+- A phase is `Completed` **only** when every exit-acceptance box in its own file is ticked.
+  Do not mark one Completed to reflect that its work packages are done.
+- Completion evidence needs something checkable — a merged PR, a passing command with its
+  output. Never add a row for work that has not been verified.
+
 ## Layout and ownership
 
 | Path | What it is | Status |
@@ -20,13 +43,18 @@ into that document.
 | `apps/admin` | React + Vite administrator portal | Not scaffolded |
 | `services/backend` | FastAPI application backend | Not scaffolded |
 | `services/ai` | MSA pronunciation service | **Working** |
-| `contracts/` | OpenAPI / JSON Schema contracts and mock fixtures | Not authored |
+| `contracts/application-api`, `contracts/ai-api` | Proposed OpenAPI contracts and mock fixtures | Design — not frozen |
+| `contracts/shared` | Cross-service integration rules and the scenario manifest | Design — not frozen |
+| `contracts/tools` | Contract validator and pinned requirements | Runnable |
 | `infra/` | Docker Compose and operational scripts | Not authored |
-| `docs/` | Baseline, product overview, diagrams, ADRs, reports | Current |
+| `docs/` | Baseline, product overview, diagrams, implementation plan, ADRs, reports | Current |
+| `<component>/docs/` | The implementation plan for that component | Design — not frozen |
 | `prototype-archive/` | The original UI mock | Reference only — never ship from it |
 
-Most of this repository is a skeleton. When a task touches a component that is "not
-scaffolded", say so rather than inventing files that imply it exists.
+Most of this repository is still a skeleton, but the *plan* for it is now written down.
+When a task touches a component that is "not scaffolded", check that component's
+`docs/implementation-plan.md` before inventing an approach — and say the component does not
+exist rather than writing files that imply it does.
 
 ## Invariants that are easy to violate
 
@@ -42,6 +70,9 @@ scaffolded", say so rather than inventing files that imply it exists.
   output. Commit `.env.example` templates instead. The `.gitignore` covers all of these;
   this repository previously had 2,589 `node_modules` files and a `.env` tracked because the
   ignore rules were added after the files, so check `git status` before staging broadly.
+- **`Yantiq_Implementation_Plans/` at the repo root is a stale local staging copy** of
+  content already relocated into `docs/`, `contracts/`, and the component `docs/`
+  directories. It is gitignored. Never edit it and never cite it — edit the relocated file.
 - **Do not rename `services/ai/checkpoints/`.** `src/quran_muaalem/data/msa_dataset.py` uses
   that literal directory name as its "local path vs HuggingFace repo id" heuristic.
 

@@ -1,0 +1,163 @@
+{
+  "request_id": "00000000-0000-4000-8000-000000000103",
+  "exercise_id": "00000000-0000-4000-8000-000000000010",
+  "exercise_revision_id": "00000000-0000-4000-8000-000000000020",
+  "assessment_key": "00000000-0000-4000-8000-000000000021",
+  "current": {
+    "schema_version": "1.0.0",
+    "request_id": "00000000-0000-4000-8000-000000000103",
+    "mode": "mock",
+    "model_version": "mock-fixture-1",
+    "scoring_version": "mock-scoring-1",
+    "processing_ms": 25,
+    "pronunciation_score": 80,
+    "confidence": null,
+    "phoneme_error_rate": 0,
+    "expected_phonemes": [
+      "b",
+      "a"
+    ],
+    "recognized_phonemes": [
+      "b",
+      "a"
+    ],
+    "alignment": [
+      {
+        "op": "match",
+        "expected": "b",
+        "recognized": "b",
+        "expected_index": 0,
+        "recognized_index": 0
+      },
+      {
+        "op": "match",
+        "expected": "a",
+        "recognized": "a",
+        "expected_index": 1,
+        "recognized_index": 1
+      }
+    ],
+    "error_counts": {
+      "matches": 2,
+      "substitutions": 0,
+      "insertions": 0,
+      "deletions": 0
+    },
+    "feedback_codes": [
+      "GOOD_TRY"
+    ]
+  },
+  "previous_best": {
+    "evaluated_at": "2026-09-09T10:00:00Z",
+    "exercise_revision_id": "00000000-0000-4000-8000-000000000020",
+    "assessment_key": "00000000-0000-4000-8000-000000000021",
+    "evidence": {
+      "schema_version": "1.0.0",
+      "request_id": "00000000-0000-4000-8000-000000000101",
+      "mode": "mock",
+      "model_version": "mock-fixture-1",
+      "scoring_version": "mock-scoring-1",
+      "processing_ms": 25,
+      "pronunciation_score": 70,
+      "confidence": null,
+      "phoneme_error_rate": 0,
+      "expected_phonemes": [
+        "b",
+        "a"
+      ],
+      "recognized_phonemes": [
+        "b",
+        "a"
+      ],
+      "alignment": [
+        {
+          "op": "match",
+          "expected": "b",
+          "recognized": "b",
+          "expected_index": 0,
+          "recognized_index": 0
+        },
+        {
+          "op": "match",
+          "expected": "a",
+          "recognized": "a",
+          "expected_index": 1,
+          "recognized_index": 1
+        }
+      ],
+      "error_counts": {
+        "matches": 2,
+        "substitutions": 0,
+        "insertions": 0,
+        "deletions": 0
+      },
+      "feedback_codes": [
+        "GOOD_TRY"
+      ]
+    }
+  },
+  "comparison": "improved",
+  "delta_from_previous_best": 10,
+  "passed": true,
+  "applied_pass_score": 75,
+  "progress": {
+    "exercise_id": "00000000-0000-4000-8000-000000000010",
+    "completed": true,
+    "completed_at": "2026-09-09T10:02:00Z",
+    "stars": 1,
+    "attempt_count": 3,
+    "last_attempt_at": "2026-09-09T10:02:00Z",
+    "best": {
+      "evaluated_at": "2026-09-09T10:02:00Z",
+      "exercise_revision_id": "00000000-0000-4000-8000-000000000020",
+      "assessment_key": "00000000-0000-4000-8000-000000000021",
+      "evidence": {
+        "schema_version": "1.0.0",
+        "request_id": "00000000-0000-4000-8000-000000000103",
+        "mode": "mock",
+        "model_version": "mock-fixture-1",
+        "scoring_version": "mock-scoring-1",
+        "processing_ms": 25,
+        "pronunciation_score": 80,
+        "confidence": null,
+        "phoneme_error_rate": 0,
+        "expected_phonemes": [
+          "b",
+          "a"
+        ],
+        "recognized_phonemes": [
+          "b",
+          "a"
+        ],
+        "alignment": [
+          {
+            "op": "match",
+            "expected": "b",
+            "recognized": "b",
+            "expected_index": 0,
+            "recognized_index": 0
+          },
+          {
+            "op": "match",
+            "expected": "a",
+            "recognized": "a",
+            "expected_index": 1,
+            "recognized_index": 1
+          }
+        ],
+        "error_counts": {
+          "matches": 2,
+          "substitutions": 0,
+          "insertions": 0,
+          "deletions": 0
+        },
+        "feedback_codes": [
+          "GOOD_TRY"
+        ]
+      }
+    }
+  },
+  "new_badges": [],
+  "lesson_completed": true,
+  "next_exercise_id": null
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "request_id": "00000000-0000-4000-8000-000000000103",
+  "mode": "mock",
+  "model_version": "mock-fixture-1",
+  "scoring_version": "mock-scoring-1",
+  "processing_ms": 25,
+  "pronunciation_score": 80,
+  "confidence": null,
+  "phoneme_error_rate": 0,
+  "expected_phonemes": [
+    "b",
+    "a"
+  ],
+  "recognized_phonemes": [
+    "b",
+    "a"
+  ],
+  "alignment": [
+    {
+      "op": "match",
+      "expected": "b",
+      "recognized": "b",
+      "expected_index": 0,
+      "recognized_index": 0
+    },
+    {
+      "op": "match",
+      "expected": "a",
+      "recognized": "a",
+      "expected_index": 1,
+      "recognized_index": 1
+    }
+  ],
+  "error_counts": {
+    "matches": 2,
+    "substitutions": 0,
+    "insertions": 0,
+    "deletions": 0
+  },
+  "feedback_codes": [
+    "GOOD_TRY"
+  ]
+}

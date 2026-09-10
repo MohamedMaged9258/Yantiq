@@ -68,3 +68,7 @@ datasets/
 *.safetensors
 *.ckpt
 *.gguf
+
+# Local staging copy of the planning package. Its contents are already relocated into
+# docs/, contracts/, and the per-component docs/ directories — edit those, not this.
+Yantiq_Implementation_Plans/

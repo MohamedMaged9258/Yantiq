@@ -1,0 +1,6 @@
+{
+  "code": "STALE_EXERCISE",
+  "message": "This exercise changed. Refresh before recording again.",
+  "request_id": "00000000-0000-4000-8000-000000000201",
+  "retryable": false
+}

@@ -1,9 +1,18 @@
 # `contracts/ai-api` — versioned AI evaluation contract
 
-**Status: not authored yet.** Placeholder for Phase 1 backlog item 4.
+**Status: proposed design, not implemented.**
 
 The OpenAPI / JSON Schema definition of the private contract between
 `services/backend` and `services/ai`, plus mock fixtures.
+
+| File | What it is |
+|---|---|
+| [`openapi.json`](openapi.json) | The **proposed** backend↔AI contract, awaiting the Phase 00 contract freeze |
+| [`examples/ai-success.mock.json`](examples/ai-success.mock.json) | A synthetic successful evaluation response |
+
+**Field names here diverge from baseline §9.3** (`alignment[].op` and four error counters,
+versus the baseline's `alignment[].operation` and three). The baseline wins until Phase 00
+resolves it — see [`docs/implementation/README.md`](../../docs/implementation/README.md).
 
 Defined by [`docs/phase-0-baseline.md`](../../docs/phase-0-baseline.md) §9.2 and §9.3.
 

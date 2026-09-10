@@ -5,6 +5,24 @@ directory. It covers `services/ai` only — it does **not** auto-load for work e
 the monorepo. The root `CLAUDE.md` and [`../../docs/phase-0-baseline.md`](../../docs/phase-0-baseline.md)
 cover the wider project; the baseline is authoritative wherever the two disagree.
 
+[`../../docs/implementation/README.md`](../../docs/implementation/README.md) is the
+implementation dashboard, and the same working loop applies here: open it before starting,
+update it and the phase file before finishing.
+
+The row of the plan that belongs to this subtree is **Phase 05 — Real AI contract, MSA
+coverage and calibration**
+([`phase-05-ai-adaptation.md`](../../docs/implementation/phases/phase-05-ai-adaptation.md)),
+work packages `P05-01` capability audit, `P05-02` adapter, `P05-03` metric/scoring,
+`P05-04` evaluation data, `P05-05` hardware and latency, `P05-06` quality gate, and
+`P05-07` contract conformance. [`docs/integration-plan.md`](docs/integration-plan.md) is
+this component's own plan for closing the gap to `POST /v1/evaluations`.
+
+Two decisions gate the AI contract, and both are still **Open** in the dashboard's Blockers
+table. **B-01**: the drafted OpenAPI uses `alignment[].op` with four error counters while
+baseline §9.3 uses `alignment[].operation` with three — the baseline wins until Phase 00
+resolves it. **O03**: score range, calibrated confidence, and who owns score mapping. Do not
+build `P05-02` onward against an unfrozen contract; raise the blocker instead.
+
 ## What This Repo Is
 
 This tree (`Yantiq/services/ai`, formerly `Yantiq/Model`) is the **MSA fine-tuning stack**:
@@ -250,3 +268,4 @@ These are non-obvious calls that came out of past debugging — they're not deri
 | Runtime config | [.env.example](.env.example), [pyproject.toml](pyproject.toml) |
 | Service overview / HTTP surface | [README.md](README.md) |
 | Upstream project READMEs (attribution) | [docs/upstream-README.md](docs/upstream-README.md), [docs/upstream-README_EN.md](docs/upstream-README_EN.md) |
+| Plan for the v1 evaluation contract | [docs/integration-plan.md](docs/integration-plan.md) — **proposed**, not approved; see the baseline-divergence note in [../../docs/implementation/README.md](../../docs/implementation/README.md) |
